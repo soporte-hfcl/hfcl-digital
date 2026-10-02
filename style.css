@@ -1,0 +1,51 @@
+body { 
+    font-family: 'Inter', sans-serif; 
+    transition: font-size 0.2s ease; 
+}
+
+/* Clases de Accesibilidad Globales */
+body.text-sm-global { font-size: 0.85rem; }
+body.text-md-global { font-size: 1rem; }
+body.text-lg-global { font-size: 1.15rem; }
+body.text-xl-global { font-size: 1.3rem; }
+
+/* Alto Contraste Profesional */
+body.high-contrast {
+    background-color: #050505 !important;
+    color: #f8fafc !important;
+}
+body.high-contrast header,
+body.high-contrast footer,
+body.high-contrast .bg-white,
+body.high-contrast div[class*="bg-slate-"],
+body.high-contrast section {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #38bdf8 !important;
+}
+body.high-contrast p, 
+body.high-contrast span, 
+body.high-contrast h1, 
+body.high-contrast h2, 
+body.high-contrast h3, 
+body.high-contrast h4, 
+body.high-contrast strong {
+    color: #ffffff !important;
+}
+body.high-contrast button, 
+body.high-contrast input, 
+body.high-contrast select, 
+body.high-contrast textarea {
+    background-color: #1e293b !important;
+    color: #facc15 !important;
+    border: 2px solid #38bdf8 !important;
+}
+
+/* Animación de Transición de Vistas Suave */
+.vista-contenido {
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}

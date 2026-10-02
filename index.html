@@ -69,129 +69,178 @@
             background-color: #1e293b !important;
             color: #facc15 !important;
             border: 2px solid #38bdf8 !important;
+
+        .vista-contenido {
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
         }
     </style>
 
 </head>
-<body class="bg-slate-50 text-slate-800 text-md-global flex flex-col min-h-screen">
+<body class="bg-slate-50/70 text-slate-800 antialiased font-sans selection:bg-emerald-100 selection:text-emerald-900">
+<!-- ========================================================================= -->
+<!-- MODAL EMERGENTE AL INICIAR LA PÁGINA - ACTUALIZACIÓN DE DATOS             -->
+<!-- ========================================================================= -->
+<div id="modalActualizarDatos" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 w-11/12 max-w-md overflow-hidden transform transition-all scale-100 p-6 sm:p-8 text-center relative">
+        
+        <!-- Botón de cierre superior (X) -->
+        <button onclick="cerrarModalDatos()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
 
-<!-- NAVBAR PRINCIPAL RESPONSIVO -->
-    <header class="bg-hospital-800 text-white shadow-md">
+        <!-- Ícono llamativo -->
+        <div class="w-16 h-16 bg-hospital-50 text-hospital-700 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+            <i class="fa-solid fa-address-card"></i>
+        </div>
+
+        <!-- Título y mensaje cercano -->
+        <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-2">¡Ayúdanos a estar en contacto contigo!</h3>
+        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">
+            Si cambiaste de número de teléfono o de domicilio recientemente, es muy importante que nos avises para poder contactarte a tiempo para tus **horas médicas, controles y llamados del hospital**.
+        </p>
+
+        <!-- Botones de acción -->
+        <div class="space-y-2.5">
+            <a href="tel:800360035" class="w-full bg-hospital-700 hover:bg-hospital-800 text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2">
+                <i class="fa-solid fa-phone-volume"></i> Llamar a OIRS (800 360 035)
+            </a>
+            <button onclick="cerrarModalDatos()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2.5 px-4 rounded-xl text-xs sm:text-sm transition">
+                Entendido, continuar al portal
+            </button>
+        </div>
+        
+        <p class="text-[10px] text-slate-400 mt-4">También puedes actualizar tus datos directamente en el mesón OIRS/SOME.</p>
+    </div>
+</div>
+
+<script>
+    // Función para cerrar el modal suavemente
+    function cerrarModalDatos() {
+        const modal = document.getElementById('modalActualizarDatos');
+        if (modal) {
+            modal.style.opacity = '0';
+            setTimeout(() => modal.remove(), 300); // Lo remueve del DOM
+        }
+    }
+
+    // Opcional: Si quieres que aparezca automáticamente al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('modalActualizarDatos');
+        // Aquí puedes agregar lógica adicional si deseas que solo aparezca 1 vez por sesión usando sessionStorage
+    });
+</script>
+<!-- NAVBAR PRINCIPAL - ESTILO SALUD AUSTRAL (Logo sin texto) -->
+    <header class="bg-emerald-900 text-white shadow-md sticky top-0 z-40 border-b border-emerald-800/60 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             
-            <!-- Logo e Identidad Institucional -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="cambiarVista('inicio')">
-                <div class="w-10 h-10 rounded-2xl bg-white text-hospital-800 flex items-center justify-center font-bold text-lg shadow-sm border border-hospital-100">
-                    <i class="fa-solid fa-hospital text-hospital-700"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-sm sm:text-base leading-tight">Hospital de Lanco</h1>
-                    <span class="text-[10px] text-hospital-200 uppercase tracking-wider font-medium">Familiar y Comunitario</span>
-                </div>
+            <!-- Logo Institucional (Solo imagen sin texto) -->
+            <div class="cursor-pointer flex items-center" onclick="cambiarVista('inicio')">
+                <img src="https://i.ibb.co/5gHpwbcX/logo-hl.png" alt="Logo Hospital de Lanco" class="h-10 w-auto object-contain hover:opacity-90 transition" />
             </div>
 
-            <!-- Contenedor Derecho Móvil: Botón OIRS + Botón Hamburguesa -->
+            <!-- Contenedor Derecho Móvil: OIRS + Menú -->
             <div class="flex items-center gap-2 lg:hidden">
-                <!-- Botón OIRS Directo (Móvil) -->
-                <button onclick="openModal('modalOirs')" class="bg-white text-hospital-800 hover:bg-hospital-50 px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 shadow-sm transition">
-                    <i class="fa-solid fa-headset text-hospital-600"></i> OIRS
+                <button onclick="openModal('modalOirs')" class="bg-white text-emerald-900 hover:bg-emerald-50 px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 shadow-2xs transition">
+                    <i class="fa-solid fa-headset text-emerald-700"></i> OIRS
                 </button>
-
-                <!-- Botón Hamburguesa -->
-                <button onclick="toggleMobileMenu()" class="text-white p-2 rounded-xl hover:bg-hospital-700 transition focus:outline-none">
+                <button onclick="toggleMobileMenu()" class="text-white p-2 rounded-xl hover:bg-emerald-800 transition focus:outline-none">
                     <i id="hamburgerIcon" class="fa-solid fa-bars text-lg"></i>
                 </button>
             </div>
 
-            <!-- Menú de Escritorio (Oculto en celulares) -->
-            <nav class="hidden lg:flex items-center space-x-6 text-xs font-medium text-hospital-100">
+            <!-- Menú de Escritorio -->
+            <nav class="hidden lg:flex items-center space-x-6 text-xs font-medium text-emerald-100">
                 <button onclick="cambiarVista('inicio')" class="hover:text-white transition font-bold py-1 flex items-center gap-1">
                     <i class="fa-solid fa-house"></i> Inicio
                 </button>
                 
-                <!-- Unidades y Servicios (Desktop) -->
+                <!-- Unidades y Servicios -->
                 <div class="relative group">
                     <button class="hover:text-white transition py-1 flex items-center gap-1.5 font-medium focus:outline-none">
-                        <i class="fa-solid fa-hospital-user text-hospital-200"></i> Unidades y Servicios <i class="fa-solid fa-chevron-down text-[9px]"></i>
+                        <i class="fa-solid fa-hospital-user text-emerald-300"></i> Unidades y Servicios <i class="fa-solid fa-chevron-down text-[9px]"></i>
                     </button>
                     <div class="absolute left-0 mt-1 w-56 bg-white text-slate-700 rounded-2xl shadow-xl border border-slate-100 hidden group-hover:block p-2 space-y-1 z-50">
-                        <button onclick="cambiarVista('urgencia')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-hospital-50 hover:text-hospital-800 transition flex items-center gap-2 font-medium">
+                        <button onclick="cambiarVista('urgencia')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
                             <i class="fa-solid fa-truck-medical text-red-500 w-4"></i> Urgencia (24/7)
                         </button>
-                        <button onclick="cambiarVista('aps')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-hospital-50 hover:text-hospital-800 transition flex items-center gap-2 font-medium">
-                            <i class="fa-solid fa-stethoscope text-hospital-600 w-4"></i> APS (SOME Sur y Norte)
+                        <button onclick="cambiarVista('aps')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-stethoscope text-emerald-700 w-4"></i> APS (SOME Sur y Norte)
                         </button>
-                        <button onclick="cambiarVista('hospitalizacion')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-hospital-50 hover:text-hospital-800 transition flex items-center gap-2 font-medium">
-                            <i class="fa-solid fa-bed-pulse text-hospital-600 w-4"></i> Hospitalización
+                        <button onclick="cambiarVista('hospitalizacion')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-bed-pulse text-emerald-700 w-4"></i> Hospitalización
                         </button>
-                        <button onclick="cambiarVista('transversales')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-hospital-50 hover:text-hospital-800 transition flex items-center gap-2 font-medium">
-                            <i class="fa-solid fa-network-wired text-hospital-600 w-4"></i> Servicios Transversales
+                        <button onclick="cambiarVista('transversales')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-network-wired text-emerald-700 w-4"></i> Servicios Transversales
                         </button>
                     </div>
                 </div>
 
-                <!-- Horarios Oficiales (Desktop) -->
+                <!-- Horarios Oficiales -->
                 <button onclick="openModal('modalHorarios')" class="hover:text-white transition py-1 flex items-center gap-1.5 font-medium focus:outline-none">
-                    <i class="fa-solid fa-clock text-hospital-200"></i> Horarios Oficiales
+                    <i class="fa-solid fa-clock text-emerald-300"></i> Horarios Oficiales
                 </button>
 
-                <!-- Información Ciudadana (Desktop) -->
+                <!-- Información Ciudadana -->
                 <div class="relative group">
                     <button class="hover:text-white transition py-1 flex items-center gap-1.5 font-medium focus:outline-none">
-                        <i class="fa-solid fa-book-open text-hospital-200"></i> Información Ciudadana <i class="fa-solid fa-chevron-down text-[9px]"></i>
+                        <i class="fa-solid fa-book-open text-emerald-300"></i> Información Ciudadana <i class="fa-solid fa-chevron-down text-[9px]"></i>
                     </button>
                     <div class="absolute left-0 mt-1 w-60 bg-white text-slate-700 rounded-2xl shadow-xl border border-slate-100 hidden group-hover:block p-2 space-y-1 z-50">
-                        <button onclick="cambiarVista('hospitalizacion')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-hospital-50 hover:text-hospital-800 transition flex items-center gap-2 font-medium">
-                            <i class="fa-solid fa-shield-heart text-hospital-600 w-4"></i> Ley MILA y Acompañamiento
+                        <button onclick="cambiarVista('hospitalizacion')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-shield-heart text-emerald-700 w-4"></i> Ley MILA y Acompañamiento
                         </button>
-                        <button onclick="cambiarVista('inicio')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-hospital-50 hover:text-hospital-800 transition flex items-center gap-2 font-medium">
-                            <i class="fa-solid fa-scale-balanced text-hospital-600 w-4"></i> Derechos y Deberes
+                        <button onclick="cambiarVista('inicio')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-scale-balanced text-emerald-700 w-4"></i> Derechos y Deberes
                         </button>
                     </div>
                 </div>
 
-                <!-- Botón OIRS Virtual (Desktop) -->
-                <button onclick="openModal('modalOirs')" class="bg-white text-hospital-800 hover:bg-hospital-50 px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-sm transition">
-                    <i class="fa-solid fa-headset text-hospital-600"></i> OIRS Virtual
+                <!-- Botón OIRS Virtual -->
+                <button onclick="openModal('modalOirs')" class="bg-white text-emerald-900 hover:bg-emerald-50 px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-2xs transition">
+                    <i class="fa-solid fa-headset text-emerald-700"></i> OIRS Virtual
                 </button>
 
-                <!-- Contacto (Desktop) -->
-                <button onclick="openModal('modalContacto')" class="hover:text-white transition py-1 text-emerald-300 font-semibold flex items-center gap-1">
+                <button onclick="openModal('modalContacto')" class="hover:text-white transition py-1 text-emerald-200 font-semibold flex items-center gap-1">
                     <i class="fa-solid fa-envelope"></i> Contacto
                 </button>
             </nav>
         </div>
 
-        <!-- Panel de Menú Desplegable para Celulares (Oculto por defecto) -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-hospital-900 border-t border-hospital-700 px-4 py-4 space-y-2 text-xs font-medium">
-            <button onclick="cambiarVista('inicio'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2">
-                <i class="fa-solid fa-house text-hospital-300"></i> Inicio
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-emerald-950 border-t border-emerald-800 px-4 py-4 space-y-2 text-xs font-medium">
+            <button onclick="cambiarVista('inicio'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2">
+                <i class="fa-solid fa-house text-emerald-300"></i> Inicio
             </button>
-            <button onclick="cambiarVista('urgencia'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2">
+            <button onclick="cambiarVista('urgencia'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2">
                 <i class="fa-solid fa-truck-medical text-red-400"></i> Urgencia (24/7)
             </button>
-            <button onclick="cambiarVista('aps'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2">
-                <i class="fa-solid fa-stethoscope text-hospital-300"></i> APS (SOME Sur y Norte)
+            <button onclick="cambiarVista('aps'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2">
+                <i class="fa-solid fa-stethoscope text-emerald-300"></i> APS (SOME Sur y Norte)
             </button>
-            <button onclick="cambiarVista('hospitalizacion'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2">
-                <i class="fa-solid fa-bed-pulse text-hospital-300"></i> Hospitalización
+            <button onclick="cambiarVista('hospitalizacion'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2">
+                <i class="fa-solid fa-bed-pulse text-emerald-300"></i> Hospitalización
             </button>
-            <button onclick="cambiarVista('transversales'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2">
-                <i class="fa-solid fa-network-wired text-hospital-300"></i> Servicios Transversales
+            <button onclick="cambiarVista('transversales'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2">
+                <i class="fa-solid fa-network-wired text-emerald-300"></i> Servicios Transversales
             </button>
-            <button onclick="openModal('modalHorarios'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2 text-amber-300 font-bold">
+            <button onclick="openModal('modalHorarios'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2 text-amber-300 font-bold">
                 <i class="fa-solid fa-clock"></i> Horarios Oficiales
             </button>
-            <button onclick="openModal('modalOirs'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2 text-hospital-200 font-bold">
+            <button onclick="openModal('modalOirs'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2 text-emerald-200 font-bold">
                 <i class="fa-solid fa-headset"></i> OIRS Virtual
             </button>
-            <button onclick="openModal('modalContacto'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-hospital-800 flex items-center gap-2 text-emerald-300 font-semibold">
+            <button onclick="openModal('modalContacto'); toggleMobileMenu();" class="w-full text-left py-2 px-3 rounded-xl hover:bg-emerald-900 flex items-center gap-2 text-emerald-200 font-semibold">
                 <i class="fa-solid fa-envelope"></i> Contacto
             </button>
         </div>
     </header>
     <!-- Main Container Fluido -->
-<main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-10 flex-grow">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         
         <!-- ================================================================= -->
         <!-- VISTA 1: INICIO (Portada, Accesos Rápidos, Leyes, FAQ y Contacto)   -->
@@ -1964,19 +2013,19 @@
         </div>
     </div>
 
-    <!-- Modal de Horarios Oficiales con Tarjeta Institucional y Opción de Compartir -->
+<!-- Modal de Horarios Oficiales (Farmacia y Leche Separados) -->
     <div id="modalHorarios" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm hidden">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 space-y-5 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-5 max-h-[90vh] overflow-y-auto">
             
             <!-- Cabecera del Modal -->
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-lg">
+                    <div class="w-10 h-10 rounded-2xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-base">
                         <i class="fa-solid fa-clock"></i>
                     </div>
                     <div>
-                        <span class="text-[10px] uppercase tracking-wider text-hospital-600 font-bold">Guía Ciudadana</span>
-                        <h3 class="font-bold text-slate-900 text-base">Horarios Oficiales - Hospital de Lanco</h3>
+                        <h3 class="font-bold text-slate-900 text-sm sm:text-base">Horarios Oficiales</h3>
+                        <span class="text-xs text-slate-500">Hospital Familiar y Comunitario de Lanco</span>
                     </div>
                 </div>
                 <button onclick="closeModal('modalHorarios')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
@@ -1984,81 +2033,89 @@
                 </button>
             </div>
 
-            <!-- TARJETA VISUAL OFICIAL (Aspecto de Infografía Institucional para dar confianza) -->
-            <div class="bg-gradient-to-br from-hospital-900 to-slate-900 text-white p-4.5 sm:p-5 rounded-2xl shadow-sm border border-hospital-700 space-y-2.5 relative overflow-hidden">
-                <div class="absolute -right-6 -bottom-6 text-white/5 text-7xl font-bold pointer-events-none">
-                    <i class="fa-solid fa-hospital"></i>
-                </div>
-                
-                <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
-                    <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-lg bg-white text-hospital-900 flex items-center justify-center font-bold text-xs">
-                            🏥
-                        </div>
-                        <div>
-                            <span class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider block">Comunicado Oficial</span>
-                            <h4 class="font-bold text-white text-xs">Hospital Familiar y Comunitario de Lanco</h4>
-                        </div>
-                    </div>
-                    <span class="text-[9px] bg-white/10 px-2 py-0.5 rounded-full text-slate-300">Vigente 2026</span>
-                </div>
-
-                <p class="text-[11px] text-slate-200 leading-relaxed">
-                    Estimada comunidad: Compartimos los canales y horarios de atención presencial y continuada de nuestro establecimiento ubicado en <strong>Santiago 595, Lanco</strong>.
-                </p>
-            </div>
-
-            <!-- Listado de Horarios Organizados -->
-            <div class="space-y-3 text-xs">
+            <!-- Listado de Horarios Independientes -->
+            <div class="space-y-2.5 text-xs">
                 
                 <!-- Urgencia -->
-                <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-3">
-                    <div>
-                        <strong class="block text-slate-900 text-sm mb-0.5"><i class="fa-solid fa-truck-medical text-red-600 mr-1.5"></i> Servicio de Urgencia</strong>
-                        <span class="text-slate-600">Atención continuada todos los días del año.</span>
+                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                    <div class="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-truck-medical"></i>
                     </div>
-                    <span class="bg-red-100 text-red-700 font-bold px-2.5 py-1 rounded-xl text-[10px] flex-shrink-0">24/7</span>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Servicio de Urgencia (24/7)</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Atención continuada todos los días del año.</span>
+                    </div>
                 </div>
 
-                <!-- Farmacia y Leche -->
-                <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-3">
-                    <div>
-                        <strong class="block text-slate-900 text-sm mb-0.5"><i class="fa-solid fa-pills text-hospital-600 mr-1.5"></i> Farmacia y Leche (PNAC)</strong>
-                        <span class="text-slate-600">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong><br>Viernes: <strong>08:00 a 16:00 hrs</strong></span>
+                <!-- Farmacia -->
+                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                    <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-pills"></i>
                     </div>
-                    <span class="bg-hospital-100 text-hospital-800 font-bold px-2.5 py-1 rounded-xl text-[10px] flex-shrink-0">Ambulatorio</span>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Unidad de Farmacia</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
+                    </div>
                 </div>
 
-                <!-- OIRS -->
-                <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-3">
-                    <div>
-                        <strong class="block text-slate-900 text-sm mb-0.5"><i class="fa-solid fa-headset text-hospital-600 mr-1.5"></i> Oficina OIRS</strong>
-                        <span class="text-slate-600">Lunes a Jueves: 08:00 a 13:00 y 14:00 a 17:00 hrs<br>Viernes: 08:00 a 13:00 y 14:00 a 16:00 hrs</span>
+<!-- Farmacia -->
+<div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+    <div class="w-9 h-9 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center flex-shrink-0 text-sm">
+        <i class="fa-solid fa-pills"></i>
+    </div>
+    <div>
+        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia Ambulatoria</strong>
+        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
+    </div>
+</div>
+
+<!-- Entrega de Leche (PNAC) -->
+<div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+    <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center flex-shrink-0 text-sm">
+        <i class="fa-solid fa-bottle-droplet"></i>
+    </div>
+    <div>
+        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Entrega de Leche y Productos (PNAC)</strong>
+        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:30 a 16:30 hrs</strong> | Viernes: <strong>08:30 a 15:30 hrs</strong></span>
+    </div>
+</div>
+
+                <!-- Oficina OIRS -->
+                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                    <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-headset"></i>
                     </div>
-                    <span class="bg-hospital-100 text-hospital-800 font-bold px-2.5 py-1 rounded-xl text-[10px] flex-shrink-0">Informaciones</span>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Oficina OIRS (Informaciones)</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves (08:00–13:00 y 14:00–17:00 hrs) • Viernes (hasta las 16:00 hrs)</span>
+                    </div>
                 </div>
 
                 <!-- Visitas -->
-                <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-3">
-                    <div>
-                        <strong class="block text-slate-900 text-sm mb-0.5"><i class="fa-solid fa-bed-pulse text-hospital-600 mr-1.5"></i> Visitas a Hospitalizados</strong>
-                        <span class="text-slate-600">Lunes a Domingo: <strong>11:30 a 17:30 hrs</strong></span>
+                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                    <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-bed-pulse"></i>
                     </div>
-                    <span class="bg-hospital-100 text-hospital-800 font-bold px-2.5 py-1 rounded-xl text-[10px] flex-shrink-0">Clínico</span>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Visitas a Hospitalizados</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Domingo: <strong>11:30 a 17:30 hrs</strong></span>
+                    </div>
                 </div>
 
                 <!-- Horas Médicas -->
-                <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-3">
-                    <div>
-                        <strong class="block text-slate-900 text-sm mb-0.5"><i class="fa-solid fa-calendar-check text-hospital-600 mr-1.5"></i> Solicitud de Horas (Línea 800)</strong>
-                        <span class="text-slate-600">Lunes y Miércoles: <strong>08:30 a 10:00 hrs</strong> (Fono: 800 360 035)</span>
+                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                    <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-calendar-check"></i>
                     </div>
-                    <span class="bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-xl text-[10px] flex-shrink-0">Telefónico</span>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Solicitud de Horas (Línea 800)</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes y Miércoles: <strong>08:30 a 10:00 hrs</strong> (Fono: 800 360 035)</span>
+                    </div>
                 </div>
 
             </div>
 
-            <!-- Botones de Acción (Cerrar y Compartir) -->
+            <!-- Botones de Acción -->
             <div class="flex flex-col sm:flex-row items-center gap-3 pt-2 border-t border-slate-100">
                 <button onclick="compartirHorarios()" class="w-full sm:flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 px-4 rounded-2xl font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm">
                     <i class="fa-brands fa-whatsapp text-sm"></i> Compartir Horarios (WhatsApp)
@@ -2115,7 +2172,15 @@
                 </div>
             </div>
 
-            <!-- Sugerencias rápidas dinámicas y aleatorias -->
+            <!-- NUEVO: Filtros Rápidos de Categorías -->
+            <div class="px-3 py-1.5 bg-white border-t border-slate-100 flex gap-1 overflow-x-auto text-[10px] scrollbar-none" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <button onclick="filtrarPreguntas('todos')" class="bg-hospital-700 text-white px-2 py-1 rounded-md font-medium whitespace-nowrap transition">Todo</button>
+                <button onclick="filtrarPreguntas('urgencias')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded-md whitespace-nowrap transition">Urgencias</button>
+                <button onclick="filtrarPreguntas('horarios')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded-md whitespace-nowrap transition">Farmacia/Leche</button>
+                <button onclick="filtrarPreguntas('tramites')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded-md whitespace-nowrap transition">Trámites/OIRS</button>
+            </div>
+
+            <!-- Sugerencias rápidas dinámicas (Se actualizan al filtrar o al iniciar) -->
             <div id="containerSugerencias" class="px-3 py-2 bg-white border-t border-slate-100 flex gap-1.5 overflow-x-auto text-[11px] scrollbar-none" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <!-- Se cargan automáticamente con JavaScript -->
             </div>
@@ -2153,6 +2218,7 @@
         </button>
     </div>
 
+<!-- Footer con Redes Sociales Oficiales -->
     <footer class="bg-white border-t border-slate-200 mt-12 py-8 text-center text-xs text-slate-500">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
             
@@ -2182,369 +2248,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript General, Formularios y Accesibilidad -->
-    <script>
-function toggleMobileMenu() {
-        const menu = document.getElementById('mobileMenu');
-        const icon = document.getElementById('hamburgerIcon');
-        menu.classList.toggle('hidden');
-        if (menu.classList.contains('hidden')) {
-            icon.className = "fa-solid fa-bars text-lg";
-        } else {
-            icon.className = "fa-solid fa-xmark text-lg";
-        }
-    }
-
-        // Funciones de Accesibilidad Universal
-        const fontLevels = ['text-sm-global', 'text-md-global', 'text-lg-global', 'text-xl-global'];
-        let currentFontIndex = 1; // Empieza en md
-
-        function changeFontSize(direction) {
-            const body = document.body;
-            body.classList.remove(fontLevels[currentFontIndex]);
-            currentFontIndex += direction;
-            if (currentFontIndex < 0) currentFontIndex = 0;
-            if (currentFontIndex >= fontLevels.length) currentFontIndex = fontLevels.length - 1;
-            body.classList.add(fontLevels[currentFontIndex]);
-        }
-
-        function toggleHighContrast() {
-            document.body.classList.toggle('high-contrast');
-        }
-
-        function readPageAloud() {
-            if (!('speechSynthesis' in window)) {
-                alert("Tu navegador no soporta la lectura en voz alta.");
-                return;
-            }
-            window.speechSynthesis.cancel();
-            const textToRead = "Portal de Pacientes del Hospital Familiar y Comunitario de Lanco. Servicios disponibles: Urgencia, Atención Primaria, Entrega de Horas, Farmacia, Leche, OIRS y Formulario de Contacto.";
-            const utterance = new SpeechSynthesisUtterance(textToRead);
-            utterance.lang = 'es-CL';
-            utterance.rate = 0.95;
-            window.speechSynthesis.speak(utterance);
-        }
-
-        function compartirHorarios() {
-        const texto = "🏥 *HOSPITAL FAMILIAR Y COMUNITARIO DE LANCO*\n" +
-                      "📍 *Dirección:* Santiago 595, Lanco\n\n" +
-                      "🕒 *GUÍA DE HORARIOS OFICIALES*:\n\n" +
-                      "🚨 *Servicio de Urgencia:* Atención 24/7 (Todos los días del año)\n\n" +
-                      "💊 *Farmacia y Leche (PNAC):*\n" +
-                      "• Lunes a Jueves: 08:00 a 17:00 hrs\n" +
-                      "• Viernes: 08:00 a 16:00 hrs\n\n" +
-                      "📞 *Oficina OIRS / Agendamiento Telefónico:* \n" +
-                      "• Fono gratuito: 800 360 035\n" +
-                      "• Lunes a Jueves (08:00 a 17:00 hrs) y Viernes (hasta las 16:00 hrs)\n\n" +
-                      "🛏️ *Visitas a Hospitalizados:*\n" +
-                      "• Lunes a Domingo: 11:30 a 17:30 hrs\n\n" +
-                      "📱 _Comparte esta información oficial con tus familiares y vecinos de la comuna._";
-
-        const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
-        window.open(urlWhatsApp, '_blank');
-    }
-
-        // Modales y Acordeones
-        function toggleFaq(id) {
-            const content = document.getElementById(id);
-            const icon = document.getElementById('icon-' + id);
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.classList.remove('fa-plus');
-                icon.classList.add('fa-minus');
-            } else {
-                content.classList.add('hidden');
-                icon.classList.remove('fa-minus');
-                icon.classList.add('fa-plus');
-            }
-        }
-
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('fixed') && event.target.classList.contains('backdrop-blur-sm')) {
-                event.target.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Buscador instantáneo en tiempo real
-        const searchInput = document.getElementById('searchInput');
-        const cards = document.querySelectorAll('.searchable-card');
-
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase().trim();
-                cards.forEach(card => {
-                    const text = card.innerText.toLowerCase();
-                    card.style.display = text.includes(term) ? 'flex' : 'none';
-                });
-            });
-        }
-
-        // Control de campos de solicitante (terceros) en OIRS
-        function toggleSolicitanteFields(val) {
-            const fields = document.getElementById('solicitanteFields');
-            if (!fields) return;
-            if (val === 'si') {
-                fields.classList.remove('hidden');
-            } else {
-                fields.classList.add('hidden');
-            }
-        }
-
-        // Manejo del Formulario de Contacto General
-        function submitContactoForm(e) {
-            e.preventDefault();
-            const form = document.getElementById('contactoForm');
-            const btn = document.getElementById('submitContactoBtn');
-            const btnText = document.getElementById('btnContactoText');
-            const btnIcon = document.getElementById('btnContactoIcon');
-            const alertBox = document.getElementById('contactoSuccessAlert');
-
-            btn.disabled = true;
-            btnText.innerText = "Enviando mensaje...";
-            btnIcon.className = "fa-solid fa-spinner fa-spin";
-
-            setTimeout(() => {
-                form.style.display = 'none';
-                alertBox.classList.remove('hidden');
-                form.reset();
-                btn.disabled = false;
-                btnText.innerText = "Enviar Mensaje";
-                btnIcon.className = "fa-solid fa-paper-plane";
-            }, 800);
-        }
-
-        function resetContactoForm() {
-            const form = document.getElementById('contactoForm');
-            const alertBox = document.getElementById('contactoSuccessAlert');
-            form.style.display = 'block';
-            alertBox.classList.add('hidden');
-        }
-
-        // Función para filtrar las preguntas frecuentes por categoría
-        function filtrarFaq(categoria) {
-            // Actualizar estilos de las pestañas
-            document.querySelectorAll('.faq-tab').forEach(tab => {
-                tab.className = "faq-tab px-3 py-1.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 transition";
-            });
-            event.target.className = "faq-tab px-3 py-1.5 rounded-xl font-medium bg-white text-hospital-700 shadow-sm transition";
-
-            // Mostrar u ocultar las preguntas según la categoría
-            const items = document.querySelectorAll('.faq-item');
-            items.forEach(item => {
-                if (categoria === 'todas' || item.getAttribute('data-categoria') === categoria) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        // Conexión del formulario OIRS a Google Apps Script
-        const SCRIPT_URL = "https://script.google.com/macros/s/TU_URL_DE_APPS_SCRIPT_AQUI/exec";
-
-        function submitOirsForm(e) {
-            e.preventDefault();
-            const form = document.getElementById('oirsForm');
-            const btn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const btnIcon = document.getElementById('btnIcon');
-            const alertBox = document.getElementById('oirsSuccessAlert');
-
-            btn.disabled = true;
-            btnText.innerText = "Enviando al sistema OIRS...";
-            btnIcon.className = "fa-solid fa-spinner fa-spin";
-
-            const formData = new FormData(form);
-
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => {
-                    form.style.display = 'none';
-                    alertBox.classList.remove('hidden');
-                    form.reset();
-                    btn.disabled = false;
-                    btnText.innerText = "Enviar Requerimiento Oficial";
-                    btnIcon.className = "fa-solid fa-paper-plane";
-                })
-                .catch(error => {
-                    form.style.display = 'none';
-                    alertBox.classList.remove('hidden');
-                    form.reset();
-                    btn.disabled = false;
-                    btnText.innerText = "Enviar Requerimiento Oficial";
-                    btnIcon.className = "fa-solid fa-paper-plane";
-                });
-        }
-
-        function resetOirsForm() {
-            const form = document.getElementById('oirsForm');
-            const alertBox = document.getElementById('oirsSuccessAlert');
-            form.style.display = 'block';
-            alertBox.classList.add('hidden');
-            document.getElementById('solicitanteFields').classList.add('hidden');
-            document.getElementById('toggleSolicitante').value = 'no';
-        }
-
-        function cambiarVista(nombreVista) {
-            document.querySelectorAll('.vista-contenido').forEach(el => el.classList.add('hidden'));
-            document.getElementById('vista-' + nombreVista).classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Configuración de la IA y el Chatbot Kümen (Protegida)
-        // NOTA DE SEGURIDAD: Nunca expongas tu API Key real en repositorios públicos o frontend.
-        // Utiliza un backend intermedio (proxy) o variables de entorno del servidor.
-        const CHAT_ENDPOINT = "/api/chat"; // Apunta a tu backend o proxy seguro
-
-        function toggleChatbot() {
-            const chatWindow = document.getElementById('chatWindow');
-            chatWindow.classList.toggle('hidden');
-        }
-
-        function enviarSugerencia(texto) {
-            document.getElementById('chatInput').value = texto;
-            procesarMensajeChat();
-        }
-
-        async function procesarMensajeChat() {
-            const input = document.getElementById('chatInput');
-            const texto = input.value.trim();
-            if (!texto) return;
-
-            const chatMessages = document.getElementById('chatMessages');
-
-            // 1. Mostrar mensaje del usuario
-            const userMsgDiv = document.createElement('div');
-            userMsgDiv.className = "flex items-start gap-2 max-w-[85%] ml-auto justify-end";
-            userMsgDiv.innerHTML = `
-                <div class="bg-hospital-700 text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-slate-100 break-words">
-                    <p>${texto}</p>
-                </div>
-            `;
-            chatMessages.appendChild(userMsgDiv);
-            input.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // 2. Mensaje temporal de carga
-            const botMsgDiv = document.createElement('div');
-            botMsgDiv.className = "flex items-start gap-2 max-w-[88%] opacity-70";
-            botMsgDiv.innerHTML = `
-                <div class="w-7 h-7 rounded-xl bg-white p-1 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <img src="https://i.ibb.co/5gHpwbcX/logo-hl.png" alt="Logo" class="w-full h-full object-contain">
-                </div>
-                <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700">
-                    <p class="italic text-slate-400">Consultando con Kümen...</p>
-                </div>
-            `;
-            chatMessages.appendChild(botMsgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            try {
-                // LLAMADA SEGURA AL BACKEND (Evita exponer la API Key en el navegador)
-                const response = await fetch(CHAT_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ mensaje: texto })
-                });
-
-                if (!response.ok) {
-                    throw new Error("No se pudo conectar con el servicio de asistencia.");
-                }
-
-                const data = await response.json();
-                const respuestaIA = data.respuesta || "Comprendo tu consulta.";
-
-                botMsgDiv.className = "flex items-start gap-2 max-w-[88%]";
-                botMsgDiv.querySelector('div:nth-child(2)').innerHTML = `<p>${respuestaIA.replace(/\n/g, '<br>')}</p>`;
-                
-            } catch (error) {
-                console.warn("Aviso del sistema (usando respaldo institucional local):", error.message);
-
-                // Sistema de respaldo local inteligente para garantizar la continuidad del servicio al vecino
-                let respuestaFallback = "Comprendo tu consulta. Para más detalles institucionales o agendamiento, puedes comunicarte con nuestra OIRS al <strong>800 360 035</strong>.";
-                const t = texto.toLowerCase();
-                
-                if (t.includes('nombre') || t.includes('quién eres')) {
-                    respuestaFallback = "Soy Kümen, el Asistente Virtual oficial del Hospital Familiar y Comunitario de Lanco, creado para orientarte en tus consultas de salud y servicios.";
-                } else if (t.includes('urgencia') || t.includes('emergencia') || t.includes('accidente') || t.includes('dolor pecho')) {
-                    respuestaFallback = "⚠️ Ante síntomas graves o riesgo vital, acude de inmediato al Servicio de Urgencia 24/7 ubicado en Santiago 595, Lanco.";
-                } else if (t.includes('farmacia') || t.includes('leche') || t.includes('medicamento') || t.includes('pnac')) {
-                    respuestaFallback = "💊 La Farmacia y entrega de leche (PNAC) atienden de lunes a jueves de 08:00 a 17:00 hrs y viernes hasta las 16:00 hrs. Recuerda traer tu receta y carnet.";
-                } else if (t.includes('hora') || t.includes('cita') || t.includes('medico') || t.includes('general')) {
-                    respuestaFallback = "📞 Las horas para médica general se solicitan a través de la línea gratuita <strong>800 360 035</strong> los días lunes y miércoles de 08:30 a 10:00 hrs.";
-                } else if (t.includes('cronico') || t.includes('crónicos')) {
-                    respuestaFallback = "📅 Las horas para pacientes crónicos se agendan de acuerdo con el cronograma mensual establecido en la APS o llamando a OIRS.";
-                } else if (t.includes('dental') || t.includes('dentista') || t.includes('urgencia dental')) {
-                    respuestaFallback = "🦷 Las atenciones dentales se coordinan según cupos programados mes a mes. Consulta los detalles en nuestra sección de APS.";
-                } else if (t.includes('rayos') || t.includes('imagen') || t.includes('rx')) {
-                    respuestaFallback = "🩻 La Unidad de Rayos atiende de lunes a jueves de 08:30 a 16:45 hrs y viernes de 08:30 a 15:45 hrs.";
-                } else if (t.includes('mila') || t.includes('acompañamiento')) {
-                    respuestaFallback = "💙 La <strong>Ley MILA</strong> garantiza el derecho al acompañamiento permanente de NNA y personas gestantes durante su estancia o atención clínica.";
-                } else if (t.includes('ubicacion') || t.includes('donde') || t.includes('direccion') || t.includes('dirección')) {
-                    respuestaFallback = "📍 Nos encontramos ubicados en <strong>Santiago 595, Lanco</strong>, Región de Los Ríos. Contamos con atención de urgencia 24/7.";
-                } else if (t.includes('hola') || t.includes('buenos dias') || t.includes('buenas tardes')) {
-                    respuestaFallback = "¡Hola! Qué gusto saludarte. Soy Kümen, ¿en qué puedo ayudarte hoy respecto a los servicios del Hospital de Lanco?";
-                }
-
-                botMsgDiv.className = "flex items-start gap-2 max-w-[88%]";
-                botMsgDiv.querySelector('div:nth-child(2)').innerHTML = `<p>${respuestaFallback}</p>`;
-            }
-
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Lista completa de preguntas frecuentes universales para las sugerencias aleatorias
-        const listaPreguntasFrecuentes = [
-            "¿Cuándo ir a Urgencia?",
-            "¿Cómo pedir una hora médica?",
-            "¿Dónde están ubicados?",
-            "Horario Farmacia y Leche",
-            "¿Cómo contactar a la OIRS?",
-            "¿Qué es la Ley MILA?",
-            "Requisitos para atención dental",
-            "Horarios de Rayos X"
-        ];
-
-        function cargarSugerenciasAleatorias() {
-            const contenedor = document.getElementById('containerSugerencias');
-            if (!contenedor) return;
-
-            const preguntasMezcladas = [...listaPreguntasFrecuentes].sort(() => 0.5 - Math.random());
-            const seleccionadas = preguntasMezcladas.slice(0, 3);
-
-            contenedor.innerHTML = seleccionadas.map(pregunta => `
-                <button onclick="enviarSugerencia('${pregunta}')" 
-                    class="bg-slate-100 hover:bg-hospital-50 hover:text-hospital-700 text-slate-600 px-2.5 py-1 rounded-full whitespace-nowrap transition border border-slate-200 flex-shrink-0">
-                    ${pregunta}
-                </button>
-            `).join('');
-        }
-
-        // Inicialización general al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            const chatInput = document.getElementById('chatInput');
-            if (chatInput) {
-                chatInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') {
-                        procesarMensajeChat();
-                    }
-                });
-            }
-            // Cargar las sugerencias aleatorias en el contenedor
-            cargarSugerenciasAleatorias();
-        });
-    </script>
+<script src="main.js"></script>
+    
 </body>
 </html>
