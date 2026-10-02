@@ -69,14 +69,14 @@
             background-color: #1e293b !important;
             color: #facc15 !important;
             border: 2px solid #38bdf8 !important;
+        } /* <--- Llave de cierre agregada correctamente aquí */
 
         .vista-contenido {
-    animation: fadeIn 0.3s ease-in-out forwards;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 
@@ -239,20 +239,30 @@
             </button>
         </div>
     </header>
-    <!-- Main Container Fluido -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+<!-- Main Container Fluido con la Marca de Agua Gigante -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 relative overflow-hidden min-h-screen">
+
+    <!-- MARCA DE AGUA GIGANTE (Efecto "Saliéndose de la pantalla" abajo a la derecha) -->
+    <div class="absolute -bottom-32 -right-32 pointer-events-none z-0 select-none">
+        <img src="https://i.ibb.co/5gHpwbcX/logo-hl.png" alt="" 
+             class="w-[550px] sm:w-[750px] lg:w-[900px] opacity-[0.04] object-contain filter grayscale transform rotate-[-10deg]">
+    </div>
+
+    <!-- CONTENEDOR DE TODO EL CONTENIDO PRINCIPAL (Flota sobre la marca de agua con z-10) -->
+    <div class="relative z-10 space-y-12">
         
         <!-- ================================================================= -->
-        <!-- VISTA 1: INICIO (Portada, Accesos Rápidos, Leyes, FAQ y Contacto)   -->
+        <!-- VISTA 1: INICIO (Organizado en las 3 Zonas Requeridas)             -->
         <!-- ================================================================= -->
-        <div id="vista-inicio" class="vista-contenido space-y-10">
+        <div id="vista-inicio" class="vista-contenido space-y-12">
             
-            <!-- Welcome Hero Card Fluida -->
+            <!-- Welcome Hero Card Fluida con Buscador -->
             <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 text-center relative overflow-hidden">
                 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-hospital-50 rounded-full pointer-events-none z-0"></div>
                 <div class="relative z-10 space-y-4 max-w-2xl mx-auto">
                     <span class="text-hospital-600 font-semibold text-xs tracking-widest uppercase bg-hospital-50 px-3 py-1 rounded-full border border-hospital-100 inline-block">Portal Ciudadano Oficial</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">¿Qué información o trámite necesitas hoy?</h2>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Hospital Familiar y Comunitario de Lanco</h2>
+                    <p class="text-xs sm:text-sm text-slate-600">Encuentra rápidamente servicios clínicos, opciones de gestión ciudadana o nuestra identidad intercultural.</p>
                     
                     <div class="pt-2 max-w-lg mx-auto relative">
                         <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
@@ -264,18 +274,18 @@
                 </div>
             </section>
 
-            <!-- MÓDULO 1: SERVICIOS CLÍNICOS Y DE ATENCIÓN DIRECTA (Tarjetas con Acceso a las Vistas) -->
+            <!-- ================================================================= -->
+            <!-- 1. ZONA ASISTENCIAL / CLÍNICO-HOSPITALARIA                       -->
+            <!-- ================================================================= -->
             <section class="space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                     <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-hospital text-hospital-600"></i> Unidades y Servicios Clínicos
+                        <i class="fa-solid fa-hospital text-hospital-600"></i> 1. Zona Asistencial / Clínico-Hospitalaria
                     </h3>
-                    <span class="text-xs text-slate-400">Selecciona una unidad para ver su espacio exclusivo</span>
+                    <span class="text-xs text-slate-400">Infraestructura, APS y unidades de atención directa</span>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="cardsGrid">
-                    
-                    <!-- Urgencia -->
+                    <!-- Urgencia / SAPU -->
                     <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
                         <div>
                             <div class="flex items-start justify-between">
@@ -293,18 +303,17 @@
                             </button>
                         </div>
                     </div>
-
-                    <!-- APS y Horas -->
+                    <!-- APS y Sectorización -->
                     <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
                         <div>
                             <div class="flex items-start justify-between">
                                 <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <i class="fa-solid fa-stethoscope"></i>
                                 </div>
-                                <span class="text-xs bg-teal-100 text-teal-800 px-2.5 py-1 rounded-full font-semibold">Calendario</span>
+                                <span class="text-xs bg-teal-100 text-teal-800 px-2.5 py-1 rounded-full font-semibold">APS</span>
                             </div>
-                            <h4 class="font-bold text-slate-800 text-base mt-4">APS y Entrega de Horas</h4>
-                            <p class="text-xs text-slate-500 mt-1">Cronograma de entrega de horas médicas, crónicos y dentales.</p>
+                            <h4 class="font-bold text-slate-800 text-base mt-4">Atención Primaria (APS)</h4>
+                            <p class="text-xs text-slate-500 mt-1">Organización territorial, equipos de cabecera y sectorización SOME Sur/Norte.</p>
                         </div>
                         <div class="pt-4">
                             <button onclick="cambiarVista('aps')" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
@@ -312,8 +321,7 @@
                             </button>
                         </div>
                     </div>
-
-                    <!-- Hospitalización -->
+                    <!-- Hospitalización y Visitas -->
                     <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
                         <div>
                             <div class="flex items-start justify-between">
@@ -331,7 +339,6 @@
                             </button>
                         </div>
                     </div>
-
                     <!-- Servicios Transversales -->
                     <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
                         <div>
@@ -350,675 +357,132 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
             </section>
 
-            <!-- MÓDULO 2: LEY MILA, KÜME MONGEN RUKA, ETC. -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Ley MILA -->
-                <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4 searchable-card flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                            <div class="w-12 h-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-xl"><i class="fa-solid fa-hands-holding-child"></i></div>
-                            <div>
-                                <span class="text-xs uppercase tracking-wider text-pink-600 font-semibold">Ley N° 21.372</span>
-                                <h3 class="text-lg font-bold text-slate-900">Ley MILA</h3>
-                            </div>
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Reconoce el derecho al acompañamiento de NNA y personas gestantes durante su atención.</p>
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="openModal('modalMila')" class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                            <span>Ver Ley MILA</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Discapacidad -->
-                <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4 searchable-card flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-wheelchair"></i></div>
-                            <div>
-                                <span class="text-xs uppercase tracking-wider text-blue-600 font-semibold">Inclusión</span>
-                                <h3 class="text-lg font-bold text-slate-900">Discapacidad</h3>
-                            </div>
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Cómo postular a la credencial y requisitos de atención preferente.</p>
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="openModal('modalDiscapacidad')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                            <span>Ver Requisitos</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Küme Mongen Ruka -->
-                <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4 searchable-card flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl"><i class="fa-solid fa-house-chimney-medical"></i></div>
-                            <div>
-                                <span class="text-xs uppercase tracking-wider text-amber-600 font-semibold">Intercultural</span>
-                                <h3 class="text-lg font-bold text-slate-900">Küme Mongen Ruka</h3>
-                            </div>
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Espacio de medicina ancestral y comunitaria liderado por la Lawentuchefe.</p>
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="openModal('modalRuka')" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                            <span>Ver Ruka</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Derechos y Deberes -->
-                <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4 searchable-card flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center text-xl"><i class="fa-solid fa-scale-balanced"></i></div>
-                            <div>
-                                <span class="text-xs uppercase tracking-wider text-purple-600 font-semibold">Marco Legal</span>
-                                <h3 class="text-lg font-bold text-slate-900">Derechos y Deberes</h3>
-                            </div>
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Conoce el detalle completo de los 16 derechos y 7 deberes de la Ley N° 20.584.</p>
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="openModal('modalDerechos')" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                            <span>Ver Ley 20.584</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                        </button>
-                    </div>
-                </section>
-            </div>
-
-           <!-- Preguntas Frecuentes (FAQ) con Filtros por Categoría -->
-            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6 searchable-card">
-                
-                <!-- Cabecera y Pestañas de Filtro (Tabs) -->
-                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <!-- ================================================================= -->
+            <!-- 2. ZONA DE TRÁMITES Y GESTIÓN CIUDADANA                           -->
+            <!-- ================================================================= -->
+            <section class="space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                     <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-question text-hospital-600"></i> Preguntas Frecuentes (FAQ)
+                        <i class="fa-solid fa-file-lines text-hospital-600"></i> 2. Zona de Trámites y Gestión Ciudadana
                     </h3>
-                    
-                    <!-- Botones de Categorías -->
-                    <div class="flex flex-wrap gap-1.5 bg-slate-100 p-1 rounded-2xl text-xs">
-                        <button onclick="filtrarFaq('todas')" class="faq-tab px-3 py-1.5 rounded-xl font-medium bg-white text-hospital-700 shadow-sm transition">Todas</button>
-                        <button onclick="filtrarFaq('citas')" class="faq-tab px-3 py-1.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 transition">Citas y Horas</button>
-                        <button onclick="filtrarFaq('urgencia')" class="faq-tab px-3 py-1.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 transition">Urgencia</button>
-                        <button onclick="filtrarFaq('horarios')" class="faq-tab px-3 py-1.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 transition">Atención y Visitas</button>
-                        <button onclick="filtrarFaq('derechos')" class="faq-tab px-3 py-1.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 transition">Derechos y Leyes</button>
-                    </div>
+                    <span class="text-xs text-slate-400">Canales de citas, calendarios e inclusión</span>
                 </div>
-
-                <!-- Contenedor de Preguntas con su respectivo data-categoria -->
-                <div class="space-y-3">
-                    
-                    <!-- FAQ 1 (Citas) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="citas">
-                        <button onclick="toggleFaq('faq1')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿Cómo puedo solicitar hora para atención médica general?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq1"></i>
-                        </button>
-                        <div id="faq1" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>Para solicitar atención médica general (no controles), debe llamar a la línea gratuita <a href="tel:800360035" class="text-hospital-600 font-bold hover:underline">800 360 035</a> exclusivamente los días <strong>lunes o miércoles de 08:30 a 10:00 hrs</strong>.</p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 2 (Horarios / Atención) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="horarios">
-                        <button onclick="toggleFaq('faq2')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿Cuál es el horario de atención de la OIRS (Informaciones)?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq2"></i>
-                        </button>
-                        <div id="faq2" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>La OIRS atiende de <strong>lunes a jueves de 08:00 a 13:00 y de 14:00 a 17:00 hrs</strong>, y los <strong>viernes de 08:00 a 13:00 y de 14:00 a 16:00 hrs</strong>. Teléfono: 800 360 035 | Correo: oirs.lanco@gmail.com</p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 3 (Derechos / Atención Preferente) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="derechos">
-                        <button onclick="toggleFaq('faq3')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿Qué documentos necesito para acceder a la Atención Preferente?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq3"></i>
-                        </button>
-                        <div id="faq3" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>Los adultos mayores de 60 años deben presentar su Cédula de Identidad o Pasaporte. Las personas con discapacidad deben presentar su credencial o certificado vigente del Registro Civil.</p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 4 (Citas) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="citas">
-                        <button onclick="toggleFaq('faq4')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿Cómo y cuándo se entregan las horas para pacientes crónicos y dentales?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq4"></i>
-                        </button>
-                        <div id="faq4" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>Las horas para pacientes <strong>Crónicos</strong> se entregan el jueves 01 de octubre. Las atenciones <strong>dentales</strong> se agendan el lunes 05 de octubre (mes a mes) según Carnet de Control.</p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 5 (Derechos / Trámites) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="derechos">
-                        <button onclick="toggleFaq('faq5')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿Cuáles son los pasos para postular a la Credencial de Discapacidad?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq5"></i>
-                        </button>
-                        <div id="faq5" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>Acudir al servicio de salud con su Trabajadora Social, entregar documentación médica y asistir a las evaluaciones para derivación a COMPIN por CEROFILAS.</p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 6 (Horarios / Visitas) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="horarios">
-                        <button onclick="toggleFaq('faq6')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿Cuáles son los horarios y normas de visita para pacientes hospitalizados?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq6"></i>
-                        </button>
-                        <div id="faq6" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>Visitas de lunes a domingo de 11:30 a 17:30 hrs (edad mínima 12 años). Sin ingreso de alimentos externos.</p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 7 (Derechos / Leyes) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="derechos">
-                        <button onclick="toggleFaq('faq7')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿En qué consiste la Ley MILA de acompañamiento?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq7"></i>
-                        </button>
-                        <div id="faq7" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>Garantiza el derecho al acompañamiento permanente de NNA y personas gestantes durante su atención clínica.</p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 8 (Urgencia) -->
-                    <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden transition" data-categoria="urgencia">
-                        <button onclick="toggleFaq('faq8')" class="w-full p-4 text-left font-medium text-slate-800 bg-slate-50 hover:bg-slate-100 flex justify-between items-center text-sm transition">
-                            <span>¿Cómo funciona la atención en el Servicio de Urgencia?</span>
-                            <i class="fa-solid fa-plus text-xs text-slate-500 transition-transform duration-300" id="icon-faq8"></i>
-                        </button>
-                        <div id="faq8" class="hidden p-4 text-xs sm:text-sm text-slate-600 bg-white border-t border-slate-100 space-y-2">
-                            <p>Opera 24/7 mediante categorización Triage (C1 a C5) según gravedad clínica, no por orden de llegada.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- Bloque de Contacto con Acciones Directas -->
-            <section class="bg-hospital-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl relative overflow-hidden searchable-card">
-                <div class="absolute -right-12 -top-12 w-48 h-48 bg-hospital-700/30 rounded-full blur-2xl pointer-events-none"></div>
-                
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-hospital-800 pb-6">
-                    <div>
-                        <span class="text-xs uppercase tracking-wider text-hospital-100 font-semibold">Canal Oficial de Contacto</span>
-                        <h4 class="text-xl font-bold mt-1">¿Tienes dudas o consultas? Contáctanos</h4>
-                    </div>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <button onclick="openModal('modalContacto')" class="bg-hospital-700 hover:bg-hospital-600 text-white px-5 py-3 rounded-2xl font-semibold text-xs sm:text-sm flex items-center gap-2.5 shadow-lg transition transform active:scale-95">
-                            <i class="fa-solid fa-envelope-open-text text-base"></i> Formulario de Contacto
-                        </button>
-                        <a href="https://whatsapp.com/channel/0029Va6exvMHrDZbkysZms3t" target="_blank" 
-                           class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3 rounded-2xl font-semibold text-xs sm:text-sm flex items-center gap-2.5 shadow-lg shadow-emerald-900/40 transition transform active:scale-95">
-                            <i class="fa-brands fa-whatsapp text-lg"></i> Canal WhatsApp Oficial
-                        </a>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-300">
-                    <div class="flex items-start gap-3 bg-hospital-800/40 p-4 rounded-2xl border border-hospital-800">
-                        <div class="bg-hospital-800 p-2.5 rounded-xl text-hospital-100 mt-0.5 flex-shrink-0"><i class="fa-solid fa-location-dot"></i></div>
-                        <div class="space-y-2">
-                            <div>
-                                <strong class="text-white block text-sm mb-0.5">Dirección</strong>
-                                <p class="text-slate-300">Santiago 595, Lanco<br>Región de Los Ríos, Chile.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Entrega de Horas Médicas -->
+                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </div>
+                                <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">Calendario</span>
                             </div>
-                            <a href="https://maps.google.com/?q=Santiago+595,+Lanco,+Los+Ríos,+Chile" target="_blank" 
-                               class="inline-flex items-center gap-1.5 text-xs text-emerald-300 hover:text-white font-semibold bg-hospital-800 hover:bg-hospital-700 px-3 py-1.5 rounded-lg border border-hospital-700 transition">
-                                <i class="fa-solid fa-map-location-dot"></i> Ver cómo llegar en Maps
-                            </a>
+                            <h4 class="font-bold text-slate-800 text-base mt-4">Entrega de Horas</h4>
+                            <p class="text-xs text-slate-500 mt-1">Cronograma, días y modalidades para la obtención de horas médicas, crónicos y dentales.</p>
+                        </div>
+                        <div class="pt-4">
+                            <button onclick="openModal('modalHorarios')" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                                <span>Ver Horarios de Horas</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="flex items-start gap-3 bg-hospital-800/40 p-4 rounded-2xl border border-hospital-800">
-                        <div class="bg-hospital-800 p-2.5 rounded-xl text-hospital-100 mt-0.5 flex-shrink-0"><i class="fa-solid fa-phone-volume"></i></div>
-                        <div class="space-y-2 w-full">
-                            <div>
-                                <strong class="text-white block text-sm mb-0.5">Teléfono OIRS / Horas</strong>
-                                <p class="text-slate-300">Línea de atención ciudadana</p>
+                    <!-- Discapacidad -->
+                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-wheelchair"></i></div>
+                                <div>
+                                    <span class="text-xs uppercase tracking-wider text-blue-600 font-semibold">Inclusión</span>
+                                    <h3 class="text-lg font-bold text-slate-900">Discapacidad</h3>
+                                </div>
                             </div>
-                            <p class="mt-1">
-                                <a href="tel:800360035" class="bg-hospital-800 hover:bg-hospital-700 text-emerald-300 px-3 py-1.5 rounded-lg font-semibold inline-flex items-center gap-1.5 transition border border-hospital-700">
-                                    <i class="fa-solid fa-phone"></i> 800 360 035
-                                </a>
-                            </p>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Cómo postular a la credencial y requisitos de atención preferente.</p>
                         </div>
-                    </div>
-
-                    <div class="flex items-start gap-3 bg-hospital-800/40 p-4 rounded-2xl border border-hospital-800">
-                        <div class="bg-hospital-800 p-2.5 rounded-xl text-hospital-100 mt-0.5 flex-shrink-0"><i class="fa-solid fa-envelope"></i></div>
-                        <div class="space-y-2 w-full">
-                            <div>
-                                <strong class="text-white block text-sm mb-0.5">Correo OIRS</strong>
-                                <p class="text-slate-300">Consultas y requerimientos</p>
-                            </div>
-                            <p class="mt-1">
-                                <a href="mailto:oirs.lanco@gmail.com" class="bg-hospital-800 hover:bg-hospital-700 text-emerald-300 px-3 py-1.5 rounded-lg font-semibold inline-flex items-center gap-1.5 transition border border-hospital-700 truncate max-w-full">
-                                    <i class="fa-solid fa-paper-plane"></i> oirs.lanco@gmail.com
-                                </a>
-                            </p>
+                        <div class="pt-4">
+                            <button onclick="openModal('modalDiscapacidad')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                                <span>Ver Requisitos</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <!-- ================================================================= -->
+            <!-- 3. ZONA COMUNITARIA, INTERCULTURAL Y LEGAL                        -->
+            <!-- ================================================================= -->
+            <section class="space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-handshake-angle text-hospital-600"></i> 3. Zona Comunitaria, Intercultural y Legal
+                    </h3>
+                    <span class="text-xs text-slate-400">Identidad, leyes y derechos de los pacientes</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Ley MILA -->
+                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                                <div class="w-12 h-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-xl"><i class="fa-solid fa-hands-holding-child"></i></div>
+                                <div>
+                                    <span class="text-xs uppercase tracking-wider text-pink-600 font-semibold">Ley N° 21.372</span>
+                                    <h3 class="text-lg font-bold text-slate-900">Ley MILA</h3>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Reconoce el derecho al acompañamiento de NNA y personas gestantes durante su atención.</p>
+                        </div>
+                        <div class="pt-4">
+                            <button onclick="openModal('modalMila')" class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                                <span>Ver Ley MILA</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Küme Mongen Ruka -->
+                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl"><i class="fa-solid fa-house-chimney-medical"></i></div>
+                                <div>
+                                    <span class="text-xs uppercase tracking-wider text-amber-600 font-semibold">Intercultural</span>
+                                    <h3 class="text-lg font-bold text-slate-900">Küme Mongen Ruka</h3>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Espacio de medicina ancestral y comunitaria liderado por la Lawentuchefe.</p>
+                        </div>
+                        <div class="pt-4">
+                            <button onclick="openModal('modalRuka')" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                                <span>Ver Ruka</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Derechos y Deberes -->
+                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center text-xl"><i class="fa-solid fa-scale-balanced"></i></div>
+                                <div>
+                                    <span class="text-xs uppercase tracking-wider text-purple-600 font-semibold">Marco Legal</span>
+                                    <h3 class="text-lg font-bold text-slate-900">Derechos y Deberes</h3>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Conoce el detalle completo de los 16 derechos y 7 deberes de la Ley N° 20.584.</p>
+                        </div>
+                        <div class="pt-4">
+                            <button onclick="openModal('modalDerechos')" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                                <span>Ver Ley 20.584</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div><!-- Fin Vista Inicio -->
 
-<!-- ================================================================= -->
-        <!-- VISTA 2: UNIDAD DE URGENCIA (Información trasladada y ampliada)    -->
-        <!-- ================================================================= -->
-        <div id="vista-urgencia" class="vista-contenido hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                
-                <!-- Cabecera de la Vista -->
-                <div class="flex items-center justify-between border-b pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-truck-medical"></i>
-                        </div>
-                        <div>
-                            <span class="text-[11px] uppercase tracking-wider text-red-600 font-bold">Atención Continuada 24/7</span>
-                            <h3 class="text-xl font-bold text-slate-900">Unidad de Emergencia y Urgencia</h3>
-                        </div>
-                    </div>
-                    <button onclick="cambiarVista('inicio')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl font-semibold transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
-                    </button>
-                </div>
+    </div>
 
-                <!-- Tarjetas informativas principales de Urgencia -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3 flex flex-col justify-between">
-                        <div>
-                            <div class="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-clipboard-list"></i></div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1">Criterio de Atención (Triage)</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">La atención <strong>no es por orden de llegada</strong>, sino por la gravedad clínica evaluada en la categorización.</p>
-                        </div>
-                        <div class="pt-2">
-                            <button onclick="openModal('modalUrgencia')" class="text-xs font-semibold text-red-600 hover:text-red-700 inline-flex items-center gap-1">Ver detalles de categorización (C1-C5) <i class="fa-solid fa-arrow-right text-[10px]"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3 flex flex-col justify-between">
-                        <div>
-                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-suitcase-medical"></i></div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1">¿Qué debe traer el paciente?</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">Cédula de Identidad, carnet de control crónico y registro de medicamentos habituales.</p>
-                        </div>
-                        <div class="pt-2 text-[11px] text-slate-500 font-medium"><i class="fa-solid fa-circle-info text-amber-600"></i> Se permite un acompañante por paciente crítico.</div>
-                    </div>
-
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3 flex flex-col justify-between">
-                        <div>
-                            <div class="w-9 h-9 rounded-xl bg-hospital-100 text-hospital-700 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1">Cuándo acudir</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">Accidentes graves, dificultad respiratoria severa, dolor torácico agudo o pérdida de conciencia.</p>
-                        </div>
-                        <div class="pt-2">
-                            <a href="tel:800360035" class="text-xs font-semibold text-hospital-700 hover:text-hospital-800 inline-flex items-center gap-1">Dudas generales (OIRS): 800 360 035 <i class="fa-solid fa-phone text-[10px]"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NUEVO COMPONENTE: Desglose Educativo del Sistema de Triage -->
-                <div class="bg-gradient-to-br from-slate-50 to-red-50/40 p-6 rounded-3xl border border-slate-200/80 space-y-4">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-xl bg-red-600 text-white flex items-center justify-center text-xs">
-                            <i class="fa-solid fa-chart-bar"></i>
-                        </div>
-                        <h4 class="font-bold text-slate-900 text-sm">Escala de Gravedad en Urgencia (Cómo se prioriza la atención)</h4>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-                        <div class="bg-white p-3.5 rounded-2xl border border-red-200 shadow-2xs space-y-1">
-                            <div class="font-bold text-red-600 flex items-center gap-1.5"><i class="fa-solid fa-circle text-[7px]"></i> C1 - C2 (Alto Riesgo)</div>
-                            <p class="text-[11px] text-slate-600">Riesgo vital inminente. Atención inmediata y prioritaria en box de reanimación.</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-2xl border border-amber-200 shadow-2xs space-y-1">
-                            <div class="font-bold text-amber-600 flex items-center gap-1.5"><i class="fa-solid fa-circle text-[7px]"></i> C3 (Urgente Moderado)</div>
-                            <p class="text-[11px] text-slate-600">Condición aguda sin riesgo inmediato, pero requiere atención médica rápida.</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-2xl border border-sky-200 shadow-2xs space-y-1">
-                            <div class="font-bold text-sky-600 flex items-center gap-1.5"><i class="fa-solid fa-circle text-[7px]"></i> C4 (Menor Complejidad)</div>
-                            <p class="text-[11px] text-slate-600">Patología de baja gravedad. Sujeta a tiempos de espera según la demanda de casos graves.</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-2xs space-y-1">
-                            <div class="font-bold text-slate-600 flex items-center gap-1.5"><i class="fa-solid fa-circle text-[7px]"></i> C5 (Atención General)</div>
-                            <p class="text-[11px] text-slate-600">Consulta de morbilidad general de baja complejidad que podría evaluarse en APS.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ================================================================= -->
-        <!-- VISTA 3 (Corregida y Estricta): APS Y SECTORIZACIÓN (SOME Sur/Norte) -->
-        <!-- ================================================================= -->
-        <div id="vista-aps" class="vista-contenido hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                
-                <!-- Cabecera de la Vista -->
-                <div class="flex items-center justify-between border-b pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-stethoscope"></i>
-                        </div>
-                        <div>
-                            <span class="text-[11px] uppercase tracking-wider text-hospital-600 font-bold">Atención Primaria en Salud (APS)</span>
-                            <h3 class="text-xl font-bold text-slate-900">Sectorización SOME y Equipos de Cabecera</h3>
-                        </div>
-                    </div>
-                    <button onclick="cambiarVista('inicio')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl font-semibold transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
-                    </button>
-                </div>
-
-                <!-- INTRODUCCIÓN A LA SECTORIZACIÓN -->
-                <div class="bg-hospital-50/60 p-4 rounded-2xl border border-hospital-100 text-xs text-slate-700 leading-relaxed flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-xl bg-hospital-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <i class="fa-solid fa-map-pin"></i>
-                    </div>
-                    <div>
-                        <strong class="text-slate-900 font-bold block mb-0.5">Distribución por Sectorización (SOME)</strong>
-                        Para una atención ordenada y cercana, el policlínico de APS se divide territorialmente en <strong>SOME Sur</strong> y <strong>SOME Norte</strong>. Cada sector agrupa de forma exclusiva los siguientes servicios y profesionales de atención directa:
-                    </div>
-                </div>
-
-                <!-- CONTENEDOR ESTRICTO DE SECTORES (SOME SUR vs SOME NORTE) -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
-                    <!-- SOME SUR -->
-                    <div class="bg-slate-50 p-5 rounded-3xl border border-slate-200/80 space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-hospital-600"></span>
-                                <h4 class="font-bold text-slate-900 text-sm">SOME Sur</h4>
-                            </div>
-                            <span class="text-[10px] bg-hospital-100 text-hospital-800 font-bold px-2.5 py-1 rounded-full">Sector Sur</span>
-                        </div>
-
-                        <div class="space-y-2.5 text-xs">
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-user-doctor text-hospital-600 w-4 text-center"></i>
-                                <div><strong>Box Médicos:</strong> Atenciones y morbilidad del sector sur.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-user-nurse text-hospital-600 w-4 text-center"></i>
-                                <div><strong>Matronas de Sector:</strong> Controles ginecológicos y obstétricos del sector.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-tooth text-hospital-600 w-4 text-center"></i>
-                                <div><strong>Odontología:</strong> Atención dental asignada al sector sur.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-apple-whole text-hospital-600 w-4 text-center"></i>
-                                <div><strong>Nutricionista y Enfermeras:</strong> Controles crónicos y de salud sectorizados.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-child-reaching text-hospital-600 w-4 text-center"></i>
-                                <div><strong>Estimulación Temprana:</strong> Psicomotricidad infantil del sector.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SOME NORTE -->
-                    <div class="bg-slate-50 p-5 rounded-3xl border border-slate-200/80 space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-                                <h4 class="font-bold text-slate-900 text-sm">SOME Norte</h4>
-                            </div>
-                            <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Sector Norte</span>
-                        </div>
-
-                        <div class="space-y-2.5 text-xs">
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-user-doctor text-amber-600 w-4 text-center"></i>
-                                <div><strong>Box Médicos:</strong> Atenciones y morbilidad del sector norte.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-user-nurse text-amber-600 w-4 text-center"></i>
-                                <div><strong>Matronas de Sector:</strong> Controles ginecológicos y obstétricos del sector.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-tooth text-amber-600 w-4 text-center"></i>
-                                <div><strong>Odontología:</strong> Atención dental asignada al sector norte.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-apple-whole text-amber-600 w-4 text-center"></i>
-                                <div><strong>Nutricionista y Enfermeras:</strong> Controles crónicos y de salud sectorizados.</div>
-                            </div>
-                            <div class="bg-white p-3 rounded-xl border border-slate-200/60 flex items-center gap-3">
-                                <i class="fa-solid fa-child-reaching text-amber-600 w-4 text-center"></i>
-                                <div><strong>Estimulación Temprana:</strong> Psicomotricidad infantil del sector.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-<!-- ================================================================= -->
-        <!-- VISTA 4: HOSPITALIZACIÓN (Ampliada y enriquecida)               -->
-        <!-- ================================================================= -->
-        <div id="vista-hospitalizacion" class="vista-contenido hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                
-                <!-- Cabecera de la Vista -->
-                <div class="flex items-center justify-between border-b pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-bed-pulse"></i>
-                        </div>
-                        <div>
-                            <span class="text-[11px] uppercase tracking-wider text-hospital-600 font-bold">Unidad de Cuidados Clínicos</span>
-                            <h3 class="text-xl font-bold text-slate-900">Hospitalización y Normas de Visita</h3>
-                        </div>
-                    </div>
-                    <button onclick="cambiarVista('inicio')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl font-semibold transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
-                    </button>
-                </div>
-
-                <!-- Tarjetas Principales de Hospitalización -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    <!-- Tarjeta 1: Horarios de Visita -->
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3 flex flex-col justify-between">
-                        <div>
-                            <div class="w-9 h-9 rounded-xl bg-hospital-100 text-hospital-700 flex items-center justify-center text-sm mb-3">
-                                <i class="fa-solid fa-clock"></i>
-                            </div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1">Horarios y Jornada de Visitas</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Las visitas a pacientes hospitalizados se realizan de <strong>lunes a domingo de 11:30 a 17:30 hrs</strong>. Se solicita respetar los momentos de rondas médicas y descanso de los pacientes.
-                            </p>
-                        </div>
-                        <div class="pt-2 border-t border-slate-200/60 mt-2 text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
-                            <i class="fa-solid fa-user-shield text-hospital-600"></i> Edad mínima sugerida para visitantes: 12 años.
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta 2: Normas Sanitarias y de Ingreso -->
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3 flex flex-col justify-between">
-                        <div>
-                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm mb-3">
-                                <i class="fa-solid fa-utensils"></i>
-                            </div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1">Normas de Alimentación e Higiene</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Por razones de seguridad alimentaria e inocuidad clínica, <strong>no está permitido el ingreso de alimentos externos</strong> para los pacientes hospitalizados. El recinto provee la alimentación según indicación médica.
-                            </p>
-                        </div>
-                        <div class="pt-2 border-t border-slate-200/60 mt-2 text-[11px] text-amber-800 font-medium flex items-center gap-1.5">
-                            <i class="fa-solid fa-triangle-exclamation"></i> Uso de alcohol gel obligatorio al ingreso de la sala.
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- NUEVO COMPONENTE: Garantía Ley MILA y Acompañamiento -->
-                <div class="bg-gradient-to-br from-hospital-900 to-hospital-800 text-white p-6 rounded-3xl shadow-md space-y-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-white/10 text-emerald-300 flex items-center justify-center text-base">
-                            <i class="fa-solid fa-shield-heart"></i>
-                        </div>
-                        <div>
-                            <span class="text-[10px] uppercase tracking-wider text-emerald-300 font-bold">Derecho Garantizado</span>
-                            <h4 class="font-bold text-white text-base">Ley MILA (Acompañamiento Permanente)</h4>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-200 leading-relaxed max-w-3xl">
-                        En cumplimiento con la normativa nacional, el Hospital de Lanco garantiza el derecho al <strong>acompañamiento permanente y sin restricciones abusivas</strong> para niñas, niños, adolescentes (NNA), personas gestantes y pacientes en cuidados de fin de vida durante su hospitalización.
-                    </p>
-                    <div class="pt-1 flex items-center gap-4 text-xs text-hospital-100">
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-400"></i> Sin restricciones arbitrarias</span>
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-400"></i> Apoyo emocional continuo</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ================================================================= -->
-        <!-- VISTA 5: SERVICIOS CLÍNICOS Y DISTRIBUCIÓN REAL (Ambulatorio y Transversal) -->
-        <!-- ================================================================= -->
-        <div id="vista-transversales" class="vista-contenido hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                
-                <!-- Cabecera de la Vista -->
-                <div class="flex items-center justify-between border-b pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-sitemap"></i>
-                        </div>
-                        <div>
-                            <span class="text-[11px] uppercase tracking-wider text-hospital-600 font-bold">Organización y Cartera de Servicios</span>
-                            <h3 class="text-xl font-bold text-slate-900">Distribución Física y Prestaciones del Hospital</h3>
-                        </div>
-                    </div>
-                    <button onclick="cambiarVista('inicio')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl font-semibold transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
-                    </button>
-                </div>
-
-                <!-- SECCIÓN 1: ÁREA AMBULATORIA -->
-                <div class="space-y-4">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-xl bg-hospital-100 text-hospital-700 flex items-center justify-center text-xs">
-                            <i class="fa-solid fa-building-user"></i>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-sm sm:text-base">Área Ambulatoria</h4>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        
-                        <!-- Vacunatorio -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-syringe text-hospital-600"></i> Vacunatorio</span>
-                                <span class="text-[10px] bg-emerald-100 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">APS</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Inmunizaciones y campañas de vacunación según programación ministerial y etaria.</p>
-                        </div>
-
-                        <!-- Farmacia y Leche (PNAC) -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-pills text-hospital-600"></i> Farmacia y Leche (PNAC)</span>
-                                <span class="text-[10px] bg-emerald-100 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">APS</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Entrega de medicamentos, alimentos y leche complementaria con receta al día.</p>
-                        </div>
-
-                        <!-- Salas IRA y ERA -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-lungs text-hospital-600"></i> Salas IRA y ERA</span>
-                                <span class="text-[10px] bg-emerald-100 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">APS</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Atención, tratamiento y seguimiento de patologías respiratorias infantiles y de adultos.</p>
-                        </div>
-
-                        <!-- Toma de Muestras -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2 sm:col-span-2 lg:col-span-3">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-vial text-hospital-600"></i> Toma de Muestras (Laboratorio)</span>
-                                <span class="text-[10px] bg-emerald-100 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">APS / Ambulatorio</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Extracción de exámenes de laboratorio según indicaciones médicas y agenda de cupos matutinos.</p>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- SECCIÓN 2: ÁREA TRANSVERSAL Y APOYO CLÍNICO -->
-                <div class="space-y-4 pt-4 border-t border-slate-100">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xs">
-                            <i class="fa-solid fa-network-wired"></i>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-sm sm:text-base">Área Transversal y Apoyo Clínico</h4>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        
-                        <!-- Matrona Transversal -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-user-nurse text-amber-600"></i> Matrona Transversal</span>
-                                <span class="text-[10px] bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full">Transversal</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Atención de matronería, controles obstétricos y prestaciones de salud sexual y reproductiva.</p>
-                        </div>
-
-                        <!-- ECG y Procedimientos -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-heart-pulse text-amber-600"></i> ECG y Procedimientos</span>
-                                <span class="text-[10px] bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full">Transversal</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Toma de electrocardiogramas y ejecución de procedimientos clínicos de enfermería y médica.</p>
-                        </div>
-
-                        <!-- Ecografía -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-laptop-medical text-amber-600"></i> Ecografía</span>
-                                <span class="text-[10px] bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full">Transversal</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Unidad de apoyo diagnóstico ecográfico programado según derivación médica.</p>
-                        </div>
-
-                        <!-- Terapia Física (Kinesiología y Terapia Ocupacional) -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2 sm:col-span-2 lg:col-span-3">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-hands-holding-child text-amber-600"></i> Terapia Física (Kinesiología y Terapia Ocupacional)</span>
-                                <span class="text-[10px] bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full">Transversal</span>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Rehabilitación física, ejercicios terapéuticos y apoyo en terapia ocupacional para pacientes ambulatorios y hospitalizados.</p>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </main>
+</main>
 
     <!-- =========================================================================
          MODALES DETALLADOS
@@ -2013,7 +1477,7 @@
         </div>
     </div>
 
-<!-- Modal de Horarios Oficiales (Farmacia y Leche Separados) -->
+<!-- Modal de Horarios Oficiale -->
     <div id="modalHorarios" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm hidden">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-5 max-h-[90vh] overflow-y-auto">
             
@@ -2059,15 +1523,15 @@
                 </div>
 
 <!-- Farmacia -->
-<div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-    <div class="w-9 h-9 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center flex-shrink-0 text-sm">
-        <i class="fa-solid fa-pills"></i>
-    </div>
-    <div>
-        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia Ambulatoria</strong>
-        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
-    </div>
-</div>
+                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                    <div class="w-9 h-9 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-pills"></i>
+                    </div>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia Ambulatoria</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
+                    </div>
+                </div>
 
 <!-- Entrega de Leche (PNAC) -->
 <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
@@ -2218,28 +1682,28 @@
         </button>
     </div>
 
-<!-- Footer con Redes Sociales Oficiales -->
-    <footer class="bg-white border-t border-slate-200 mt-12 py-8 text-center text-xs text-slate-500">
-        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+<!-- Footer con Redes Sociales Oficiales (Optimizado y compacto) -->
+    <footer class="bg-white border-t border-slate-200 mt-8 py-6 text-center text-xs text-slate-500">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
             
-            <div class="flex justify-center items-center gap-4 text-lg">
-                <a href="https://www.instagram.com/hfc.lanco/" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-pink-50 hover:text-pink-600 text-slate-600 flex items-center justify-center transition shadow-sm" title="Instagram Oficial">
+            <div class="flex justify-center items-center gap-3 text-lg">
+                <a href="https://www.instagram.com/hfc.lanco/" target="_blank" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-pink-50 hover:text-pink-600 text-slate-600 flex items-center justify-center transition shadow-xs" title="Instagram Oficial">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
-                <a href="https://www.facebook.com/hfc.lanco" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-blue-50 hover:text-blue-600 text-slate-600 flex items-center justify-center transition shadow-sm" title="Facebook Oficial">
+                <a href="https://www.facebook.com/hfc.lanco" target="_blank" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-blue-50 hover:text-blue-600 text-slate-600 flex items-center justify-center transition shadow-xs" title="Facebook Oficial">
                     <i class="fa-brands fa-facebook-f"></i>
                 </a>
-                <a href="https://whatsapp.com/channel/0029Va6exvMHrDZbkysZms3t" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-600 text-slate-600 flex items-center justify-center transition shadow-sm" title="Canal de WhatsApp Oficial">
+                <a href="https://whatsapp.com/channel/0029Va6exvMHrDZbkysZms3t" target="_blank" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-600 text-slate-600 flex items-center justify-center transition shadow-xs" title="Canal de WhatsApp Oficial">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
             </div>
 
-            <div class="space-y-1 pt-2 border-t border-slate-100">
+            <div class="space-y-0.5 pt-2 border-t border-slate-100">
                 <p class="font-medium text-slate-700">Hospital Familiar y Comunitario de Lanco</p>
-                <p>Implementación del Modelo de Salud Familiar • Región de Los Ríos</p>
-                <p class="text-slate-400 pt-1">© 2026 Todos los derechos reservados. (Repositorio: hfcl-digital)</p>
+                <p class="text-[11px]">Implementación del Modelo de Salud Familiar • Región de Los Ríos</p>
+                <p class="text-slate-400 text-[11px] pt-0.5">© 2026 Todos los derechos reservados. (Repositorio: hfcl-digital)</p>
                 
-                <div class="pt-2 text-[11px] text-slate-400 flex items-center justify-center gap-1.5 font-normal">
+                <div class="pt-1.5 text-[11px] text-slate-400 flex items-center justify-center gap-1.5 font-normal">
                     <span>Diseñado y construido con foco comunitario por</span>
                     <span class="text-hospital-700 font-semibold">José Paineñanco Durán</span>
                     <span>• Lanco, Chile</span>
