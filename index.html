@@ -166,7 +166,7 @@
                     </button>
                     <div class="absolute left-0 mt-1 w-56 bg-white text-slate-700 rounded-2xl shadow-xl border border-slate-100 hidden group-hover:block p-2 space-y-1 z-50">
                         <button onclick="cambiarVista('urgencia')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
-                            <i class="fa-solid fa-truck-medical text-red-500 w-4"></i> Urgencia (24/7)
+                            <i class="fa-solid fa-truck-medical text-red-500 w-4"></i> Urgencia
                         </button>
                         <button onclick="cambiarVista('aps')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
                             <i class="fa-solid fa-stethoscope text-emerald-700 w-4"></i> APS (SOME Sur y Norte)
@@ -241,7 +241,6 @@
     </header>
 <!-- Main Container Fluido con la Marca de Agua Gigante -->
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 relative overflow-hidden min-h-screen">
-
     <!-- MARCA DE AGUA GIGANTE (Efecto "Saliéndose de la pantalla" abajo a la derecha) -->
     <div class="absolute -bottom-32 -right-32 pointer-events-none z-0 select-none">
         <img src="https://i.ibb.co/5gHpwbcX/logo-hl.png" alt="" 
@@ -249,30 +248,43 @@
     </div>
 
     <!-- CONTENEDOR DE TODO EL CONTENIDO PRINCIPAL (Flota sobre la marca de agua con z-10) -->
-    <div class="relative z-10 space-y-12">
+    <div id="vista-inicio" class="vista-contenido relative z-10 space-y-12">
         
-        <!-- ================================================================= -->
-        <!-- VISTA 1: INICIO (Organizado en las 3 Zonas Requeridas)             -->
-        <!-- ================================================================= -->
-        <div id="vista-inicio" class="vista-contenido space-y-12">
-            
-            <!-- Welcome Hero Card Fluida con Buscador -->
-            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 text-center relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-hospital-50 rounded-full pointer-events-none z-0"></div>
-                <div class="relative z-10 space-y-4 max-w-2xl mx-auto">
-                    <span class="text-hospital-600 font-semibold text-xs tracking-widest uppercase bg-hospital-50 px-3 py-1 rounded-full border border-hospital-100 inline-block">Portal Ciudadano Oficial</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Hospital Familiar y Comunitario de Lanco</h2>
-                    <p class="text-xs sm:text-sm text-slate-600">Encuentra rápidamente servicios clínicos, opciones de gestión ciudadana o nuestra identidad intercultural.</p>
-                    
-                    <div class="pt-2 max-w-lg mx-auto relative">
-                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-                            <i class="fa-solid fa-search"></i>
-                        </span>
-                        <input type="text" id="searchInput" placeholder="Busca por servicio, farmacia, leche, rayos, urgencia, horas..." 
-                            class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-hospital-500 focus:bg-white transition shadow-inner">
-                    </div>
+<!-- Welcome Hero Card Limpia, Dinámica y con Avisos Rotativos Automáticos -->
+<section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 text-center relative overflow-hidden">
+    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-hospital-50 rounded-full pointer-events-none z-0"></div>
+    
+    <div class="relative z-10 space-y-5 max-w-2xl mx-auto">
+        <!-- Saludo Dinámico Cálido según la hora -->
+        <div>
+            <span id="saludoDinamico" class="text-hospital-700 font-bold text-xs tracking-widest uppercase bg-hospital-50 px-3.5 py-1 rounded-full border border-hospital-100 inline-block mb-2">Hola</span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">¿Qué servicio o información necesitas hoy?</h2>
+        </div>
+        
+        <!-- Buscador Central -->
+        <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-solid fa-search"></i>
+            </span>
+            <input type="text" id="searchInput" placeholder="Escribe para buscar servicios, farmacia, rayos, urgencia..." 
+                class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-hospital-500 focus:bg-white transition shadow-inner">
+        </div>
+
+        <!-- Panel de Avisos Comunitarios con Rotación Automática -->
+        <div class="bg-slate-50 border border-slate-200/70 rounded-2xl p-3.5 text-left flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-hospital-100 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm mt-0.5">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <div class="text-xs text-slate-600 space-y-0.5 w-full overflow-hidden">
+                <span class="font-bold text-slate-800 block">Aviso Comunitario</span>
+                <!-- Contenedor con transición suave para el cambio automático -->
+                <div id="contenedorAviso" class="transition-opacity duration-500 ease-in-out opacity-100 leading-relaxed">
+                    Cargando avisos...
                 </div>
-            </section>
+            </div>
+        </div>
+    </div>
+</section>
 
             <!-- ================================================================= -->
             <!-- 1. ZONA ASISTENCIAL / CLÍNICO-HOSPITALARIA                       -->
@@ -292,7 +304,6 @@
                                 <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
                                     <i class="fa-solid fa-truck-medical"></i>
                                 </div>
-                                <span class="text-xs bg-red-100 text-red-800 px-2.5 py-1 rounded-full font-semibold">24/7</span>
                             </div>
                             <h4 class="font-bold text-slate-800 text-base mt-4">Urgencia</h4>
                             <p class="text-xs text-slate-500 mt-1">Atención continuada y categorización de gravedad (Triage C1-C5).</p>
@@ -472,7 +483,7 @@
                         <div class="pt-4">
                             <button onclick="openModal('modalDerechos')" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
                                 <span>Ver Ley 20.584</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                            </button>
+</button>
                         </div>
                     </div>
                 </div>
@@ -480,9 +491,417 @@
 
         </div><!-- Fin Vista Inicio -->
 
-    </div>
+        <!-- ================================================================= -->
+            <!-- 4. HERRAMIENTAS DIGITALES Y UTILIDADES                            -->
+            <!-- ================================================================= -->
+            <section class="space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-mobile-screen-button text-hospital-600"></i> 4. Herramientas Interactivas
+                    </h3>
+                    <span class="text-xs text-slate-400">Consultas rápidas y ayuda al paciente</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Botón Sectorización -->
+                    <button onclick="openModal('modalSectorizacion')" class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-sky-300 transition group text-left flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-base">Descubre tu SOME</h4>
+                            <p class="text-xs text-slate-500 mt-1">Busca tu calle, pasaje o sector para saber si perteneces al SOME Norte o SOME Sur.</p>
+                        </div>
+                    </button>
+                    
+                    <!-- Botón Checklist -->
+                    <button onclick="openModal('modalChecklist')" class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-emerald-300 transition group text-left flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-base">Preparación de Visita</h4>
+                            <p class="text-xs text-slate-500 mt-1">Revisa qué documentos o carnets necesitas traer antes de venir a realizar un trámite.</p>
+                        </div>
+                    </button>
 
-</main>
+                    <!-- Botón Herbario -->
+                    <button onclick="openModal('modalHerbario')" class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-amber-300 transition group text-left flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-base">Herbario (Lawen)</h4>
+                            <p class="text-xs text-slate-500 mt-1">Conoce las especies nativas y medicinales que cultivamos en nuestras áreas verdes.</p>
+                        </div>
+                    </button>
+                    
+                </div>
+            </section>
+
+<!-- ================================================================= -->
+        <!-- VISTA EXCLUSIVA: URGENCIA                                         -->
+        <!-- ================================================================= -->
+        <div id="vista-urgencia" class="vista-contenido hidden">
+    <!-- Contenido de Urgencia -->
+
+            
+            <!-- Botón Superior para Volver al Inicio -->
+            <div>
+                <button onclick="cambiarVista('inicio')" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-xs font-semibold border border-slate-200 shadow-sm transition">
+                    <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+                </button>
+            </div>
+
+            <!-- Cabecera de la Vista Urgencia -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-red-50 rounded-full pointer-events-none z-0"></div>
+                <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                            <i class="fa-solid fa-truck-medical"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-red-600 font-semibold bg-red-50 px-3 py-1 rounded-full border border-red-100 inline-block mb-1">Servicio de Urgencia</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Atención y Categorización de Urgencia (24/7)</h2>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
+                    Espacio clínico destinado a la resolución de situaciones de salud agudas. Recuerda que la atención se rige estrictamente por la <strong>gravedad clínica del paciente (Triage C1 a C5)</strong> y no por el orden de llegada.
+                </p>
+            </section>
+
+            <!-- Tarjetas informativas de Urgencia -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">¿Cuándo acudir a Urgencia?</h3>
+                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc list-inside">
+                        <li>Dificultad respiratoria severa o sensación de ahogo.</li>
+                        <li>Dolor en el pecho de inicio súbito ( sospecha de infarto).</li>
+                        <li>Pérdida de conciencia o desmayos repentinos.</li>
+                        <li>Accidentes graves, golpes fuertes en la cabeza o fracturas expuestas.</li>
+                        <li>Hemorragias abundantes que no se detienen.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Proceso de Categorización (Triage)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Al ingresar, un enfermero o matrón evaluará tus síntomas para asignarte una categoría de urgencia:
+                    </p>
+                    <div class="text-xs space-y-1.5 font-medium text-slate-700">
+                        <div class="p-2 bg-red-50 text-red-800 rounded-lg border border-red-200"><strong>C1 - C2:</strong> Riesgo vital / Emergencia (Atención inmediata)</div>
+                        <div class="p-2 bg-yellow-50 text-yellow-800 rounded-lg border border-yellow-200"><strong>C3:</strong> Urgencia media (Esperas según gravedad)</div>
+                        <div class="p-2 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-200"><strong>C4 - C5:</strong> Consulta general / Menor complejidad</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- VISTA EXCLUSIVA: APS (ATENCIÓN PRIMARIA)                          -->
+        <!-- ================================================================= -->
+        <div id="vista-aps" class="vista-contenido hidden space-y-6">
+            
+            <!-- Botón Superior para Volver al Inicio -->
+            <div>
+                <button onclick="cambiarVista('inicio')" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-xs font-semibold border border-slate-200 shadow-sm transition">
+                    <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+                </button>
+            </div>
+
+            <!-- Cabecera de la Vista APS -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-teal-50 rounded-full pointer-events-none z-0"></div>
+                <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                            <i class="fa-solid fa-stethoscope"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-teal-700 font-semibold bg-teal-50 px-3 py-1 rounded-full border border-teal-100 inline-block mb-1">Modelo de Salud Familiar</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Atención Primaria de Salud (APS)</h2>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
+                    Nuestro enfoque preventivo y promocional de salud. La atención se organiza territorialmente a través de <strong>SOME Sur y SOME Norte</strong> para brindar un seguimiento continuo a ti y a tu familia en cada etapa del ciclo vital.
+                </p>
+            </section>
+
+            <!-- Tarjetas informativas de APS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- SOME Sur y Norte -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Sectorización (SOME Sur y Norte)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        La comuna está dividida en sectores para organizar tu atención médica con un equipo de cabecera asignado:
+                    </p>
+                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc list-inside mt-2">
+                        <li><strong>SOME Norte:</strong> Atención a pacientes de la zona norte urbana y postas rurales correspondientes.</li>
+                        <li><strong>SOME Sur:</strong> Atención a pacientes de la zona sur urbana e intersectorial.</li>
+                    </ul>
+                </div>
+
+                <!-- Prestaciones y Controles -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Prestaciones y Controles</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        A través de tu SOME correspondiente, accedes a controles regulares tales como:
+                    </p>
+                    <div class="grid grid-cols-2 gap-2 text-[11px] sm:text-xs font-medium text-slate-700 mt-2">
+                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-heart-pulse text-teal-600 w-3"></i> Prog. Cardiovascular</div>
+                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-baby text-teal-600 w-3"></i> Control Niño Sano</div>
+                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-person-pregnant text-teal-600 w-3"></i> Salud Maternal</div>
+                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-tooth text-teal-600 w-3"></i> Atención Dental</div>
+                    </div>
+                </div>
+
+                <!-- Agendamiento de Horas (Ocupa ambas columnas) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl flex-shrink-0">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
+                    <div class="w-full">
+                        <h3 class="font-bold text-slate-900 text-base text-center sm:text-left">¿Necesitas atención médica general (Morbilidad)?</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1 mb-3 text-center sm:text-left">
+                            Para atenciones del día, llama a nuestra línea gratuita <strong>800 360 035</strong> los días <strong>Lunes y Miércoles de 08:30 a 10:00 hrs</strong>. Si requieres agendar horas de controles (crónicos, dentales, etc.), te invitamos a revisar nuestro calendario oficial.
+                        </p>
+                        <div class="flex justify-center sm:justify-start">
+                            <!-- Fíjate cómo conectamos este botón al modal que ya tenías creado -->
+                            <button onclick="openModal('modalAps')" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm">
+                                <i class="fa-solid fa-calendar-days"></i> Ver Cronograma de Horas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- VISTA EXCLUSIVA: HOSPITALIZACIÓN                                  -->
+        <!-- ================================================================= -->
+        <div id="vista-hospitalizacion" class="vista-contenido hidden space-y-6">
+            
+            <!-- Botón Superior para Volver al Inicio -->
+            <div>
+                <button onclick="cambiarVista('inicio')" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-xs font-semibold border border-slate-200 shadow-sm transition">
+                    <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+                </button>
+            </div>
+
+            <!-- Cabecera de la Vista Hospitalización -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-50 rounded-full pointer-events-none z-0"></div>
+                <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                            <i class="fa-solid fa-bed-pulse"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-indigo-700 font-semibold bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 inline-block mb-1">Unidad de Cuidados</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Hospitalización</h2>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
+                    Servicio dedicado al cuidado, tratamiento y recuperación de pacientes que requieren observación continua. Promovemos una estadía segura, respetuosa y conectada con la familia a través de la Ley MILA y nuestros protocolos de visita.
+                </p>
+            </section>
+
+            <!-- Tarjetas informativas de Hospitalización -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Horarios de Visita y Normas -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">Visitas y Artículos Permitidos</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1">
+                            Las visitas están habilitadas de <strong>Lunes a Domingo de 11:30 a 17:30 hrs</strong> (máximo 6 personas por paciente, ingresando de a uno). Revisa qué útiles de aseo están permitidos ingresar y el reglamento de la unidad.
+                        </p>
+                    </div>
+                    <div class="pt-4">
+                        <button onclick="openModal('modalHospitalizado')" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                            <i class="fa-solid fa-book-medical"></i> Ver Guía de Hospitalización
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ley MILA -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">Acompañamiento Digno (Ley MILA)</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1">
+                            Garantizamos el derecho al acompañamiento continuo de niños, niñas, adolescentes y personas gestantes durante su proceso de hospitalización o atención ambulatoria.
+                        </p>
+                    </div>
+                    <div class="pt-4">
+                        <button onclick="openModal('modalMila')" class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                            <i class="fa-solid fa-scale-balanced"></i> Conocer Derechos Ley MILA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Entrega de Información (Ocupa ambas columnas) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl flex-shrink-0">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
+                    <div class="w-full text-center sm:text-left">
+                        <h3 class="font-bold text-slate-900 text-base">Información Médica Telefónica</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1 mb-3">
+                            Para familiares responsables y autorizados. Puedes comunicarte directamente a la unidad llamando al <a href="tel:632686139" class="font-bold text-indigo-600 hover:underline">63 268 6139</a> en los siguientes horarios estipulados:
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start text-xs font-medium text-slate-700">
+                            <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2">
+                                <i class="fa-regular fa-clock text-indigo-500"></i> Lunes a Viernes: 14:00 - 16:00 hrs
+                            </div>
+                            <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2">
+                                <i class="fa-regular fa-clock text-indigo-500"></i> Sábados y Domingos: 10:00 - 12:00 hrs
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- ================================================================= -->
+        <!-- VISTA EXCLUSIVA: SERVICIOS TRANSVERSALES Y APOYO CLÍNICO          -->
+        <!-- ================================================================= -->
+        <div id="vista-transversales" class="vista-contenido hidden space-y-6">
+            
+            <!-- Botón Superior para Volver al Inicio -->
+            <div>
+                <button onclick="cambiarVista('inicio')" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-xs font-semibold border border-slate-200 shadow-sm transition">
+                    <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+                </button>
+            </div>
+
+            <!-- Cabecera de la Vista Transversales -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-yellow-50 rounded-full pointer-events-none z-0"></div>
+                <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-50 text-yellow-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-yellow-700 font-semibold bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100 inline-block mb-1">Apoyo y Tratamiento</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Servicios Transversales</h2>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
+                    Unidades de apoyo clínico que prestan servicios a toda la red del hospital, incluyendo entrega de fármacos, toma de exámenes, inmunización y procedimientos específicos indicados por nuestros profesionales.
+                </p>
+            </section>
+
+            <!-- Tarjetas informativas de Servicios Transversales -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Sector Transversal (Procedimientos y Profesionales) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
+                    <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-user-nurse"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">Sector Transversal y Procedimientos</h3>
+                    </div>
+                    
+                    <p class="text-xs text-slate-600">
+                        Área de atención que agrupa a: <strong>Matrona, Procedimiento, Kinesiólogo y Terapeuta Ocupacional</strong>. Por favor, espere su turno en la sala de espera (prohibido el ingreso a personal no autorizado).
+                    </p>
+
+                    <!-- Normativas de Procedimiento extraídas de las fotos -->
+                    <div class="space-y-2 mt-3">
+                        <div class="bg-red-50 p-3 rounded-xl border border-red-100 text-xs text-red-900 space-y-1">
+                            <strong class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-syringe text-red-600"></i> Administración de Medicamentos</strong>
+                            <p class="text-red-800 leading-tight">Solo con indicación de un médico de nuestro establecimiento o proveniente del Hospital Base Valdivia. <strong>No se administran medicamentos comprados de forma particular.</strong></p>
+                        </div>
+                        
+                        <div class="bg-pink-50 p-3 rounded-xl border border-pink-100 text-xs text-pink-900 space-y-1">
+                            <strong class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-clipboard-user text-pink-600"></i> Métodos Anticonceptivos</strong>
+                            <p class="text-pink-800 leading-tight">Para la administración de métodos anticonceptivos, es requisito obligatorio <strong>asistir con Carnet de Control Ginecológico</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Horarios Procedimiento -->
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <strong class="text-slate-800 text-xs block mb-1">Horarios de Procedimiento:</strong>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-medium text-slate-700">
+                            <div class="p-2 bg-slate-50 rounded-lg border border-slate-100"><i class="fa-regular fa-clock text-orange-500"></i> <strong>L a J:</strong> 08:00 - 12:45 y 14:00 - 16:45 hrs.</div>
+                            <div class="p-2 bg-slate-50 rounded-lg border border-slate-100"><i class="fa-regular fa-clock text-orange-500"></i> <strong>Viernes:</strong> 08:00 - 12:45 y 14:00 - 15:45 hrs.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unidades de Apoyo (Farmacia, Leche, Rayos, Vacunatorio) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                            <div class="w-10 h-10 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-pills"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base">Unidades de Apoyo Clínico</h3>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 mt-4">
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
+                                <i class="fa-solid fa-prescription-bottle-medical text-xl text-yellow-600"></i>
+                                <span class="font-bold text-xs text-slate-800">Farmacia</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
+                                <i class="fa-solid fa-baby text-xl text-sky-600"></i>
+                                <span class="font-bold text-xs text-slate-800">Leche (PNAC)</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
+                                <i class="fa-solid fa-x-ray text-xl text-slate-700"></i>
+                                <span class="font-bold text-xs text-slate-800">Rayos X</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
+                                <i class="fa-solid fa-virus-covid text-xl text-emerald-600"></i>
+                                <span class="font-bold text-xs text-slate-800">Vacunatorio</span>
+                            </div>
+                        </div>
+
+                        <!-- Horarios específicos del Vacunatorio según foto -->
+                        <div class="mt-4 bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-xs">
+                            <strong class="text-emerald-900 block mb-1 flex items-center gap-1.5"><i class="fa-solid fa-clock"></i> Horario Específico Vacunatorio:</strong>
+                            <p class="text-emerald-800 leading-tight"><strong>Lunes a Jueves:</strong> Mañana 08:45 a 12:30 / Tarde 14:00 a 16:30.<br><strong>Viernes:</strong> Mañana 08:45 a 12:30 / Tarde 14:00 a 15:30.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 mt-4">
+                        <button onclick="openModal('modalFarmaciaHorarios')" class="w-full py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                            <i class="fa-regular fa-clock"></i> Ver Horarios de Farmacia, Rayos y Leche
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     <!-- =========================================================================
          MODALES DETALLADOS
@@ -807,6 +1226,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Modal 1: Urgencia y Triage (C1-C5) -->
     <div id="modalUrgencia" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
@@ -1591,6 +2011,102 @@
 
         </div>
     </div>
+
+    <!-- ========================================================================= -->
+    <!-- NUEVAS HERRAMIENTAS INTERACTIVAS (Checklist, Sectorización, Herbario)   -->
+    <!-- ========================================================================= -->
+
+    <!-- 1. Modal: Checklist Preparación de Visita -->
+    <div id="modalChecklist" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl relative">
+            <button onclick="closeModal('modalChecklist')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-emerald-600 font-semibold">Organiza tu tiempo</span>
+                    <h3 class="text-xl font-bold text-slate-900">Preparación de Visita</h3>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <p class="text-xs text-slate-600">Selecciona el trámite que vienes a realizar para saber qué documentos necesitas traer:</p>
+                <select id="selectTramite" onchange="mostrarChecklist()" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="">Selecciona un trámite...</option>
+                    <option value="leche">Retiro de Leche (PNAC)</option>
+                    <option value="anticonceptivo">Administración Método Anticonceptivo</option>
+                    <option value="medicamentos">Retiro de Medicamentos (Farmacia)</option>
+                    <option value="urgencia">Atención de Urgencia</option>
+                </select>
+
+                <!-- Contenedor dinámico del resultado -->
+                <div id="resultadoChecklist" class="hidden mt-4 p-4 rounded-2xl border transition-all duration-300">
+                    <!-- Aquí se inyecta el contenido con JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Modal: Buscador Interactivo de Sectorización (SOME) -->
+    <div id="modalSectorizacion" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative min-h-[400px]">
+            <button onclick="closeModal('modalSectorizacion')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-sky-600 font-semibold">Descubre tu SOME</span>
+                    <h3 class="text-xl font-bold text-slate-900">Buscador de Sectorización</h3>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <p class="text-xs sm:text-sm text-slate-600">Escribe el nombre de tu calle, población, pasaje o sector rural para saber a qué SOME (Norte o Sur) perteneces.</p>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-search"></i>
+                    </span>
+                    <input type="text" id="inputSector" onkeyup="buscarSector()" placeholder="Ej: Los Laureles, Gabriela Mistral, Purulon..." 
+                        class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 transition">
+                </div>
+
+                <div id="resultadoSector" class="mt-4 space-y-2 max-h-60 overflow-y-auto">
+                    <!-- Los resultados aparecerán aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Modal: Herbario Virtual de la Ruka -->
+    <div id="modalHerbario" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modalHerbario')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-amber-600 font-semibold">Küme Mongen Ruka</span>
+                    <h3 class="text-xl font-bold text-slate-900">Herbario Virtual (Lawen)</h3>
+                </div>
+            </div>
+            
+            <p class="text-xs sm:text-sm text-slate-600">Nuestras áreas verdes albergan especies nativas con propiedades curativas utilizadas en la medicina tradicional mapuche. Conoce algunas de ellas:</p>
+            
+            <!-- Cuadrícula del Herbario -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="gridHerbario">
+                <!-- Se inyecta con JS -->
+            </div>
+        </div>
+    </div>
 <!-- ========================================================================= -->
     <!-- WIDGET FLOTANTE: ASISTENTE VIRTUAL MÉDICO - HOSPITAL DE LANCO             -->
     <!-- ========================================================================= -->
@@ -1681,7 +2197,7 @@
             <i class="fa-solid fa-volume-high text-[11px]"></i>
         </button>
     </div>
-
+</main>
 <!-- Footer con Redes Sociales Oficiales (Optimizado y compacto) -->
     <footer class="bg-white border-t border-slate-200 mt-8 py-6 text-center text-xs text-slate-500">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
