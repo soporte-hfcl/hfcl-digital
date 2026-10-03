@@ -1678,75 +1678,7 @@
         </div>
     </div>
 
-    <!-- Modal 7: Áreas Verdes y Lawen -->
-    <div id="modalVerdes" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('modalVerdes')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-leaf"></i>
-                </div>
-                <div>
-                    <span class="text-xs uppercase tracking-wider text-emerald-600 font-semibold">Patrimonio Natural e Intercultural</span>
-                    <h3 class="text-xl font-bold text-slate-900">Áreas Verdes, Especies Nativas y Lawen</h3>
-                </div>
-            </div>
-            
-            <div class="space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                <p class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100 text-emerald-900">
-                    Las áreas verdes de nuestro Hospital tienen la característica vital de contar con especies nativas (tanto árboles como plantas). Estos son <strong>Lawen</strong>: poseen propiedades curativas esenciales y son utilizadas por la Lawentuchefe de la <em>Küme Mongen Ruka</em>.
-                </p>
-
-                <!-- Alerta importante sobre los cortes -->
-                <div class="bg-red-50 p-4 rounded-2xl border border-red-200 text-red-900 space-y-1">
-                    <strong class="font-bold block flex items-center gap-1.5 text-red-700">
-                        <i class="fa-solid fa-triangle-exclamation"></i> Llamado al Cuidado de Nuestras Áreas Verdes
-                    </strong>
-                    <p class="text-xs text-slate-700">
-                        Ante los reportes y registros de cortes inapropiados en nuestra área verde institucional, es fundamental explicar y concientizar a toda la comunidad sobre la importancia de proteger este ecosistema vivo.
-                    </p>
-                </div>
-
-                <div class="space-y-2">
-                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-emerald-700">
-                        <i class="fa-solid fa-seedling"></i> Especies Nativas Presentes en el Recinto
-                    </h4>
-                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pl-5 list-disc text-slate-700">
-                        <li><strong>FOYE:</strong> Canelo</li>
-                        <li><strong>TRIWE:</strong> Laurel</li>
-                        <li><strong>PICHI:</strong> Pichi romero</li>
-                        <li><strong>AMPE:</strong> Helechos</li>
-                        <li><strong>MAFÜLN:</strong> Salvia</li>
-                        <li><strong>PEGÜ:</strong> Peumo</li>
-                        <li><strong>PAÑIL:</strong> Matico</li>
-                        <li><strong>KELON:</strong> Maqui</li>
-                        <li><strong>CHILCA:</strong> Romero</li>
-                        <li><strong>KOLEU:</strong> Poleo</li>
-                        <li><strong>VOQUI:</strong> Copihue (entre otras)</li>
-                    </ul>
-                </div>
-
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
-                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-emerald-700">
-                        <i class="fa-solid fa-earth-americas"></i> Importancia Ecológica y Comunitaria
-                    </h4>
-                    <p>
-                        Cuidar y proteger las áreas verdes del hospital trasciende la estética: estas son fuente de vida para aves, insectos y microorganismos benéficos. Nos aportan sombra fresca y ayudan a mantener la humedad indispensable en los suelos. <strong>¡Cuidemos nuestra Ñuke Mapu (Madre Tierra)!</strong>
-                    </p>
-                </div>
-            </div>
-
-            <div class="pt-2">
-                <button onclick="closeModal('modalVerdes')" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-sm transition">
-                    Cerrar Módulo Áreas Verdes
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 8: Derechos y Deberes Generales (Ley 20.584) -->
+    <!-- Modal 7: Derechos y Deberes Generales (Ley 20.584) -->
     <div id="modalDerechos" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('modalDerechos')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
@@ -2048,27 +1980,64 @@
         </div>
     </div>
 
-    <!-- 3. Modal: Herbario Virtual de la Ruka -->
+<!-- Modal UNIFICADO: Herbario Virtual y Lawen (Con Grid Dinámico) -->
     <div id="modalHerbario" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('modalHerbario')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl">
+            
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl">
                     <i class="fa-solid fa-leaf"></i>
                 </div>
                 <div>
-                    <span class="text-xs uppercase tracking-wider text-amber-600 font-semibold">Küme Mongen Ruka</span>
+                    <span class="text-xs uppercase tracking-wider text-amber-600 font-semibold">Patrimonio Natural e Intercultural</span>
                     <h3 class="text-xl font-bold text-slate-900">Herbario Virtual (Lawen)</h3>
                 </div>
             </div>
             
-            <p class="text-xs sm:text-sm text-slate-600">Nuestras áreas verdes albergan especies nativas con propiedades curativas utilizadas en la medicina tradicional mapuche. Conoce algunas de ellas:</p>
-            
-            <!-- Cuadrícula del Herbario -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="gridHerbario">
-                <!-- Se inyecta con JS -->
+            <div class="space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <!-- Introducción Lawen -->
+                <p class="bg-amber-50/70 p-4 rounded-2xl border border-amber-100 text-amber-900">
+                    Las áreas verdes de nuestro Hospital cuentan con especies nativas vitales. Estos son <strong>Lawen</strong>: poseen propiedades curativas esenciales y son utilizadas por la Lawentuchefe en la <em>Küme Mongen Ruka</em>.
+                </p>
+
+                <!-- Alerta de Cuidado -->
+                <div class="bg-red-50 p-4 rounded-2xl border border-red-200 text-red-900 space-y-1">
+                    <strong class="font-bold block flex items-center gap-1.5 text-red-700">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Llamado al Cuidado de Nuestras Áreas Verdes
+                    </strong>
+                    <p class="text-xs text-slate-700">
+                        Ante los reportes de cortes inapropiados, es fundamental concientizar a toda la comunidad sobre la importancia de proteger este ecosistema vivo y medicinal.
+                    </p>
+                </div>
+
+                <!-- Grid Dinámico de Plantas (Aquí se inyecta tu JS) -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-amber-800">
+                        <i class="fa-solid fa-seedling"></i> Especies Nativas Presentes en el Recinto
+                    </h4>
+                    <div id="gridHerbario" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
+                        <!-- JavaScript rellenará esto automáticamente -->
+                    </div>
+                </div>
+
+                <!-- Cierre Ecológico -->
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-amber-800">
+                        <i class="fa-solid fa-earth-americas"></i> Importancia Ecológica
+                    </h4>
+                    <p>
+                        Cuidar las áreas verdes trasciende la estética: son fuente de vida, otorgan sombra fresca y mantienen la humedad indispensable en los suelos. <strong>¡Cuidemos nuestra Ñuke Mapu (Madre Tierra)!</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="closeModal('modalHerbario')" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-sm transition">
+                    Cerrar Herbario
+                </button>
             </div>
         </div>
     </div>
