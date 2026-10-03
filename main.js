@@ -645,6 +645,7 @@ const dataSectores = [
     { nombre: 'TRANA', sector: 'NORTE', tipo: 'Rural' },
     { nombre: 'TROLTROHUE', sector: 'NORTE', tipo: 'Rural' },
 
+    { nombre: 'LOS ARRAYANES', sector: 'NORTE', tipo: 'Urbano' },
     { nombre: 'ACCESO SUR', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'ALBERTO CORDOVA', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'AVENIDA CENTENARIO', sector: 'SUR', tipo: 'Urbano' },
@@ -654,7 +655,7 @@ const dataSectores = [
     { nombre: 'CORVI', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'CONDOR', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'COPIHUE', sector: 'SUR', tipo: 'Urbano' },
-    { nombre: 'DIECIOCHO DE SEPTIEMBRE', sector: 'SUR', tipo: 'Urbano' },
+    { nombre: '18 DE SEPTIEMBRE', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'ESPERANZA', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'FRANCISCO PEÑA', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'FELIPE BARTHOU', sector: 'SUR', tipo: 'Urbano' },
@@ -868,3 +869,73 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 700); // Pausa de 0.7 segundos por cada fase (más lento y ceremonioso)
     }
 });
+
+/* =========================================================================
+   CINTILLO DINÁMICO DE SALUD (SOLO CASOS EXTREMOS DE CLIMA)
+   ========================================================================= */
+async function verificarClimaYSalud() {
+    const cintillo = document.getElementById('cintilloSalud');
+    const textoCintillo = document.getElementById('textoCintillo');
+    const iconoCintillo = document.getElementById('iconoCintillo');
+
+    if (!cintillo || !textoCintillo) return;
+
+    try {
+        // Coordenadas de Lanco, Chile
+        const lat = -39.45;
+        const lon = -72.53;
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,weather_code,wind_speed_10m`);
+        const data = await response.json();
+
+        if (data && data.current) {
+            const temp = data.current.temperature_2m;
+            const precipitacion = data.current.precipitation;
+            const viento = data.current.wind_speed_10m || 0; // km/h
+            const weatherCode = data.current.weather_code;
+
+            let mensaje = "";
+            let iconoClass = "";
+            let mostrarAlerta = false;
+
+            // Definición de condiciones extremas:
+            // 1. Frío extremo / Helada (ej. menos de 4°C)
+            if (temp <= 4) {
+                mensaje = "⚠️ Alerta de Bajas Temperaturas en Lanco: El frío extremo favorece la circulación de virus respiratorios. Abrígate por capas, protege a niños y adultos mayores y evita cambios bruscos de temperatura.";
+                iconoClass = "fa-snowflake";
+                mostrarAlerta = true;
+            } 
+            // 2. Calor extremo / Ola de calor (ej. más de 28°C)
+            else if (temp >= 28) {
+                mensaje = "⚠️ Aviso de Altas Temperaturas: Mantén una hidratación constante con agua, evita la exposición directa al sol en horas punta y protege a los grupos de riesgo frente a golpes de calor.";
+                iconoClass = "fa-temperature-high";
+                mostrarAlerta = true;
+            } 
+            // 3. Lluvia intensa o temporal (códigos de lluvia fuerte o precipitación alta > 3mm/h)
+            else if (precipitacion > 3.0 || [63, 65, 82].includes(weatherCode)) {
+                mensaje = "⚠️ Condición de Precipitaciones Intensas: Ante las fuertes lluvias en la zona, extrema los cuidados en el hogar, evita zonas de acumulación de agua y mantén al día tus tratamientos médicos.";
+                iconoClass = "fa-cloud-showers-heavy";
+                mostrarAlerta = true;
+            }
+            // 4. Viento fuerte
+            else if (viento > 40) {
+                mensaje = "⚠️ Alerta de Vientos Intensos en la Comuna: Se recomienda precaución al transitar y asegurar elementos exteriores para prevenir accidentes.";
+                iconoClass = "fa-wind";
+                mostrarAlerta = true;
+            }
+
+            // Si es un caso extremo, mostramos el cintillo institucional; si no, queda oculto
+            if (mostrarAlerta) {
+                textoCintillo.innerText = mensaje;
+                iconoCintillo.className = `fa-solid ${iconoClass}`;
+                cintillo.classList.remove('hidden');
+            } else {
+                cintillo.classList.add('hidden');
+            }
+        }
+    } catch (error) {
+        console.log("Sistema de clima en segundo plano inactivo:", error);
+    }
+}
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', verificarClimaYSalud);
