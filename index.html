@@ -81,7 +81,7 @@
     </style>
 
 </head>
-<body class="bg-slate-50/70 text-slate-800 antialiased font-sans selection:bg-emerald-100 selection:text-emerald-900">
+<body class="bg-slate-100 text-slate-800 font-sans antialiased selection:bg-slate-300 selection:text-slate-900">
 <!-- ========================================================================= -->
 <!-- MODAL EMERGENTE AL INICIAR LA PÁGINA - ACTUALIZACIÓN DE DATOS             -->
 <!-- ========================================================================= -->
@@ -135,7 +135,7 @@
     });
 </script>
 <!-- NAVBAR PRINCIPAL - ESTILO SALUD AUSTRAL (Logo sin texto) -->
-    <header class="bg-emerald-900 text-white shadow-md sticky top-0 z-40 border-b border-emerald-800/60 backdrop-blur-md">
+    <header class="bg-slate-800 text-slate-50 shadow-md sticky top-0 z-50 border-b border-slate-700">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             
             <!-- Logo Institucional (Solo imagen sin texto) -->
@@ -145,7 +145,7 @@
 
             <!-- Contenedor Derecho Móvil: OIRS + Menú -->
             <div class="flex items-center gap-2 lg:hidden">
-                <button onclick="openModal('modalOirs')" class="bg-white text-emerald-900 hover:bg-emerald-50 px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 shadow-2xs transition">
+                <button onclick="openModal('modalOirs')" class="bg-white text-emerald-900 hover:bg-slate-700 px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 shadow-2xs transition">
                     <i class="fa-solid fa-headset text-emerald-700"></i> OIRS
                 </button>
                 <button onclick="toggleMobileMenu()" class="text-white p-2 rounded-xl hover:bg-emerald-800 transition focus:outline-none">
@@ -240,15 +240,15 @@
         </div>
     </header>
 <!-- Main Container Fluido con la Marca de Agua Gigante -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 relative overflow-hidden min-h-screen">
-    <!-- MARCA DE AGUA GIGANTE (Efecto "Saliéndose de la pantalla" abajo a la derecha) -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12 relative overflow-hidden min-h-screen">
+        <!-- MARCA DE AGUA GIGANTE (Efecto "Saliéndose de la pantalla" abajo a la derecha) -->
     <div class="absolute -bottom-32 -right-32 pointer-events-none z-0 select-none">
         <img src="https://i.ibb.co/5gHpwbcX/logo-hl.png" alt="" 
              class="w-[550px] sm:w-[750px] lg:w-[900px] opacity-[0.04] object-contain filter grayscale transform rotate-[-10deg]">
     </div>
 
     <!-- CONTENEDOR DE TODO EL CONTENIDO PRINCIPAL (Flota sobre la marca de agua con z-10) -->
-    <div id="vista-inicio" class="vista-contenido relative z-10 space-y-12">
+    <div id="vista-inicio" class="vista-contenido relative z-10 space-y-6 sm:space-y-8">
         
 <!-- Welcome Hero Card Limpia, Dinámica y con Avisos Rotativos Automáticos -->
 <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 text-center relative overflow-hidden">
@@ -292,7 +292,7 @@
             <section class="space-y-3">
                 <div class="border-b border-slate-200 pb-2">
                     <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-hospital text-hospital-600"></i> 1. Zona Asistencial / Clínica
+                        <i class="fa-solid fa-hospital text-hospital-600"></i> Zona Asistencial / Clínica
                     </h3>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="cardsGrid">
@@ -354,7 +354,7 @@
             <section class="space-y-3">
                 <div class="border-b border-slate-200 pb-2">
                     <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-file-lines text-hospital-600"></i> 2. Trámites y Gestión
+                        <i class="fa-solid fa-file-lines text-hospital-600"></i> Trámites y Gestión
                     </h3>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -392,7 +392,7 @@
             <section class="space-y-3">
                 <div class="border-b border-slate-200 pb-2">
                     <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-handshake-angle text-hospital-600"></i> 3. Interculturalidad y Derechos
+                        <i class="fa-solid fa-handshake-angle text-hospital-600"></i> Interculturalidad y Derechos
                     </h3>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -442,7 +442,7 @@
             <section class="space-y-3">
                 <div class="border-b border-slate-200 pb-2">
                     <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-mobile-screen-button text-hospital-600"></i> 4. Herramientas Rápidas
+                        <i class="fa-solid fa-mobile-screen-button text-hospital-600"></i> Herramientas Rápidas
                     </h3>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -2234,7 +2234,6 @@
 
     <!-- BARRA LATERAL / INFERIOR IZQUIERDA DISCRETA DE ACCESIBILIDAD -->
     <div class="fixed bottom-4 left-4 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg rounded-2xl p-2 flex items-center gap-1.5 transition-all text-xs">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1 hidden md:inline">Accesibilidad:</span>
         
         <button onclick="changeFontSize(1)" class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-hospital-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold flex items-center justify-center transition shadow-2xs" title="Aumentar texto">
             A+
