@@ -99,25 +99,73 @@ function readPageAloud() {
     window.speechSynthesis.speak(utterance);
 }
 
-function compartirHorarios() {
-    const texto = "🏥 *HOSPITAL FAMILIAR Y COMUNITARIO DE LANCO*\n" +
-                  "📍 *Dirección:* Santiago 595, Lanco\n\n" +
-                  "🕒 *GUÍA DE HORARIOS OFICIALES*:\n\n" +
-                  "💊 *Farmacia:* \n" +
-                  "• Lunes a Jueves: 08:00 a 17:00 hrs\n" +
-                  "• Viernes: 08:00 a 16:00 hrs\n\n" +
-                  "🍼 *Entrega de Leche y Productos (PNAC):* \n" +
-                  "• Lunes a Jueves: 08:30 a 16:30 hrs\n" +
-                  "• Viernes: 08:30 a 15:30 hrs\n\n" +
-                  "📞 *Oficina OIRS / Agendamiento Telefónico:* \n" +
-                  "• Fono gratuito: 800 360 035\n" +
-                  "• Lunes a Jueves (08:00 a 17:00 hrs) y Viernes (hasta las 16:00 hrs)\n\n" +
-                  "🛏️ *Visitas a Hospitalizados:*\n" +
-                  "• Lunes a Domingo: 11:30 a 17:30 hrs\n\n" +
-                  "📱 _Comparte esta información oficial con tus familiares y vecinos de la comuna._";
+/* =========================================================================
+   COMPARTIR TARJETA OFICIAL COMO IMAGEN (BLINDADO)
+   ========================================================================= */
+async function compartirTarjetaOficial() {
+    const tarjeta = document.getElementById('tarjetaCompartible');
+    
+    if (!tarjeta) {
+        console.error("No se encontró el elemento #tarjetaCompartible");
+        return;
+    }
 
-    const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
-    window.open(urlWhatsApp, '_blank');
+    try {
+        // Asegurarnos de que html2canvas esté disponible
+        if (typeof html2canvas === 'undefined') {
+            alert("La librería html2canvas no está cargada correctamente.");
+            return;
+        }
+
+        // Convertir el HTML en lienzo (Canvas)
+        const canvas = await html2canvas(tarjeta, { 
+            scale: 2,
+            useCORS: true,
+            allowTaint: false
+        });
+
+        canvas.toBlob(async (blob) => {
+            if (!blob) {
+                console.error("No se pudo crear el blob de la imagen.");
+                return;
+            }
+
+            const archivo = new File([blob], "horarios-hospital-lanco.png", { type: "image/png" });
+            
+            // Verificar si el navegador soporta compartir archivos nativos (Celulares)
+            if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+                try {
+                    await navigator.share({
+                        title: 'Horarios Oficiales - Hospital de Lanco',
+                        text: 'Comparto la información oficial de horarios del Hospital de Lanco:',
+                        files: [archivo],
+                    });
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.log('Error al compartir, intentando descarga directa...', error);
+                        descargarImagenRespaldo(blob);
+                    }
+                }
+            } else {
+                // Respaldo para PC o navegadores que no soportan compartir archivos
+                descargarImagenRespaldo(blob);
+            }
+        }, 'image/png');
+
+    } catch (error) {
+        console.error("Error crítico al generar la imagen:", error);
+        alert("Hubo un problema al generar la tarjeta. Asegúrate de abrir la página mediante un servidor local (Live Server).");
+    }
+}
+
+// Función auxiliar de respaldo para descarga directa
+function descargarImagenRespaldo(blob) {
+    const enlace = document.createElement('a');
+    enlace.href = URL.createObjectURL(blob);
+    enlace.download = 'horarios-oficiales-hospital-lanco.png';
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
 }
 
 // Modales y Acordeones

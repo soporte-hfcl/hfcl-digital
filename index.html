@@ -8,6 +8,7 @@
     <title>Portal Pacientes - Hospital Familiar y Comunitario de Lanco</title>
     
     <!-- Tailwind CSS CDN -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -1896,16 +1897,62 @@
 
             </div>
 
+            
+
             <!-- Botones de Acción -->
             <div class="flex flex-col sm:flex-row items-center gap-3 pt-2 border-t border-slate-100">
-                <button onclick="compartirHorarios()" class="w-full sm:flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 px-4 rounded-2xl font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> Compartir Horarios (WhatsApp)
-                </button>
+                <button onclick="compartirTarjetaOficial()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
+    <i class="fa-brands fa-whatsapp text-lg"></i> Compartir Tarjeta Oficial
+</button>
                 <button onclick="closeModal('modalHorarios')" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 px-5 rounded-2xl font-semibold text-xs transition">
                     Cerrar
                 </button>
             </div>
+<!-- Tarjeta Oculta con Logo Local -->
+<div id="tarjetaCompartible" class="fixed -left-[9999px] top-0 bg-white p-8 rounded-3xl w-[500px] shadow-2xl border border-slate-200 font-sans">
+    <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+        <div class="flex items-center gap-3">
+            <!-- Ruta local del logo -->
+            <img src="logo_hfcl.png" alt="Logo Hospital de Lanco" class="w-12 h-12 object-contain">
+            <div>
+                <h4 class="font-bold text-slate-900 text-sm">Hospital Familiar y Comunitario de Lanco</h4>
+                <p class="text-[10px] text-slate-500">Santiago 595, Lanco</p>
+            </div>
+        </div>
+        <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Documento Oficial</span>
+    </div>
 
+    <!-- Resto del contenido de los horarios... -->
+
+    <div class="space-y-4 text-xs text-slate-700">
+        <h3 class="font-bold text-slate-900 text-base mb-2">🕒 Guía de Horarios y Atención</h3>
+        
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1">
+            <p class="font-bold text-slate-900">💊 Farmacia:</p>
+            <p class="text-slate-600">Lunes a Jueves: 08:00 a 17:00 hrs | Viernes: hasta las 16:00 hrs</p>
+        </div>
+
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1">
+            <p class="font-bold text-slate-900">🍼 Entrega de Leche (PNAC):</p>
+            <p class="text-slate-600">Lunes a Jueves: 08:30 a 16:30 hrs | Viernes: hasta las 15:30 hrs</p>
+        </div>
+
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1">
+            <p class="font-bold text-slate-900">📞 OIRS y Agendamiento:</p>
+            <p class="text-slate-600">Fono gratuito: 800 360 035 (Lunes y Miércoles 8:30 a 10:00 hrs)</p>
+        </div>
+
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1">
+            <p class="font-bold text-slate-900">🛏️ Visitas a Hospitalizados:</p>
+            <p class="text-slate-600">Lunes a Domingo: 11:30 a 17:30 hrs</p>
+        </div>
+    </div>
+
+    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400 font-medium">
+        <span>Información oficial verificada</span>
+        <span class="text-emerald-700 font-bold">Portal Digital HFCL</span>
+    </div>
+</div>
         </div>
     </div>
 
