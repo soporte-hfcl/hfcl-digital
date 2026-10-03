@@ -103,7 +103,6 @@ function compartirHorarios() {
     const texto = "🏥 *HOSPITAL FAMILIAR Y COMUNITARIO DE LANCO*\n" +
                   "📍 *Dirección:* Santiago 595, Lanco\n\n" +
                   "🕒 *GUÍA DE HORARIOS OFICIALES*:\n\n" +
-                  "🚨 *Servicio de Urgencia:* Atención 24/7 (Todos los días del año)\n\n" +
                   "💊 *Farmacia:* \n" +
                   "• Lunes a Jueves: 08:00 a 17:00 hrs\n" +
                   "• Viernes: 08:00 a 16:00 hrs\n\n" +
@@ -729,5 +728,95 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
         grid.innerHTML = html;
+    }
+});
+
+/* =========================================================================
+   CÁLCULO AUTOMÁTICO DE DÍAS HÁBILES PARA ENTREGA DE HORAS
+   ========================================================================= */
+function calcularFechasAgendas() {
+    const fechaActual = new Date();
+    const anio = fechaActual.getFullYear();
+    const mes = fechaActual.getMonth();
+    
+    // Array para guardar los primeros 3 días hábiles del mes actual
+    let diasHabiles = [];
+    // Empezamos desde el día 1 del mes
+    let diaIterador = new Date(anio, mes, 1);
+    
+    while(diasHabiles.length < 3) {
+        // getDay() devuelve 0 para Domingo y 6 para Sábado
+        let diaSemana = diaIterador.getDay();
+        if(diaSemana !== 0 && diaSemana !== 6) {
+            diasHabiles.push(new Date(diaIterador));
+        }
+        diaIterador.setDate(diaIterador.getDate() + 1);
+    }
+
+    // Función para formatear (Ej: "Lunes 05 de Octubre")
+    const formatearFecha = (fecha) => {
+        const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        
+        let numDia = String(fecha.getDate()).padStart(2, '0');
+        return `${dias[fecha.getDay()]} ${numDia} de ${meses[fecha.getMonth()]}`;
+    };
+
+    // Actualizar los textos en el HTML (Intenta actualizar ambas opciones)
+    const opcionesIds = ['opt1', 'opt2'];
+    opcionesIds.forEach(opt => {
+        const d1 = document.getElementById(`fecha-dia1-${opt}`);
+        const d2 = document.getElementById(`fecha-dia2-${opt}`);
+        const d3 = document.getElementById(`fecha-dia3-${opt}`);
+        
+        if(d1) d1.innerText = formatearFecha(diasHabiles[0]);
+        if(d2) d2.innerText = formatearFecha(diasHabiles[1]);
+        if(d3) d3.innerText = formatearFecha(diasHabiles[2]);
+    });
+}
+
+// Ejecutar la función apenas cargue la página
+document.addEventListener('DOMContentLoaded', calcularFechasAgendas);
+
+/* =========================================================================
+   PANTALLA DE CARGA (SECUENCIA INSTITUCIONAL Y PAUSADA)
+   ========================================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    const splash = document.getElementById('pantallaCarga');
+    const progressBar = document.getElementById('splash-progress');
+    const statusText = document.getElementById('splash-status');
+
+    if (splash && progressBar && statusText) {
+        const steps = [
+            { progress: '25%', text: 'Cargando servicios de atención y urgencia...' },
+            { progress: '50%', text: 'Organizando canales de orientación SOME...' },
+            { progress: '75%', text: 'Integrando espacios de medicina intercultural...' },
+            { progress: '100%', text: '¡Bienvenido a nuestro portal de salud!' }
+        ];
+
+        let currentStep = 0;
+
+        const interval = setInterval(() => {
+            if (currentStep < steps.length) {
+                // Efecto de pequeño desvanecimiento al cambiar texto
+                statusText.style.opacity = '0';
+                setTimeout(() => {
+                    statusText.innerText = steps[currentStep].text;
+                    statusText.style.opacity = '1';
+                }, 150);
+
+                progressBar.style.width = steps[currentStep].progress;
+                currentStep++;
+            } else {
+                clearInterval(interval);
+                // Pausa final antes de desvanecer la pantalla
+                setTimeout(() => {
+                    splash.style.opacity = '0';
+                    setTimeout(() => {
+                        splash.style.display = 'none';
+                    }, 1000); // 1 segundo de desvanecimiento suave
+                }, 800);
+            }
+        }, 700); // Pausa de 0.7 segundos por cada fase (más lento y ceremonioso)
     }
 });

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon del Hospital Familiar y Comunitario de Lanco -->
+<link rel="icon" type="image/png" href="https://i.ibb.co/5gHpwbcX/logo-hl.png">
     <title>Portal Pacientes - Hospital Familiar y Comunitario de Lanco</title>
     
     <!-- Tailwind CSS CDN -->
@@ -82,6 +84,29 @@
 
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased selection:bg-slate-300 selection:text-slate-900">
+<!-- Pantalla de Carga (Institucional / Salud) -->
+    <div id="pantallaCarga" class="fixed inset-0 bg-slate-900 z-[100] flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="flex flex-col items-center space-y-6 max-w-sm w-full px-6">
+            
+            <!-- Logo con pulso suave -->
+            <div class="relative animate-pulse">
+                <div class="absolute inset-0 bg-emerald-500/10 blur-2xl rounded-full"></div>
+                <img src="https://i.ibb.co/5gHpwbcX/logo-hl.png" alt="Logo Hospital de Lanco" class="w-24 h-24 object-contain relative z-10 filter drop-shadow-lg">
+            </div>
+            
+            <div class="text-center space-y-2">
+                <h2 class="text-white font-bold text-base tracking-wide">Hospital Familiar y Comunitario de Lanco</h2>
+                <p id="splash-status" class="text-xs text-emerald-400 font-medium transition-opacity duration-300">Preparando portal ciudadano...</p>
+            </div>
+            
+            <!-- Barra de carga elegante -->
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                <div id="splash-progress" class="bg-emerald-500 h-full w-0 rounded-full transition-all duration-500"></div>
+            </div>
+            
+            <span class="text-[11px] text-slate-400 italic">"Comprometidos con tu salud y bienestar"</span>
+        </div>
+    </div>
 <!-- ========================================================================= -->
 <!-- MODAL EMERGENTE AL INICIAR LA PÁGINA - ACTUALIZACIÓN DE DATOS             -->
 <!-- ========================================================================= -->
@@ -107,14 +132,14 @@
         <!-- Botones de acción -->
         <div class="space-y-2.5">
             <a href="tel:800360035" class="w-full bg-hospital-700 hover:bg-hospital-800 text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2">
-                <i class="fa-solid fa-phone-volume"></i> Llamar a OIRS (800 360 035)
+                <i class="fa-solid fa-phone-volume"></i> Llamar a OIRS
             </a>
             <button onclick="cerrarModalDatos()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2.5 px-4 rounded-xl text-xs sm:text-sm transition">
-                Entendido, continuar al portal
+                Entendido
             </button>
         </div>
         
-        <p class="text-[10px] text-slate-400 mt-4">También puedes actualizar tus datos directamente en el mesón OIRS/SOME.</p>
+        <p class="text-[10px] text-slate-400 mt-4">También puedes actualizar tus datos directamente en el mesón OIRS.</p>
     </div>
 </div>
 
@@ -1246,27 +1271,57 @@
                 <p class="text-xs text-slate-500 italic">Según indicación en Carnet de Control (Para enero 2027):</p>
 
                 <!-- Cronograma por fechas -->
-                <div class="space-y-3">
-                    <div class="bg-teal-50 p-3.5 rounded-2xl border border-teal-200">
-                        <strong class="text-teal-900 block font-bold text-xs"><i class="fa-solid fa-calendar-check text-teal-700"></i> Jueves 01 de Octubre</strong>
-                        <p class="text-slate-700 text-xs mt-0.5">Horas médicas para pacientes <strong>Crónicos</strong>.</p>
-                    </div>
+                <!-- OPCIÓN 1: LÍNEA DE TIEMPO -->
+<div class="space-y-6">
+    <!-- Cronograma dinámico -->
+    <div class="relative border-l-2 border-slate-200 ml-3 md:ml-4 space-y-6">
+        
+        <!-- Paso 1: Crónicos -->
+        <div class="relative pl-6">
+            <div class="absolute w-4 h-4 bg-red-500 rounded-full -left-[9px] top-1 border-4 border-white shadow-sm"></div>
+            <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                <span id="fecha-dia1-opt1" class="text-red-600">Calculando fecha...</span>
+            </h4>
+            <p class="text-sm font-semibold text-slate-700 mt-1">Pacientes Crónicos</p>
+            <p class="text-xs text-slate-500">Apertura exclusiva de horas médicas según indicación en Carnet de Control.</p>
+        </div>
 
-                    <div class="bg-teal-50 p-3.5 rounded-2xl border border-teal-200">
-                        <strong class="text-teal-900 block font-bold text-xs"><i class="fa-solid fa-calendar-check text-teal-700"></i> Lunes 05 de Octubre</strong>
-                        <p class="text-slate-700 text-xs mt-0.5">Agenda para atenciones <strong>dentales</strong>, con programación mes a mes.</p>
-                    </div>
+        <!-- Paso 2: Dental -->
+        <div class="relative pl-6">
+            <div class="absolute w-4 h-4 bg-teal-500 rounded-full -left-[9px] top-1 border-4 border-white shadow-sm"></div>
+            <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                <span id="fecha-dia2-opt1" class="text-teal-600">Calculando fecha...</span>
+            </h4>
+            <p class="text-sm font-semibold text-slate-700 mt-1">Atención Dental</p>
+            <p class="text-xs text-slate-500">Apertura de agenda para atenciones dentales, con programación mes a mes.</p>
+        </div>
 
-                    <div class="bg-teal-50 p-3.5 rounded-2xl border border-teal-200">
-                        <strong class="text-teal-900 block font-bold text-xs"><i class="fa-solid fa-calendar-check text-teal-700"></i> Martes 06 de Octubre (en adelante)</strong>
-                        <p class="text-slate-700 text-xs mt-0.5">Agenda de horas para: Matrona, Pediatra, Enfermería, Psicología, Trabajo Social, Kinesiología, Terapia Ocupacional, Fonoaudiología, Nutrición y Educadora de Párvulo.</p>
-                    </div>
+        <!-- Paso 3: Resto de Profesionales -->
+        <div class="relative pl-6">
+            <div class="absolute w-4 h-4 bg-blue-500 rounded-full -left-[9px] top-1 border-4 border-white shadow-sm"></div>
+            <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                <span id="fecha-dia3-opt1" class="text-blue-600">Calculando fecha...</span> <span class="text-xs text-slate-500 font-normal">(en adelante)</span>
+            </h4>
+            <p class="text-sm font-semibold text-slate-700 mt-1">Especialidades y Resto de Profesionales</p>
+            <p class="text-xs text-slate-500 leading-relaxed">Agenda para: Matrona, Pediatra, Enfermería, Psicología, Trabajo Social, Kinesiología, Terapia Ocupacional, Fonoaudiología, Nutrición y Educadora de Párvulo[cite: 5].</p>
+        </div>
+    </div>
 
-                    <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200">
-                        <strong class="text-amber-900 block font-bold text-xs"><i class="fa-solid fa-phone text-amber-700"></i> Atención Médica General (No controles)</strong>
-                        <p class="text-slate-700 text-xs mt-0.5">Línea gratuita: <a href="tel:800360035" class="font-bold text-amber-800 hover:underline">800 360 035</a>. Llamar lunes o miércoles de 08:30 a 10:00 hrs.</p>
-                    </div>
-                </div>
+    <!-- Tarjeta Separada: Línea 800 -->
+    <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 mt-6">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-lg"><i class="fa-solid fa-phone"></i></div>
+            <div>
+                <h4 class="font-bold text-indigo-900 leading-tight">Atención Médica General</h4>
+                <p class="text-xs text-indigo-700 font-bold">Línea Gratuita: 800 360 035</p>
+            </div>
+        </div>
+        <p class="text-sm text-indigo-800 mt-2 font-medium">Lunes y Miércoles • 8:30 a 10:00 horas[cite: 5].</p>
+        <div class="mt-3 bg-red-100 border border-red-200 text-red-800 text-xs px-3 py-2 rounded-lg font-semibold flex items-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation"></i> IMPORTANTE: No corresponde a controles crónicos.
+        </div>
+    </div>
+</div>
             </div>
 
             <div class="pt-2">
@@ -1851,17 +1906,6 @@
 
             <!-- Listado de Horarios Independientes -->
             <div class="space-y-2.5 text-xs">
-                
-                <!-- Urgencia -->
-                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                    <div class="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center flex-shrink-0 text-sm">
-                        <i class="fa-solid fa-truck-medical"></i>
-                    </div>
-                    <div>
-                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Servicio de Urgencia (24/7)</strong>
-                        <span class="text-slate-600 text-[11px] sm:text-xs">Atención continuada todos los días del año.</span>
-                    </div>
-                </div>
 
                 <!-- Farmacia -->
                 <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
@@ -1869,18 +1913,7 @@
                         <i class="fa-solid fa-pills"></i>
                     </div>
                     <div>
-                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Unidad de Farmacia</strong>
-                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
-                    </div>
-                </div>
-
-<!-- Farmacia -->
-                <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                    <div class="w-9 h-9 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center flex-shrink-0 text-sm">
-                        <i class="fa-solid fa-pills"></i>
-                    </div>
-                    <div>
-                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia Ambulatoria</strong>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia</strong>
                         <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
                     </div>
                 </div>
