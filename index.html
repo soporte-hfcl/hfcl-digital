@@ -286,259 +286,191 @@
     </div>
 </section>
 
-            <!-- ================================================================= -->
+<!-- ================================================================= -->
             <!-- 1. ZONA ASISTENCIAL / CLÍNICO-HOSPITALARIA                       -->
             <!-- ================================================================= -->
-            <section class="space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-hospital text-hospital-600"></i> 1. Zona Asistencial / Clínico-Hospitalaria
+            <section class="space-y-3">
+                <div class="border-b border-slate-200 pb-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-hospital text-hospital-600"></i> 1. Zona Asistencial / Clínica
                     </h3>
-                    <span class="text-xs text-slate-400">Infraestructura, APS y unidades de atención directa</span>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="cardsGrid">
-                    <!-- Urgencia / SAPU -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-start justify-between">
-                                <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-truck-medical"></i>
-                                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="cardsGrid">
+                    
+                    <!-- Urgencia -->
+                    <div onclick="cambiarVista('urgencia')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-red-200 transition group">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-truck-medical"></i></div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight group-hover:text-red-600 transition">Urgencia</h4>
                             </div>
-                            <h4 class="font-bold text-slate-800 text-base mt-4">Urgencia</h4>
-                            <p class="text-xs text-slate-500 mt-1">Atención continuada y categorización de gravedad (Triage C1-C5).</p>
+                            <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-red-400 transition text-xs"></i>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="cambiarVista('urgencia')" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Espacio Urgencia</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                            </button>
-                        </div>
+                        <p class="text-[11px] text-slate-500 leading-snug">Atención continuada y categorización por gravedad (C1-C5).</p>
                     </div>
-                    <!-- APS y Sectorización -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-start justify-between">
-                                <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-stethoscope"></i>
-                                </div>
-                                <span class="text-xs bg-teal-100 text-teal-800 px-2.5 py-1 rounded-full font-semibold">APS</span>
+
+                    <!-- APS -->
+                    <div onclick="cambiarVista('aps')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-teal-200 transition group">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-stethoscope"></i></div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight group-hover:text-teal-600 transition">Atención Primaria</h4>
                             </div>
-                            <h4 class="font-bold text-slate-800 text-base mt-4">Atención Primaria (APS)</h4>
-                            <p class="text-xs text-slate-500 mt-1">Organización territorial, equipos de cabecera y sectorización SOME Sur/Norte.</p>
+                            <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-teal-400 transition text-xs"></i>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="cambiarVista('aps')" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Espacio APS</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                            </button>
-                        </div>
+                        <p class="text-[11px] text-slate-500 leading-snug">Equipos de cabecera y sectorización SOME Sur y Norte.</p>
                     </div>
-                    <!-- Hospitalización y Visitas -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-start justify-between">
-                                <div class="w-12 h-12 rounded-xl bg-hospital-50 text-hospital-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-bed-pulse"></i>
-                                </div>
-                                <span class="text-xs bg-hospital-100 text-hospital-800 px-2.5 py-1 rounded-full font-semibold">Visitas</span>
+
+                    <!-- Hospitalización -->
+                    <div onclick="cambiarVista('hospitalizacion')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-200 transition group">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-bed-pulse"></i></div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight group-hover:text-indigo-600 transition">Hospitalización</h4>
                             </div>
-                            <h4 class="font-bold text-slate-800 text-base mt-4">Hospitalización</h4>
-                            <p class="text-xs text-slate-500 mt-1">Horarios de visita, Ley MILA y normas de estancia hospitalaria.</p>
+                            <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-indigo-400 transition text-xs"></i>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="cambiarVista('hospitalizacion')" class="w-full py-2.5 bg-hospital-700 hover:bg-hospital-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Hospitalización</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                            </button>
-                        </div>
+                        <p class="text-[11px] text-slate-500 leading-snug">Horarios de visita, normas de estancia y Ley MILA.</p>
                     </div>
-                    <!-- Servicios Transversales -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-start justify-between">
-                                <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-pills"></i>
-                                </div>
-                                <span class="text-xs bg-yellow-100 text-yellow-800 px-2.5 py-1 rounded-full font-semibold">Apoyo</span>
+
+                    <!-- Transversales -->
+                    <div onclick="cambiarVista('transversales')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-yellow-200 transition group">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-pills"></i></div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight group-hover:text-yellow-600 transition">Transversales</h4>
                             </div>
-                            <h4 class="font-bold text-slate-800 text-base mt-4">Servicios Transversales</h4>
-                            <p class="text-xs text-slate-500 mt-1">Farmacia, Leche (PNAC), Rayos, Vacunatorio y Oficinas SOME.</p>
+                            <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-yellow-400 transition text-xs"></i>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="cambiarVista('transversales')" class="w-full py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Serv. Transversales</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                            </button>
-                        </div>
+                        <p class="text-[11px] text-slate-500 leading-snug">Farmacia, Leche (PNAC), Rayos X y Vacunatorio.</p>
                     </div>
+
                 </div>
             </section>
 
             <!-- ================================================================= -->
             <!-- 2. ZONA DE TRÁMITES Y GESTIÓN CIUDADANA                           -->
             <!-- ================================================================= -->
-            <section class="space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-file-lines text-hospital-600"></i> 2. Zona de Trámites y Gestión Ciudadana
+            <section class="space-y-3">
+                <div class="border-b border-slate-200 pb-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines text-hospital-600"></i> 2. Trámites y Gestión
                     </h3>
-                    <span class="text-xs text-slate-400">Canales de citas, calendarios e inclusión</span>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Entrega de Horas Médicas -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-start justify-between">
-                                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 transition">
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                </div>
-                                <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">Calendario</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <!-- Entrega de Horas -->
+                    <div onclick="openModal('modalHorarios')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-emerald-200 transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-calendar-days"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm group-hover:text-emerald-600 transition">Entrega de Horas</h4>
+                                <p class="text-[11px] text-slate-500 leading-snug mt-0.5">Días y modalidades para obtener horas médicas y dentales.</p>
                             </div>
-                            <h4 class="font-bold text-slate-800 text-base mt-4">Entrega de Horas</h4>
-                            <p class="text-xs text-slate-500 mt-1">Cronograma, días y modalidades para la obtención de horas médicas, crónicos y dentales.</p>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="openModal('modalHorarios')" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Horarios de Horas</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                            </button>
-                        </div>
+                        <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-emerald-400 transition text-sm"></i>
                     </div>
+
                     <!-- Discapacidad -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-wheelchair"></i></div>
-                                <div>
-                                    <span class="text-xs uppercase tracking-wider text-blue-600 font-semibold">Inclusión</span>
-                                    <h3 class="text-lg font-bold text-slate-900">Discapacidad</h3>
-                                </div>
+                    <div onclick="openModal('modalDiscapacidad')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-200 transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-wheelchair"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm group-hover:text-blue-600 transition">Discapacidad e Inclusión</h4>
+                                <p class="text-[11px] text-slate-500 leading-snug mt-0.5">Postulación a credencial y requisitos de atención preferente.</p>
                             </div>
-                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Cómo postular a la credencial y requisitos de atención preferente.</p>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="openModal('modalDiscapacidad')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Requisitos</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                            </button>
-                        </div>
+                        <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-blue-400 transition text-sm"></i>
                     </div>
+
                 </div>
             </section>
 
             <!-- ================================================================= -->
             <!-- 3. ZONA COMUNITARIA, INTERCULTURAL Y LEGAL                        -->
             <!-- ================================================================= -->
-            <section class="space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-handshake-angle text-hospital-600"></i> 3. Zona Comunitaria, Intercultural y Legal
+            <section class="space-y-3">
+                <div class="border-b border-slate-200 pb-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-handshake-angle text-hospital-600"></i> 3. Interculturalidad y Derechos
                     </h3>
-                    <span class="text-xs text-slate-400">Identidad, leyes y derechos de los pacientes</span>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    
                     <!-- Ley MILA -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                                <div class="w-12 h-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-xl"><i class="fa-solid fa-hands-holding-child"></i></div>
-                                <div>
-                                    <span class="text-xs uppercase tracking-wider text-pink-600 font-semibold">Ley N° 21.372</span>
-                                    <h3 class="text-lg font-bold text-slate-900">Ley MILA</h3>
-                                </div>
+                    <div onclick="openModal('modalMila')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-pink-200 transition group">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-hands-holding-child"></i></div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight group-hover:text-pink-600 transition">Ley MILA</h4>
                             </div>
-                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Reconoce el derecho al acompañamiento de NNA y personas gestantes durante su atención.</p>
+                            <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-pink-400 transition text-xs"></i>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="openModal('modalMila')" class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Ley MILA</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                            </button>
-                        </div>
+                        <p class="text-[11px] text-slate-500 leading-snug">Acompañamiento a NNA y gestantes.</p>
                     </div>
+
                     <!-- Küme Mongen Ruka -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl"><i class="fa-solid fa-house-chimney-medical"></i></div>
-                                <div>
-                                    <span class="text-xs uppercase tracking-wider text-amber-600 font-semibold">Intercultural</span>
-                                    <h3 class="text-lg font-bold text-slate-900">Küme Mongen Ruka</h3>
-                                </div>
+                    <div onclick="openModal('modalRuka')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-amber-200 transition group">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-house-chimney-medical"></i></div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight group-hover:text-amber-600 transition">Küme Mongen Ruka</h4>
                             </div>
-                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Espacio de medicina ancestral y comunitaria liderado por la Lawentuchefe.</p>
+                            <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-amber-400 transition text-xs"></i>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="openModal('modalRuka')" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Ruka</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                            </button>
-                        </div>
+                        <p class="text-[11px] text-slate-500 leading-snug">Medicina ancestral y comunitaria (Lawen).</p>
                     </div>
-                    <!-- Derechos y Deberes -->
-                    <div class="searchable-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md card-transition group flex flex-col justify-between">
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-                                <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center text-xl"><i class="fa-solid fa-scale-balanced"></i></div>
-                                <div>
-                                    <span class="text-xs uppercase tracking-wider text-purple-600 font-semibold">Marco Legal</span>
-                                    <h3 class="text-lg font-bold text-slate-900">Derechos y Deberes</h3>
-                                </div>
+
+                    <!-- Derechos -->
+                    <div onclick="openModal('modalDerechos')" class="searchable-card cursor-pointer bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-purple-200 transition group">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition"><i class="fa-solid fa-scale-balanced"></i></div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight group-hover:text-purple-600 transition">Derechos y Deberes</h4>
                             </div>
-                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Conoce el detalle completo de los 16 derechos y 7 deberes de la Ley N° 20.584.</p>
+                            <i class="fa-solid fa-chevron-right text-slate-200 group-hover:text-purple-400 transition text-xs"></i>
                         </div>
-                        <div class="pt-4">
-                            <button onclick="openModal('modalDerechos')" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Ver Ley 20.584</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-</button>
-                        </div>
+                        <p class="text-[11px] text-slate-500 leading-snug">Ley 20.584 sobre derechos del paciente.</p>
                     </div>
+
+                </div>
+            </section>
+
+            <!-- ================================================================= -->
+            <!-- 4. HERRAMIENTAS DIGITALES Y UTILIDADES                            -->
+            <!-- ================================================================= -->
+            <section class="space-y-3">
+                <div class="border-b border-slate-200 pb-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-mobile-screen-button text-hospital-600"></i> 4. Herramientas Rápidas
+                    </h3>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    
+                    <button onclick="openModal('modalSectorizacion')" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-sky-300 transition flex flex-col items-center text-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center text-lg"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <span class="font-bold text-slate-800 text-xs">Descubre<br>tu SOME</span>
+                    </button>
+                    
+                    <button onclick="openModal('modalChecklist')" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-emerald-300 transition flex flex-col items-center text-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-list-check"></i></div>
+                        <span class="font-bold text-slate-800 text-xs">Preparar<br>Visita</span>
+                    </button>
+
+                    <button onclick="openModal('modalHerbario')" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-amber-300 transition flex flex-col items-center text-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-leaf"></i></div>
+                        <span class="font-bold text-slate-800 text-xs">Herbario<br>Virtual</span>
+                    </button>
+
+                    <button onclick="openModal('modalFaq')" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-purple-300 transition flex flex-col items-center text-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-lg"><i class="fa-solid fa-circle-question"></i></div>
+                        <span class="font-bold text-slate-800 text-xs">Preguntas<br>Frecuentes</span>
+                    </button>
+
                 </div>
             </section>
 
         </div><!-- Fin Vista Inicio -->
-
-        <!-- ================================================================= -->
-            <!-- 4. HERRAMIENTAS DIGITALES Y UTILIDADES                            -->
-            <!-- ================================================================= -->
-            <section class="space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-mobile-screen-button text-hospital-600"></i> 4. Herramientas Interactivas
-                    </h3>
-                    <span class="text-xs text-slate-400">Consultas rápidas y ayuda al paciente</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    
-                    <!-- Botón Sectorización -->
-                    <button onclick="openModal('modalSectorizacion')" class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-sky-300 transition group text-left flex flex-col justify-between">
-                        <div>
-                            <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
-                                <i class="fa-solid fa-map-location-dot"></i>
-                            </div>
-                            <h4 class="font-bold text-slate-800 text-base">Descubre tu SOME</h4>
-                            <p class="text-xs text-slate-500 mt-1">Busca tu calle, pasaje o sector para saber si perteneces al SOME Norte o SOME Sur.</p>
-                        </div>
-                    </button>
-                    
-                    <!-- Botón Checklist -->
-                    <button onclick="openModal('modalChecklist')" class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-emerald-300 transition group text-left flex flex-col justify-between">
-                        <div>
-                            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
-                                <i class="fa-solid fa-list-check"></i>
-                            </div>
-                            <h4 class="font-bold text-slate-800 text-base">Preparación de Visita</h4>
-                            <p class="text-xs text-slate-500 mt-1">Revisa qué documentos o carnets necesitas traer antes de venir a realizar un trámite.</p>
-                        </div>
-                    </button>
-
-                    <!-- Botón Herbario -->
-                    <button onclick="openModal('modalHerbario')" class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-amber-300 transition group text-left flex flex-col justify-between">
-                        <div>
-                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
-                                <i class="fa-solid fa-leaf"></i>
-                            </div>
-                            <h4 class="font-bold text-slate-800 text-base">Herbario (Lawen)</h4>
-                            <p class="text-xs text-slate-500 mt-1">Conoce las especies nativas y medicinales que cultivamos en nuestras áreas verdes.</p>
-                        </div>
-                    </button>
-                    
-                </div>
-            </section>
-
 <!-- ================================================================= -->
         <!-- VISTA EXCLUSIVA: URGENCIA                                         -->
         <!-- ================================================================= -->
@@ -2104,6 +2036,129 @@
             <!-- Cuadrícula del Herbario -->
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="gridHerbario">
                 <!-- Se inyecta con JS -->
+            </div>
+        </div>
+    </div>
+
+<!-- 4. Modal CENTRALIZADO: Centro de Ayuda y Preguntas Frecuentes -->
+    <div id="modalFaq" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modalFaq')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition z-10">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-4 gap-4 sticky top-0 bg-white z-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-purple-600 font-semibold">Centro de Ayuda</span>
+                        <h3 class="text-xl font-bold text-slate-900">Preguntas Frecuentes Centralizadas</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6 mt-4">
+                <p class="text-xs sm:text-sm text-slate-600">Busca la categoría de tu consulta. Haz clic en la pregunta para ver la respuesta detallada y evitar filas innecesarias.</p>
+
+                <!-- CATEGORÍA 1: TRÁMITES Y SOME -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-1 text-sky-700">
+                        <i class="fa-solid fa-folder-open"></i> Trámites Administrativos y SOME
+                    </h4>
+                    
+                    <details class="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-3.5 font-semibold text-slate-700 text-xs sm:text-sm hover:bg-slate-100 transition rounded-2xl">
+                            <span>¿Cómo me inscribo en el Hospital si vengo de otra ciudad?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-3.5 pt-0 text-xs text-slate-600 mt-1 leading-relaxed border-t border-slate-200">
+                            Dirígete de forma presencial al <strong>SOME Central</strong>. Asegúrate de traer tu Cédula de Identidad, un certificado de residencia (o cuenta a tu nombre que acredite tu domicilio en Lanco) y tu comprobante de FONASA.
+                        </div>
+                    </details>
+
+                    <details class="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-3.5 font-semibold text-slate-700 text-xs sm:text-sm hover:bg-slate-100 transition rounded-2xl">
+                            <span>Perdí mi carnet de control, ¿qué hago?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-3.5 pt-0 text-xs text-slate-600 mt-1 leading-relaxed border-t border-slate-200">
+                            Acércate a la ventanilla de Admisión (SOME Central) o al SOME de tu sector territorial. Presenta tu Cédula de Identidad y te emitirán un duplicado.
+                        </div>
+                    </details>
+                    
+                    <details class="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-3.5 font-semibold text-slate-700 text-xs sm:text-sm hover:bg-slate-100 transition rounded-2xl">
+                            <span>¿Qué documentos necesito para inscribir a mi recién nacido?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-3.5 pt-0 text-xs text-slate-600 mt-1 leading-relaxed border-t border-slate-200">
+                            Preséntate en SOME con: Certificado de Nacimiento emitido por el Registro Civil, comprobante de carga familiar en FONASA y el Carnet de Alta entregado por la Maternidad.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- CATEGORÍA 2: FARMACIA Y PROCEDIMIENTOS -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-1 text-yellow-700">
+                        <i class="fa-solid fa-pills"></i> Farmacia y Procedimientos
+                    </h4>
+                    
+                    <details class="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-3.5 font-semibold text-slate-700 text-xs sm:text-sm hover:bg-slate-100 transition rounded-2xl">
+                            <span>¿Cómo retiro medicamentos para un paciente postrado?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-3.5 pt-0 text-xs text-slate-600 mt-1 leading-relaxed border-t border-slate-200">
+                            Los cuidadores registrados pueden retirar en la <strong>Unidad de Farmacia</strong>. Es indispensable presentar la receta médica vigente y el Carnet de Identidad del paciente.
+                        </div>
+                    </details>
+
+                    <details class="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-3.5 font-semibold text-slate-700 text-xs sm:text-sm hover:bg-slate-100 transition rounded-2xl">
+                            <span>¿Puedo llevar un medicamento comprado por mi cuenta para que me lo inyecten?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-3.5 pt-0 text-xs text-slate-600 mt-1 leading-relaxed border-t border-slate-200">
+                            <strong>No.</strong> Por normativa de seguridad clínica, solo se administran medicamentos con indicación de un médico de nuestro establecimiento o provenientes del Hospital Base Valdivia. No se administran medicamentos comprados de forma particular.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- CATEGORÍA 3: URGENCIA Y HORAS -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-1 text-red-700">
+                        <i class="fa-solid fa-truck-medical"></i> Atención y Horas Médicas
+                    </h4>
+                    
+                    <details class="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-3.5 font-semibold text-slate-700 text-xs sm:text-sm hover:bg-slate-100 transition rounded-2xl">
+                            <span>Si llego temprano a Urgencia, ¿me atienden primero?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-3.5 pt-0 text-xs text-slate-600 mt-1 leading-relaxed border-t border-slate-200">
+                            <strong>No.</strong> La atención en el Servicio de Urgencia no es por orden de llegada, sino por <strong>Categorización de Gravedad (Triage)</strong>. Un paciente con riesgo vital (C1-C2) siempre pasará antes que una dolencia menor (C4-C5), sin importar a qué hora llegó.
+                        </div>
+                    </details>
+
+                    <details class="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-3.5 font-semibold text-slate-700 text-xs sm:text-sm hover:bg-slate-100 transition rounded-2xl">
+                            <span>¿Cuándo debo llamar a la línea 800 360 035?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-3.5 pt-0 text-xs text-slate-600 mt-1 leading-relaxed border-t border-slate-200">
+                            Esta línea gratuita es exclusivamente para solicitar <strong>atención médica general (morbilidad)</strong> para atenciones en el día. Debes llamar los lunes o miércoles entre las 08:30 y las 10:00 hrs. Para controles (crónicos, dentales), debes ver el cronograma presencial.
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+
+            <div class="pt-6">
+                <button onclick="closeModal('modalFaq')" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-sm transition">
+                    Cerrar Centro de Ayuda
+                </button>
             </div>
         </div>
     </div>
