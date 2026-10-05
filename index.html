@@ -2301,11 +2301,12 @@
             </div>
         </div>
 
-        <!-- Modal de Horarios Oficiales (Ancho y Proporcionado) -->
-<div id="modalHorarios" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm hidden">
-    
-    <!-- Contenedor visible del Modal ampliado a max-w-xl -->
-    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 space-y-5 max-h-[90vh] overflow-y-auto my-auto">
+<!-- ================================================================= -->
+<!-- MODAL DE HORARIOS OFICIALES (Diseño Uniforme y Centrado)          -->
+<!-- ================================================================= -->
+<!-- Modal de Horarios Oficiales con Estados en Tiempo Real -->
+<div id="modalHorarios" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-5 shadow-2xl relative max-h-[90vh] overflow-y-auto my-auto z-10">
 
         <!-- Cabecera del Modal -->
         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -2323,67 +2324,97 @@
             </button>
         </div>
 
-        <!-- Listado de Horarios -->
+        <!-- Listado de Horarios con Estados Dinámicos -->
         <div class="space-y-3 text-xs">
 
+            <!-- Solicitud de Horas (Línea 800) -->
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center justify-between gap-3.5 transition">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Solicitud de Horas (Línea 800)</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes y Miércoles: <strong>08:30 a 10:00 hrs</strong> (Fono: 800 360 035)</span>
+                    </div>
+                </div>
+                <div id="estado-horas"></div>
+            </div>
+
             <!-- Farmacia -->
-            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
-                    <i class="fa-solid fa-pills"></i>
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center justify-between gap-3.5 transition">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-pills"></i>
+                    </div>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
+                    </div>
                 </div>
-                <div>
-                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia</strong>
-                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
+                <div id="estado-farmacia"></div>
+            </div>
+
+            <!-- Vacunatorio -->
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center justify-between gap-3.5 transition">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-syringe"></i>
+                    </div>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Vacunatorio</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs block">L. a J.: 08:45-12:30 / 14:00-16:30 hrs</span>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Viernes: 08:45-12:30 / 14:00-15:30 hrs</span>
+                    </div>
                 </div>
+                <div id="estado-vacunatorio"></div>
             </div>
 
             <!-- Entrega de Leche (PNAC) -->
-            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center flex-shrink-0 text-sm">
-                    <i class="fa-solid fa-bottle-droplet"></i>
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center justify-between gap-3.5 transition">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-bottle-droplet"></i>
+                    </div>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Entrega de Leche (PNAC)</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:30 a 16:30 hrs</strong> | Viernes: hasta 15:30</span>
+                    </div>
                 </div>
-                <div>
-                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Entrega de Leche y Productos (PNAC)</strong>
-                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:30 a 16:30 hrs</strong> | Viernes: <strong>08:30 a 15:30 hrs</strong></span>
-                </div>
+                <div id="estado-leche"></div>
             </div>
 
             <!-- Oficina OIRS -->
-            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
-                    <i class="fa-solid fa-headset"></i>
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center justify-between gap-3.5 transition">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Oficina OIRS</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves (08:00–13:00 y 14:00–17:00 hrs)</span>
+                    </div>
                 </div>
-                <div>
-                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Oficina OIRS (Informaciones)</strong>
-                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves (08:00–13:00 y 14:00–17:00 hrs) • Viernes (hasta las 16:00 hrs)</span>
-                </div>
+                <div id="estado-oirs"></div>
             </div>
 
             <!-- Visitas -->
-            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
-                    <i class="fa-solid fa-bed-pulse"></i>
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center justify-between gap-3.5 transition">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                        <i class="fa-solid fa-bed-pulse"></i>
+                    </div>
+                    <div>
+                        <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Visitas a Hospitalizados</strong>
+                        <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Domingo: <strong>11:30 a 17:30 hrs</strong></span>
+                    </div>
                 </div>
-                <div>
-                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Visitas a Hospitalizados</strong>
-                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Domingo: <strong>11:30 a 17:30 hrs</strong></span>
-                </div>
-            </div>
-
-            <!-- Horas Médicas -->
-            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0 text-sm">
-                    <i class="fa-solid fa-calendar-check"></i>
-                </div>
-                <div>
-                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Solicitud de Horas (Línea 800)</strong>
-                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes y Miércoles: <strong>08:30 a 10:00 hrs</strong> (Fono: 800 360 035)</span>
-                </div>
+                <div id="estado-visitas"></div>
             </div>
 
         </div>
 
-        <!-- Botones de Acción Equilibrados -->
+        <!-- Botones de Acción -->
         <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
             <button onclick="compartirTarjetaOficial()" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
                 <i class="fa-brands fa-whatsapp text-lg"></i> Compartir Horarios
@@ -2392,18 +2423,15 @@
                 Cerrar
             </button>
         </div>
-
     </div>
 
-    <!-- Tarjeta Oculta para WhatsApp (Se mantiene intacta) -->
-    <div id="tarjetaCompartible" class="fixed -left-[9999px] top-0 bg-white p-10 rounded-3xl w-[500px] shadow-2xl border border-slate-200 font-sans relative overflow-hidden">
+    <!-- TARJETA OCULTA PARA WHATSAPP (Estilo unificado) -->
+    <div id="tarjetaCompartible" class="absolute -left-[9999px] top-0 bg-white p-10 rounded-3xl w-[500px] shadow-2xl border border-slate-200 font-sans">
         
-        <!-- MARCA DE AGUA GIGANTE Y DOBLE DE FONDO -->
         <div class="absolute -right-16 -bottom-16 w-[420px] h-[420px] pointer-events-none opacity-[0.05] flex items-center justify-center transform rotate-[-15deg]">
             <img src="logo_hfcl.png" alt="" class="w-full h-full object-contain">
         </div>
 
-        <!-- Encabezado de la Tarjeta -->
         <div class="relative z-10 flex items-center justify-between border-b border-slate-100 pb-5 mb-6">
             <div class="flex items-center gap-4">
                 <img src="logo_hfcl.png" alt="Logo Hospital de Lanco" class="w-14 h-14 object-contain shrink-0">
@@ -2413,36 +2441,37 @@
             </div>
         </div>
 
-        <!-- Cuerpo con los Horarios -->
-        <div class="relative z-10 space-y-4 text-xs text-slate-700">
-
-            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+        <div class="relative z-10 space-y-3 text-xs text-slate-700">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-0.5">
                 <p class="font-bold text-slate-900">💊 Farmacia:</p>
                 <p class="text-slate-600">Lunes a Jueves: 08:00 a 17:00 hrs | Viernes: hasta las 16:00 hrs</p>
             </div>
 
-            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-0.5">
+                <p class="font-bold text-slate-900">💉 Vacunatorio:</p>
+                <p class="text-slate-600">Lunes a Jueves: 08:45 a 12:30 y 14:00 a 16:30 hrs<br>Viernes: 08:45 a 12:30 y 14:00 a 15:30 hrs</p>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-0.5">
                 <p class="font-bold text-slate-900">🍼 Entrega de Leche (PNAC):</p>
                 <p class="text-slate-600">Lunes a Jueves: 08:30 a 16:30 hrs | Viernes: hasta las 15:30 hrs</p>
             </div>
 
-            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-0.5">
                 <p class="font-bold text-slate-900">📞 OIRS y Agendamiento:</p>
                 <p class="text-slate-600">Fono gratuito: 800 360 035 (Lunes y Miércoles 8:30 a 10:00 hrs)</p>
             </div>
 
-            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-0.5">
                 <p class="font-bold text-slate-900">🛏️ Visitas a Hospitalizados:</p>
                 <p class="text-slate-600">Lunes a Domingo: 11:30 a 17:30 hrs</p>
             </div>
         </div>
 
-        <!-- Pie de página de la tarjeta -->
-        <div class="relative z-10 mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+        <div class="relative z-10 mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
             <span>Canal verificado para la comunidad</span>
             <span class="text-emerald-700 font-bold">Portal Digital HFCL</span>
         </div>
-
     </div>
 
 </div>
