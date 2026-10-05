@@ -272,15 +272,35 @@
                             class="fa-solid fa-chevron-down text-[9px]"></i>
                     </button>
                     <div
-                        class="absolute left-0 mt-1 w-60 bg-white text-slate-700 rounded-2xl shadow-xl border border-slate-100 hidden group-hover:block p-2 space-y-1 z-50">
+                        class="absolute left-0 mt-1 w-72 bg-white text-slate-700 rounded-2xl shadow-xl border border-slate-100 hidden group-hover:block p-2 space-y-1 z-50">
+                        
                         <button onclick="cambiarVista('hospitalizacion')"
                             class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
                             <i class="fa-solid fa-shield-heart text-emerald-700 w-4"></i> Ley MILA y Acompañamiento
                         </button>
+                        
                         <button onclick="cambiarVista('inicio')"
                             class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
                             <i class="fa-solid fa-scale-balanced text-emerald-700 w-4"></i> Derechos y Deberes
                         </button>
+                        
+                        <button onclick="openModal('modalGlosario')"
+                            class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-book text-emerald-700 w-4"></i> Glosario Ciudadano (Términos)
+                        </button>
+
+                        <div class="border-t border-slate-100 my-1"></div>
+
+                        <button onclick="openModal('modalAgendamiento')"
+                            class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-calendar-days text-emerald-700 w-4"></i> Días de Agendamiento
+                        </button>
+
+                        <button onclick="openModal('modalSectores')"
+                            class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-50 hover:text-emerald-900 transition flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-map-location-dot text-emerald-700 w-4"></i> Buscador SOME Norte / Sur
+                        </button>
+                        
                     </div>
                 </div>
 
@@ -1687,30 +1707,30 @@
 <div id="modalBienvenida" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl relative text-center">
         
-        <!-- Icono Institucional -->
-        <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-2xl mx-auto shadow-inner">
-            <i class="fa-solid fa-user-nurse"></i>
+        <!-- Logo Institucional del Hospital -->
+        <div class="flex justify-center mb-2">
+            <img src="logo_hfcl.png" alt="Logo Hospital Familiar y Comunitario de Lanco" class="w-24 h-24 object-contain drop-shadow-sm">
         </div>
 
         <div class="space-y-2">
-            <h3 class="text-xl font-extrabold text-slate-900">¡Bienvenido al Portal de Salud!</h3>
+            <h3 class="text-xl font-extrabold text-slate-900">Portal Digital del Hospital</h3>
             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Hospital Familiar y Comunitario de Lanco. Para brindarte una experiencia más cercana, por favor indícanos tu nombre:
+                Tu acceso rápido a horarios, teléfonos y servicios del <strong class="text-slate-800">Hospital Familiar y Comunitario de Lanco</strong>. Para hacer tu visita más cercana, ¿cómo te llamas?
             </p>
         </div>
 
         <!-- Input para el Nombre -->
-        <div class="space-y-3">
-            <input type="text" id="nombreUsuarioInput" placeholder="Ej. Juan Pérez" 
+        <div class="space-y-3 pt-2">
+            <input type="text" id="nombreUsuarioInput" placeholder="Escribe tu nombre aquí..." 
                 class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm text-center text-slate-900 font-medium focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 transition">
             
             <button onclick="guardarNombreUsuario()" 
-                class="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white rounded-2xl font-semibold text-sm transition shadow-md">
-                Ingresar al Portal
+                class="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-2xl font-semibold text-sm transition shadow-md flex items-center justify-center gap-2">
+                Entrar al Portal <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
         
-        <p class="text-[11px] text-slate-400">Tu nombre solo se usará para personalizar tu saludo en este dispositivo.</p>
+        <p class="text-[11px] text-slate-400">Tranquilidad: Tu nombre solo se guarda en este celular para saludarte.</p>
     </div>
 </div>
 

@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function() {
         // Si ya guardó su nombre antes, ocultamos el modal y saludamos con su nombre
         if (modalBienv) modalBienv.style.display = 'none';
         actualizarTextoSaludo(nombreGuardado);
+
+        // Actualizamos también el saludo inicial del chat con el nombre guardado
+        const primerMensajeChat = document.querySelector('#chatMessages p');
+        if (primerMensajeChat) {
+            primerMensajeChat.innerHTML = `¡Hola, <strong>${nombreGuardado}</strong>! Mucho gusto. Mi nombre es <strong>Kümen</strong>, el asistente virtual del <strong>Hospital Familiar y Comunitario de Lanco</strong>. ¿En qué puedo orientarte hoy sobre nuestros servicios, horarios o dudas de salud?`;
+        }
     } else {
         // Si es su primera vez, mostramos el modal para que ingrese su nombre
         if (modalBienv) modalBienv.style.display = 'flex';
@@ -22,9 +28,9 @@ document.addEventListener("DOMContentLoaded", function() {
         "🦷 <strong>Agendamiento (Día 2):</strong> El segundo día hábil de cada mes está reservado exclusivamente para la asignación de horas <strong>odontológicas / dentales</strong>.",
         "🩺 <strong>Agendamiento (Día 3 en adelante):</strong> Desde el tercer día hábil y todo el resto del mes, puedes agendar para matrona, pediatría, enfermería, psicología y kinesiología.",
         "📞 <strong>Línea Gratuita 800 360 035:</strong> Operativa de lunes a viernes. Horario exclusivo para pedir horas médico general: lunes y miércoles de 8:30 a 10:00 hrs.",
-        "⚖️️ <strong>Ley MILA:</strong> Tienes derecho a acompañamiento permanente y sin restricciones si eres niño, niña, adolescente o persona gestante hospitalizada.",
+        "⚖ <strong>Ley MILA:</strong> Tienes derecho a acompañamiento permanente y sin restricciones si eres niño, niña, adolescente o persona gestante hospitalizada.",
         "📝 <strong>Actualiza tus datos:</strong> Si cambiaste de teléfono o dirección, avísanos en OIRS o SOME. ¡Es vital para ubicarte a tiempo para tus controles!",
-        "🩺 <strong>Servicio de Urgencia 24/7:</strong> Recuerda que la atención se rige estrictamente por gravedad clínica (Triage C1 a C5) y no por orden de llegada.",
+        "🩺 <strong>Servicio de Urgencia:</strong> Recuerda que la atención se rige estrictamente por gravedad clínica (Triage C1 a C5) y no por orden de llegada.",
         "💊 <strong>Farmacia y Apoyo:</strong> Recuerda portar tu cédula de identidad y receta al día al retirar fármacos. Los medicamentos particulares no se administran."
     ];
 
@@ -48,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 6000);
     }
 
-    // 4. Configuración del Chatbot e Input de Entérate / Enter
+    // Configuración del Chatbot e Input de Entérate / Enter
     const chatInput = document.getElementById('chatInput');
     if (chatInput) {
         chatInput.addEventListener('keypress', function(e) {
@@ -60,7 +66,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Cargar sugerencias iniciales del chatbot
     filtrarPreguntas('todos');
-}); // <-- ¡Aquí está la llave que faltaba cerrando el DOMContentLoaded principal!
+    calcularFechasAgendas();
+    verificarClimaYSalud();
+});
 
 // Función al hacer clic en "Ingresar al Portal"
 function guardarNombreUsuario() {
@@ -81,6 +89,17 @@ function guardarNombreUsuario() {
     
     // Actualizamos el saludo en pantalla de inmediato
     actualizarTextoSaludo(nombre);
+
+    // Actualizamos el mensaje de bienvenida dentro del chat al vuelo
+    const primerMensajeChat = document.querySelector('#chatMessages p');
+    if (primerMensajeChat) {
+        primerMensajeChat.innerHTML = `¡Hola, <strong>${nombre}</strong>! Mucho gusto. Mi nombre es <strong>Kümen</strong>, el asistente virtual del <strong>Hospital Familiar y Comunitario de Lanco</strong>. ¿En qué puedo orientarte hoy sobre nuestros servicios, horarios o dudas de salud?`;
+    }
+}
+
+// Función auxiliar para obtener el nombre del usuario guardado
+function obtenerNombreUsuario() {
+    return localStorage.getItem("nombrePacienteLanco") || "vecino/a";
 }
 
 // Función centralizada para calcular la hora y pintar el saludo dinámico personalizado
@@ -98,7 +117,6 @@ function actualizarTextoSaludo(nombre) {
             saludoTiempo = "¡Buenas noches";
         }
         
-        // Si hay nombre guardado lo personaliza, si por algo llega vacío usa vecino/a
         if (nombre) {
             contenedorSaludo.textContent = `${saludoTiempo}, ${nombre}! 👋`;
         } else {
@@ -121,7 +139,7 @@ function toggleMobileMenu() {
 
 // Funciones de Accesibilidad Universal conectadas a tu CSS
 const fontLevels = ['text-sm-global', 'text-md-global', 'text-lg-global', 'text-xl-global'];
-let currentFontIndex = 1; // Empieza en md por defecto
+let currentFontIndex = 1;
 
 function changeFontSize(direction) {
     const body = document.body;
@@ -149,9 +167,7 @@ function readPageAloud() {
     window.speechSynthesis.speak(utterance);
 }
 
-/* =========================================================================
-   COMPARTIR TARJETA OFICIAL COMO IMAGEN (BLINDADO)
-   ========================================================================= */
+// Compartir tarjeta oficial como imagen
 async function compartirTarjetaOficial() {
     const tarjeta = document.getElementById('tarjetaCompartible');
     if (!tarjeta) return;
@@ -186,6 +202,15 @@ async function compartirTarjetaOficial() {
     } catch (error) {
         console.error("Error crítico al generar la imagen:", error);
     }
+}
+
+function descargarImagenRespaldo(blob) {
+    const enlace = document.createElement('a');
+    enlace.href = URL.createObjectURL(blob);
+    enlace.download = 'horarios-oficiales-hospital-lanco.png';
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
 }
 
 function mostrarNivelTriage(nivel) {
@@ -234,27 +259,16 @@ function cambiarTabHospitalizacion(tab) {
 }
 
 function cambiarTabTransversal(tab) {
-    // Ocultar contenidos y limpiar estilos de botones
     document.querySelectorAll('.trans-content').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.trans-tab-btn').forEach(btn => {
         btn.classList.remove('border-yellow-500', 'bg-yellow-50', 'text-yellow-900', 'border-2');
         btn.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-600');
     });
 
-    // Mostrar el contenido seleccionado y destacar su botón
     document.getElementById(`content-trans-${tab}`).classList.remove('hidden');
     const activeBtn = document.getElementById(`btn-trans-${tab}`);
     activeBtn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-600');
     activeBtn.classList.add('border-yellow-500', 'bg-yellow-50', 'text-yellow-900', 'border-2');
-}
-
-function descargarImagenRespaldo(blob) {
-    const enlace = document.createElement('a');
-    enlace.href = URL.createObjectURL(blob);
-    enlace.download = 'horarios-oficiales-hospital-lanco.png';
-    document.body.appendChild(enlace);
-    enlace.click();
-    document.body.removeChild(enlace);
 }
 
 function toggleFaq(id) {
@@ -276,8 +290,6 @@ function openModal(modalId) {
     if(modal) {
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        
-        // Si el modal que se abre es el de horarios, calculamos los estados al instante
         if (modalId === 'modalHorarios') {
             actualizarEstadosHorarios();
         }
@@ -334,7 +346,10 @@ function cambiarVista(nombreVista) {
     }
 }
 
-// Configuración de la IA y el Chatbot Kümen
+// =========================================================================
+// CONFIGURACIÓN Y CEREBRO DEL CHATBOT KÜMEN (INTELIGENTE Y SINCRONIZADO)
+// =========================================================================
+
 const CHAT_ENDPOINT = "/api/chat";
 
 function toggleChatbot() {
@@ -359,6 +374,7 @@ async function procesarMensajeChat() {
     const chatMessages = document.getElementById('chatMessages');
     if(!chatMessages) return;
 
+    // 1. Mostrar el mensaje del usuario
     const userMsgDiv = document.createElement('div');
     userMsgDiv.className = "flex items-start gap-2 max-w-[85%] ml-auto justify-end";
     userMsgDiv.innerHTML = `
@@ -370,11 +386,12 @@ async function procesarMensajeChat() {
     input.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
+    // 2. Mostrar "Kümen está pensando..."
     const botMsgDiv = document.createElement('div');
     botMsgDiv.className = "flex items-start gap-2 max-w-[88%] opacity-70";
     botMsgDiv.innerHTML = `
         <div class="w-7 h-7 rounded-xl bg-white p-1 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm">
-            <img src="https://i.ibb.co/5gHpwbcX/logo-hl.png" alt="Logo" class="w-full h-full object-contain">
+            <img src="logo_hfcl.png" alt="Logo" class="w-full h-full object-contain">
         </div>
         <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700">
             <p class="italic text-slate-400">Kümen está pensando tu respuesta...</p>
@@ -398,72 +415,183 @@ async function procesarMensajeChat() {
         botMsgDiv.querySelector('div:nth-child(2)').innerHTML = `<p>${respuestaIA.replace(/\n/g, '<br>')}</p>`;
         
     } catch (error) {
-        let respuestaFallback = "Comprendo lo que nos comentas. Para entregarte la información más certera y evitar confusiones, te sugiero comunicarte directamente con nuestra OIRS llamando al <a href='tel:800360035' class='text-hospital-700 font-bold underline'>800 360 035</a>. ¡Estamos para ayudarte!";
+        let respuestaFallback = "Comprendo lo que nos comentas. Para entregarte la información más certera, te sugiero comunicarte con nuestra OIRS llamando al <a href='tel:800360035' class='text-hospital-700 font-bold underline'>800 360 035</a>. ¡Estamos para ayudarte!";
         let incluirDisclaimer = false; 
-        const t = texto.toLowerCase();
+        let abrirModalHorarios = false; 
         
-        if (t.includes('nombre') || t.includes('quién eres') || t.includes('kumen')) {
-            respuestaFallback = "¡Hola! Soy <strong>Kümen</strong>, el asistente virtual del Hospital Familiar y Comunitario de Lanco. Nací para acompañarte y orientarte de forma rápida en los servicios de nuestra comunidad.";
-        } 
-        else if (t.includes('hola') || t.includes('buenos dias') || t.includes('buenas tardes') || t.includes('saludos')) {
-            respuestaFallback = "¡Hola! Qué gusto saludarte de parte de todo el equipo. ¿En qué puedo orientarte hoy respecto a los servicios de nuestro hospital?";
-        }
-        else if (t.includes('urgencia') || t.includes('emergencia') || t.includes('accident') || t.includes('sapu') || t.includes('dolor pecho') || t.includes('ahogo') || t.includes('respirar') || t.includes('golpe') || t.includes('cabeza') || t.includes('caida') || t.includes('caída') || t.includes('sangre') || t.includes('corte') || t.includes('herida') || t.includes('desmaya')) {
-            respuestaFallback = "⚠ <strong>Atención de Urgencia 24/7:</strong> Si tú o un familiar sufrieron un accidente, golpe fuerte, síntoma crítico o riesgo vital, por favor no esperen: acudan de inmediato al servicio de urgencias en <strong>Santiago 595, Lanco</strong>.";
-            incluirDisclaimer = true; 
-        } 
-        else if (t.includes('tos') || t.includes('resfrío') || t.includes('resfrio') || t.includes('garganta') || t.includes('fiebre') || t.includes('gripe') || t.includes('malestar')) {
-            respuestaFallback = "🌡 Si estás con tos, fiebre o síntomas respiratorios leves, te sugerimos abrigarte, mantener hidratación y solicitar evaluación en tu atención primaria. <strong>Ojo:</strong> Si la tos se acompaña de ahogo o dificultad grave para respirar, acude de inmediato a Urgencia 24/7.";
-            incluirDisclaimer = true; 
-        }
-        else if (t.includes('estomago') || t.includes('estómago') || t.includes('barriga') || t.includes('diarrea') || t.includes('vomito') || t.includes('vómito') || t.includes('nausea')) {
-            respuestaFallback = "🤢 Ante molestias estomacales o digestivas, mantén una hidratación constante con agua o suero oral liviano. Si el dolor abdominal es muy intenso, persistente o hay vómitos con sangre, acude de inmediato a Urgencia 24/7.";
-            incluirDisclaimer = true;
-        }
-        else if (t.includes('farmacia') || t.includes('remedio') || t.includes('pastilla') || t.includes('receta')) {
-            respuestaFallback = "💊 <strong>Farmacia:</strong> Atendemos de lunes a jueves de 08:00 a 17:00 hrs y viernes hasta las 16:00 hrs. Recuerda traer tu cédula de identidad y tu receta médica al día para agilizar el retiro.";
-        } 
-        else if (t.includes('leche') || t.includes('pnac') || t.includes('alimento') || t.includes('crecimiento')) {
-            respuestaFallback = "🍼 <strong>Entrega de Leche y Alimentos (PNAC):</strong> Puedes venir a retirar los productos de lunes a jueves de 08:00 a 17:00 hrs y viernes hasta las 16:00 hrs. No olvides traer el carnet de control al día.";
-        } 
-        else if (t.includes('rayos') || t.includes('imagen') || t.includes('rx') || t.includes('radiografia')) {
-            respuestaFallback = "🩻 La Unidad de Imagenología / Rayos atiende de lunes a jueves de 08:30 a 16:45 hrs y los viernes de 08:30 a 15:45 hrs.";
-        } 
-        else if (t.includes('laboratorio') || t.includes('examen') || t.includes('sangre') || t.includes('muestra')) {
-            respuestaFallback = "🧪 La toma de muestras de laboratorio se realiza en las primeras horas de la mañana, según la indicación de tu médico y los cupos asignados en ventanilla.";
-        } 
-        else if (t.includes('vacuna') || t.includes('vacunatorio') || t.includes('influenza') || t.includes('covid')) {
-            respuestaFallback = "💉 Nuestro vacunatorio funciona siguiendo las campañas vigentes del Ministerio de Salud. Te invitamos a consultar los horarios específicos del día directamente en nuestra recepción.";
-        } 
-        else if (t.includes('kine') || t.includes('rehabilitacion') || t.includes('rehabilitación')) {
-            respuestaFallback = "🏃‍♂️ Las sesiones y tratamientos de Kinesiología se coordinan mediante derivación directa de tu médico tratante en el policlínico o controles crónicos.";
-        } 
-        else if (t.includes('dental') || t.includes('dentista') || t.includes('urgencia dental')) {
-            respuestaFallback = "🦷 Las horas dentales se organizan según los cupos programados de cada ciclo. Si tienes una urgencia dental calificada, acérate a consultar con nuestro personal en el área.";
-        } 
-        else if (t.includes('cronico') || t.includes('crónicos') || t.includes('hipertension') || t.includes('diabetes')) {
-            respuestaFallback = "📅 Los controles y seguimientos para pacientes crónicos se agendan de acuerdo con el calendario mensual de tu sector. <br><br><em>💡 <strong>Dato importante:</strong> Si cambiaste de número de teléfono o de domicilio recientemente, por favor avísanos para poder ubicarte a tiempo para tus llamados y controles.</em>";
-        }
-        else if (t.includes('hora') || t.includes('cita') || t.includes('medico') || t.includes('general') || t.includes('pedir')) {
-            respuestaFallback = "📞 Para solicitar una hora con médico general, puedes llamarnos a nuestra línea gratuita <a href='tel:800360035' class='text-hospital-700 font-bold underline'>800 360 035</a> los días lunes y miércoles entre 08:30 y 10:00 hrs. <br><br><em>📱 <strong>Recuerda:</strong> Mantén tu número de contacto actualizado en el mesón o OIRS para que podamos ubicarte sin problemas si hay cambios en tu hora.</em>";
-        }
-        else if (t.includes('mila') || t.includes('acompañamiento')) {
-            respuestaFallback = "💙 Porque nos importa tu bienestar emocional, la <strong>Ley MILA</strong> garantiza el derecho al acompañamiento permanente de Niñas, Niños, Adolescentes (NNA) y personas gestantes durante su hospitalización o atención.";
-        } 
-        else if (t.includes('ubicacion') || t.includes('donde') || t.includes('direccion') || t.includes('dirección') || t.includes('llegar')) {
-            respuestaFallback = "📍 Nos encontramos en <strong>Santiago 595, Lanco</strong>, en la hermosa Región de Los Ríos. <br><br><a href='https://maps.google.com/?q=Hospital+Familiar+y+Comunitario+de+Lanco' target='_blank' class='inline-block bg-hospital-700 text-white px-3 py-1.5 rounded-lg text-xs mt-2 font-medium hover:bg-hospital-800 transition'>Abrir ubicación en Google Maps 🗺️</a>";
-        } 
-        else if (t.includes('oirs') || t.includes('reclamo') || t.includes('sugerencia') || t.includes('contacto')) {
-            respuestaFallback = "ℹ️ ¿Tienes alguna duda institucional, sugerencia o reclamo? Nuestra Oficina de Informaciones, Reclamos y Sugerencias (OIRS) te atiende en el <a href='tel:800360035' class='text-hospital-700 font-bold underline'>800 360 035</a>. <br><br><em>🏠 Acércate también a la OIRS o SOME si necesitas actualizar tu dirección o número telefónico en nuestros registros.</em>";
+        const textoUsuario = texto.toLowerCase();
+        const nombreActual = obtenerNombreUsuario();
+
+        // Herramientas de reloj y feriados
+        const ahora = new Date();
+        const diaSemana = ahora.getDay();
+        const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+        const mesDiaActual = String(ahora.getMonth() + 1).padStart(2, '0') + '-' + String(ahora.getDate()).padStart(2, '0');
+        const feriadosChile = ['01-01', '05-01', '05-21', '06-21', '06-29', '07-16', '08-15', '09-18', '09-19', '10-12', '10-31', '11-01', '12-08', '12-25'];
+        const esFeriado = feriadosChile.includes(mesDiaActual);
+
+        function chequearHorario(bloques, diasPermitidos) {
+            if (esFeriado) return "🔴 <strong>CERRADO (Feriado)</strong>";
+            if (!diasPermitidos.includes(diaSemana)) return "🔴 <strong>CERRADO en este momento</strong>";
+            for (let b of bloques) {
+                const [hI, mI] = b.inicio.split(':').map(Number);
+                const [hF, mF] = b.fin.split(':').map(Number);
+                const inicio = hI * 60 + mI;
+                const fin = hF * 60 + mF;
+                if (minutosActuales >= inicio && minutosActuales <= fin) return "🟢 <strong>ABIERTO en este momento</strong>";
+            }
+            return "🔴 <strong>CERRADO en este momento</strong>";
         }
 
-        let htmlRespuesta = `<p>${respuestaFallback}</p>`;
+        // Mapa conceptual semántico para entender sinónimos del paciente
+       const mapaConceptos = [
+            {
+                palabras: ['farmacia', 'remedio', 'pastilla', 'receta', 'medicamento'],
+                nombre: 'Farmacia',
+                horarioTexto: 'Lunes a Jueves de 08:00 a 17:00 hrs, y Viernes hasta las 16:00 hrs.',
+                bloquesL_J: [{inicio:'08:00', fin:'17:00'}],
+                bloquesV: [{inicio:'08:00', fin:'16:00'}],
+                requiereModal: true
+            },
+            {
+                palabras: ['vacuna', 'vacunatorio', 'influenza', 'covid', 'inocular', 'inyección', 'inyeccion'],
+                nombre: 'Vacunatorio',
+                horarioTexto: 'Lunes a Jueves hasta las 16:30 hrs y Viernes hasta las 15:30 hrs (cierra al mediodía entre 12:30 y 14:00 hrs).',
+                bloquesL_J: [{inicio:'08:45', fin:'12:30'}, {inicio:'14:00', fin:'16:30'}],
+                bloquesV: [{inicio:'08:45', fin:'12:30'}, {inicio:'14:00', fin:'15:30'}],
+                requiereModal: true
+            },
+            {
+                palabras: ['leche', 'pnac', 'alimento', 'harina', 'sobras'],
+                nombre: 'Entrega de Leche (PNAC)',
+                horarioTexto: 'Lunes a Jueves de 08:30 a 16:30 hrs, y los Viernes hasta las 15:30 hrs.',
+                bloquesL_J: [{inicio:'08:30', fin:'16:30'}],
+                bloquesV: [{inicio:'08:30', fin:'15:30'}],
+                requiereModal: true
+            },
+            {
+                palabras: ['oirs', 'reclamo', 'sugerencia', 'oficina', 'queja', 'felicitacion'],
+                nombre: 'Oficina OIRS',
+                horarioTexto: 'Lunes a Jueves (08:00 a 13:00 y de 14:00 a 17:00 hrs) y Viernes hasta las 16:00 hrs.',
+                bloquesL_J: [{inicio:'08:00', fin:'13:00'}, {inicio:'14:00', fin:'17:00'}],
+                bloquesV: [{inicio:'08:00', fin:'13:00'}, {inicio:'14:00', fin:'16:00'}],
+                requiereModal: true
+            },
+            {
+                palabras: ['imagen', 'imagenologia', 'imagenología', 'rayos', 'rx', 'radiografia', 'radiografía'],
+                nombre: 'Unidad de Imagenología / Rayos',
+                horarioTexto: 'Lunes a Jueves de 08:30 a 16:45 hrs, y los Viernes hasta las 15:45 hrs.',
+                bloquesL_J: [{inicio:'08:30', fin:'16:45'}],
+                bloquesV: [{inicio:'08:30', fin:'15:45'}],
+                requiereModal: true
+            },
+            {
+                palabras: ['kine', 'kinesiologia', 'kinesiología', 'kinesiologo', 'kinesiólogo', 'rehabilitacion', 'rehabilitación', 'terapia'],
+                esKine: true
+            },
+            {
+                palabras: ['urgencia', 'urgencias', 'sapu', 'emergencia', 'accidente', 'sangre', 'corte', 'dolor pecho', 'ahogo', 'golpe'],
+                esUrgencia: true
+            },
+            {
+                palabras: ['ubicacion', 'ubicación', 'donde', 'dónde', 'direccion', 'dirección', 'llegar', 'mapa', 'santiago'],
+                esUbicacion: true
+            },
+            {
+                palabras: ['hora', 'cita', 'medico', 'médico', 'pedir', 'general'],
+                esHoraMedica: true
+            },
+            {
+                palabras: ['tos', 'fiebre', 'resfrio', 'resfrío', 'garganta', 'gripe', 'malestar', 'respiratorio'],
+                esSintoma: true
+            },
+            {
+                palabras: ['some', 'ventanilla', 'mesón', 'mesongeneral'],
+                nombre: 'SOME (Mesón de informaciones)',
+                esTermino: true,
+                significado: 'Es el mesón principal donde pides horas, confirmas tus citas y te registras al llegar al hospital.'
+            },
+            {
+                palabras: ['morbilidad', 'enfermo', 'atencion general', 'atención general', 'doctor general'],
+                nombre: 'Morbilidad',
+                esTermino: true,
+                significado: 'Es la consulta médica general para cuando te enfermas de forma imprevista (resfríos, dolores estomacales, etc.).'
+            },
+            {
+                palabras: ['triage', 'categorizacion', 'categorización', 'gravedad'],
+                nombre: 'Triage (Clasificación de Urgencia)',
+                esTermino: true,
+                significado: 'Evaluación rápida de la enfermera al llegar a urgencias para priorizar la atención según la gravedad clínica (C1 a C5), no por orden de llegada.'
+            },
+            {
+                palabras: ['ges', 'auge', 'garantias'],
+                nombre: 'GES / AUGE',
+                esTermino: true,
+                significado: 'Garantías Explícitas de Salud que aseguran por ley la atención, plazos y tratamientos para ciertas enfermedades.'
+            }
+        ];
+
+let coincidenciaEncontrada = null;
+        for (let concepto of mapaConceptos) {
+            if (concepto.palabras.some(p => textoUsuario.includes(p))) {
+                coincidenciaEncontrada = concepto;
+                break;
+            }
+        }
+
+        if (coincidenciaEncontrada) {
+            let c = coincidenciaEncontrada;
+
+            if (c.esUrgencia) {
+                respuestaFallback = `⚠ <strong>Atención de Urgencia:</strong> ${nombreActual}, si tú o un familiar sufrieron un accidente grave o riesgo vital, acudan de inmediato a Urgencias en <strong>Santiago 595, Lanco</strong>.`;
+                incluirDisclaimer = true;
+            } 
+            else if (c.esUbicacion) {
+                respuestaFallback = `📍 ${nombreActual}, nos encontramos en <strong>Santiago 595, Lanco</strong>. <br><br><a href='https://maps.google.com/?q=Hospital+Familiar+y+Comunitario+de+Lanco' target='_blank' class='inline-block bg-hospital-700 text-white px-3 py-1.5 rounded-lg text-xs mt-2 font-medium hover:bg-hospital-800 transition'>Abrir ubicación en Google Maps 🗺️</a>`;
+            }
+            else if (c.esHoraMedica) {
+                respuestaFallback = `📞 ${nombreActual}, las horas médicas generales se solicitan en la línea gratuita <a href='tel:800360035' class='text-hospital-700 font-bold underline'>800 360 035</a> los días Lunes y Miércoles de 08:30 a 10:00 hrs.<br><br><em>Te abriré los horarios oficiales para que los tengas a mano.</em>`;
+                abrirModalHorarios = true;
+            }
+            else if (c.esKine) {
+                respuestaFallback = `🏃‍♂️ <strong>Kinesiología y Rehabilitación:</strong> Las sesiones se coordinan mediante derivación directa de tu médico tratante en el policlínico.<br><br><em>💡 Para consultas sobre tus horas, acércate al sector de atención ambulatoria.</em>`;
+            }
+            else if (c.esSintoma) {
+                respuestaFallback = `🌡 ${nombreActual}, si estás con tos, fiebre o síntomas respiratorios leves, te sugerimos abrigarte, mantener hidratación y solicitar evaluación en tu atención primaria. <br><br><strong>Ojo:</strong> Si la tos se acompaña de ahogo o dificultad grave para respirar, acude de inmediato a Urgencias.`;
+                incluirDisclaimer = true;
+            }
+            else if (c.esTermino) {
+                    respuestaFallback = `📖 <strong>¿Qué significa "${c.nombre}"?</strong><br><br>${c.significado}<br><br><em>¿Tienes alguna otra duda con los términos del hospital? ¡Pregúntame con confianza!</em>`;
+            }
+            else {
+                let bloquesHoy = (diaSemana === 5) ? c.bloquesV : c.bloquesL_J;
+                let diasValidos = (diaSemana === 5) ? [5] : [1, 2, 3, 4];
+                let estadoActual = chequearHorario(bloquesHoy, diasValidos);
+
+                respuestaFallback = `📋 <strong>${c.nombre}:</strong> Atendemos de ${c.horarioTexto}<br><br>👉 ${nombreActual}, según mi reloj, en este momento se encuentra ${estadoActual}.<br><br><em>¡Te abriré los horarios oficiales en pantalla!</em>`;
+                abrirModalHorarios = c.requiereModal;
+            }
+        } 
+        else if (textoUsuario.includes('hola') || textoUsuario.includes('buenos dias') || textoUsuario.includes('saludos')) {
+            respuestaFallback = `¡Hola, <strong>${nombreActual}</strong>! Qué gusto saludarte. ¿En qué puedo orientarte hoy respecto a los servicios del hospital?`;
+        }
+        else if (textoUsuario.includes('nombre') || textoUsuario.includes('quién eres') || textoUsuario.includes('kumen')) {
+            respuestaFallback = `¡Hola, <strong>${nombreActual}</strong>! Soy <strong>Kümen</strong>, el asistente virtual del Hospital Familiar y Comunitario de Lanco.`;
+        }
+
+        let htmlRespuesta = `<p class="text-sm leading-relaxed">${respuestaFallback}</p>`;
         if (incluirDisclaimer) {
-            htmlRespuesta += `<div class='mt-2 pt-2 border-t border-slate-100 text-[11px] text-slate-400 italic'>💡 Orientación preventiva institucional. No reemplaza una evaluación médica profesional.</div>`;
+            htmlRespuesta += `<div class='mt-3 pt-2 border-t border-slate-100 text-[11px] text-slate-400 italic'>💡 Orientación preventiva. No reemplaza evaluación profesional.</div>`;
         }
 
         botMsgDiv.className = "flex items-start gap-2 max-w-[88%]";
         botMsgDiv.querySelector('div:nth-child(2)').innerHTML = htmlRespuesta;
+
+        if (abrirModalHorarios) {
+            setTimeout(() => {
+                if(typeof openModal === 'function') openModal('modalHorarios');
+            }, 2000); 
+        }
     }
 
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -628,6 +756,18 @@ const dataSectores = [
     { nombre: 'CONDOR', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'COPIHUE', sector: 'SUR', tipo: 'Urbano' },
     { nombre: '18 DE SEPTIEMBRE', sector: 'SUR', tipo: 'Urbano' },
+    { nombre: 'LAGO PIRIHUEICO', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'LAGO MAIHUE', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'C. MARTIN TORRES MONTOLLA', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'MARTIN TORRES MONTOLLA', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'LAS CLAVELES', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'LAS ROSAS', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'LOS GIRASOLES', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'LOS ALHELIES', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'LOS ALERCES', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'LAGO PALLAIFA', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'BLANCA SANHUEZA', sector: 'NORTE', tipo: 'Urbano' },
+    { nombre: 'VICTOR JARA', sector: 'NORTE', tipo: 'Urbano' },
     { nombre: 'ESPERANZA', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'FRANCISCO PEÑA', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'FELIPE BARTHOU', sector: 'SUR', tipo: 'Urbano' },
@@ -640,6 +780,7 @@ const dataSectores = [
     { nombre: 'PASAJE FERROVIARIO', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'PASAJE ALHUES', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'PASAJE PINTO', sector: 'SUR', tipo: 'Urbano' },
+    { nombre: 'ROBERTO MATTA', sector: 'NORTE', tipo: 'Urbano' },
     { nombre: 'PASAJE SAN LUIS', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'PANAMERICANA', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'PASAJE MANUEL RODRIGUEZ', sector: 'SUR', tipo: 'Urbano' },
@@ -874,42 +1015,24 @@ async function verificarClimaYSalud() {
 
 document.addEventListener('DOMContentLoaded', verificarClimaYSalud);
 
-// Función auxiliar para transformar "HH:MM" en minutos totales desde medianoche
 function horaAMinutos(horaStr) {
     const [h, m] = horaStr.split(':').map(Number);
     return h * 60 + m;
 }
 
-// Función principal que evalúa y pinta los estados en tiempo real (Ahora con Feriados)
 function actualizarEstadosHorarios() {
     const ahora = new Date();
     const diaSemana = ahora.getDay(); 
     const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
-
-    // Extraemos el Mes y Día en formato "MM-DD" para compararlo
     const mesDiaActual = String(ahora.getMonth() + 1).padStart(2, '0') + '-' + String(ahora.getDate()).padStart(2, '0');
 
-    // Lista de feriados fijos en Chile (puedes agregar feriados móviles de cada año aquí)
     const feriadosChile = [
-        '01-01', // Año Nuevo
-        '05-01', // Día del Trabajador
-        '05-21', // Glorias Navales
-        '06-21', // Pueblos Indígenas
-        '06-29', // San Pedro y San Pablo
-        '07-16', // Virgen del Carmen
-        '08-15', // Asunción de la Virgen
-        '09-18', // Primera Junta Nacional
-        '09-19', // Glorias del Ejército
-        '10-12', // Encuentro de Dos Mundos
-        '10-31', // Iglesias Evangélicas
-        '11-01', // Todos los Santos
-        '12-08', // Inmaculada Concepción
-        '12-25'  // Navidad
+        '01-01', '05-01', '05-21', '06-21', '06-29', '07-16', '08-15', 
+        '09-18', '09-19', '10-12', '10-31', '11-01', '12-08', '12-25'
     ];
 
     const esFeriado = feriadosChile.includes(mesDiaActual);
 
-    // Helper para generar el HTML del distintivo visual
     function crearBadge(estado) {
         if (estado === 'abierto') {
             return `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-[10px] flex items-center gap-1 whitespace-nowrap shadow-2xs"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> Abierto</span>`;
@@ -922,9 +1045,8 @@ function actualizarEstadosHorarios() {
         }
     }
 
-    // Lógica para evaluar un servicio con bloques horarios
     function evaluarBloques(bloques, diasPermitidos) {
-        if (esFeriado) return 'feriado'; // Cortafuegos: Si es feriado, bloqueamos de inmediato
+        if (esFeriado) return 'feriado';
         if (!diasPermitidos.includes(diaSemana)) return 'cerrado';
 
         for (let b of bloques) {
@@ -941,32 +1063,41 @@ function actualizarEstadosHorarios() {
         return 'cerrado';
     }
 
-    // Evaluaciones
-    const estadoFarmacia = evaluarBloques([{ inicio: '08:00', fin: '17:00' }], [1, 2, 3, 4]); // Simplificando lógica si L-J, ajustarViernes si necesario
-    
-    // Farmacia (L-J: 08:00-17:00 | V: 08:00-16:00)
-    document.getElementById('estado-farmacia').innerHTML = crearBadge(
-        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:00', fin: '16:00' }], [5]) : evaluarBloques([{ inicio: '08:00', fin: '17:00' }], [1, 2, 3, 4]))
-    );
+    const elFarmacia = document.getElementById('estado-farmacia');
+    if(elFarmacia) {
+        elFarmacia.innerHTML = crearBadge(
+            esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:00', fin: '16:00' }], [5]) : evaluarBloques([{ inicio: '08:00', fin: '17:00' }], [1, 2, 3, 4]))
+        );
+    }
 
-    // Vacunatorio
-    document.getElementById('estado-vacunatorio').innerHTML = crearBadge(
-        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:45', fin: '12:30' }, { inicio: '14:00', fin: '15:30' }], [5]) : evaluarBloques([{ inicio: '08:45', fin: '12:30' }, { inicio: '14:00', fin: '16:30' }], [1, 2, 3, 4]))
-    );
+    const elVac = document.getElementById('estado-vacunatorio');
+    if(elVac) {
+        elVac.innerHTML = crearBadge(
+            esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:45', fin: '12:30' }, { inicio: '14:00', fin: '15:30' }], [5]) : evaluarBloques([{ inicio: '08:45', fin: '12:30' }, { inicio: '14:00', fin: '16:30' }], [1, 2, 3, 4]))
+        );
+    }
 
-    // Leche / PNAC
-    document.getElementById('estado-leche').innerHTML = crearBadge(
-        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:30', fin: '15:30' }], [5]) : evaluarBloques([{ inicio: '08:30', fin: '16:30' }], [1, 2, 3, 4]))
-    );
+    const elLeche = document.getElementById('estado-leche');
+    if(elLeche) {
+        elLeche.innerHTML = crearBadge(
+            esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:30', fin: '15:30' }], [5]) : evaluarBloques([{ inicio: '08:30', fin: '16:30' }], [1, 2, 3, 4]))
+        );
+    }
 
-    // OIRS
-    document.getElementById('estado-oirs').innerHTML = crearBadge(
-        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:00', fin: '13:00' }, { inicio: '14:00', fin: '16:00' }], [5]) : evaluarBloques([{ inicio: '08:00', fin: '13:00' }, { inicio: '14:00', fin: '17:00' }], [1, 2, 3, 4]))
-    );
+    const elOirs = document.getElementById('estado-oirs');
+    if(elOirs) {
+        elOirs.innerHTML = crearBadge(
+            esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:00', fin: '13:00' }, { inicio: '14:00', fin: '16:00' }], [5]) : evaluarBloques([{ inicio: '08:00', fin: '13:00' }, { inicio: '14:00', fin: '17:00' }], [1, 2, 3, 4]))
+        );
+    }
 
-    // Visitas
-    document.getElementById('estado-visitas').innerHTML = crearBadge(evaluarBloques([{ inicio: '11:30', fin: '17:30' }], [0, 1, 2, 3, 4, 5, 6]));
+    const elVisitas = document.getElementById('estado-visitas');
+    if(elVisitas) {
+        elVisitas.innerHTML = crearBadge(evaluarBloques([{ inicio: '11:30', fin: '17:30' }], [0, 1, 2, 3, 4, 5, 6]));
+    }
 
-    // Línea 800
-    document.getElementById('estado-horas').innerHTML = crearBadge(evaluarBloques([{ inicio: '08:30', fin: '10:00' }], [1, 3]));
+    const elHoras = document.getElementById('estado-horas');
+    if(elHoras) {
+        elHoras.innerHTML = crearBadge(evaluarBloques([{ inicio: '08:30', fin: '10:00' }], [1, 3]));
+    }
 }
