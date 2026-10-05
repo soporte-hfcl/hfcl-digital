@@ -18,11 +18,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 2. Banco de avisos comunitarios
     const listaAvisos = [
-        "📞 <strong>Línea 800:</strong> Funciona de lunes a viernes, pero las horas se agendan solo lunes y miércoles de 8:30 a 10:00 hrs. El resto del horario opera como OIRS.",
-        "📅 <strong>Calendario de Horas:</strong> El 1° día hábil del mes es exclusivo para pacientes crónicos; el 2° día para dentales; y el resto del mes para matrona, pediatría, enfermería, psicología, kinesiología y más.",
-        "⚖️ <strong>Ley MILA:</strong> Tienes derecho a acompañamiento permanente y sin restricciones si eres niño, niña, adolescente o persona gestante hospitalizada.",
-        "📝 <strong>Actualiza tus datos:</strong> Si cambiaste de número de teléfono o dirección, avísanos en OIRS para poder llamarte a tiempo a tus controles médicos.",
-        "🩺 <strong>Urgencia:</strong> Recuerda que la atención en el servicio de urgencia se rige por gravedad clínica (Triage C1 a C5), no estrictamente por orden de llegada."
+        "📅 <strong>Agendamiento (Día 1):</strong> El primer día hábil de cada mes está destinado exclusivamente al agendamiento de controles para <strong>pacientes crónicos</strong>.",
+        "🦷 <strong>Agendamiento (Día 2):</strong> El segundo día hábil de cada mes está reservado exclusivamente para la asignación de horas <strong>odontológicas / dentales</strong>.",
+        "🩺 <strong>Agendamiento (Día 3 en adelante):</strong> Desde el tercer día hábil y todo el resto del mes, puedes agendar para matrona, pediatría, enfermería, psicología y kinesiología.",
+        "📞 <strong>Línea Gratuita 800 360 035:</strong> Operativa de lunes a viernes. Horario exclusivo para pedir horas médico general: lunes y miércoles de 8:30 a 10:00 hrs.",
+        "⚖️️ <strong>Ley MILA:</strong> Tienes derecho a acompañamiento permanente y sin restricciones si eres niño, niña, adolescente o persona gestante hospitalizada.",
+        "📝 <strong>Actualiza tus datos:</strong> Si cambiaste de teléfono o dirección, avísanos en OIRS o SOME. ¡Es vital para ubicarte a tiempo para tus controles!",
+        "🩺 <strong>Servicio de Urgencia 24/7:</strong> Recuerda que la atención se rige estrictamente por gravedad clínica (Triage C1 a C5) y no por orden de llegada.",
+        "💊 <strong>Farmacia y Apoyo:</strong> Recuerda portar tu cédula de identidad y receta al día al retirar fármacos. Los medicamentos particulares no se administran."
     ];
 
     // 3. Rotación automática cada 6 segundos con efecto de desvanecimiento
@@ -273,6 +276,11 @@ function openModal(modalId) {
     if(modal) {
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        
+        // Si el modal que se abre es el de horarios, calculamos los estados al instante
+        if (modalId === 'modalHorarios') {
+            actualizarEstadosHorarios();
+        }
     }
 }
 
@@ -865,3 +873,100 @@ async function verificarClimaYSalud() {
 }
 
 document.addEventListener('DOMContentLoaded', verificarClimaYSalud);
+
+// Función auxiliar para transformar "HH:MM" en minutos totales desde medianoche
+function horaAMinutos(horaStr) {
+    const [h, m] = horaStr.split(':').map(Number);
+    return h * 60 + m;
+}
+
+// Función principal que evalúa y pinta los estados en tiempo real (Ahora con Feriados)
+function actualizarEstadosHorarios() {
+    const ahora = new Date();
+    const diaSemana = ahora.getDay(); 
+    const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+
+    // Extraemos el Mes y Día en formato "MM-DD" para compararlo
+    const mesDiaActual = String(ahora.getMonth() + 1).padStart(2, '0') + '-' + String(ahora.getDate()).padStart(2, '0');
+
+    // Lista de feriados fijos en Chile (puedes agregar feriados móviles de cada año aquí)
+    const feriadosChile = [
+        '01-01', // Año Nuevo
+        '05-01', // Día del Trabajador
+        '05-21', // Glorias Navales
+        '06-21', // Pueblos Indígenas
+        '06-29', // San Pedro y San Pablo
+        '07-16', // Virgen del Carmen
+        '08-15', // Asunción de la Virgen
+        '09-18', // Primera Junta Nacional
+        '09-19', // Glorias del Ejército
+        '10-12', // Encuentro de Dos Mundos
+        '10-31', // Iglesias Evangélicas
+        '11-01', // Todos los Santos
+        '12-08', // Inmaculada Concepción
+        '12-25'  // Navidad
+    ];
+
+    const esFeriado = feriadosChile.includes(mesDiaActual);
+
+    // Helper para generar el HTML del distintivo visual
+    function crearBadge(estado) {
+        if (estado === 'abierto') {
+            return `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-[10px] flex items-center gap-1 whitespace-nowrap shadow-2xs"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> Abierto</span>`;
+        } else if (estado === 'cierra-pronto') {
+            return `<span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full font-bold text-[10px] flex items-center gap-1 whitespace-nowrap shadow-2xs"><span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Cierra pronto</span>`;
+        } else if (estado === 'feriado') {
+            return `<span class="px-2.5 py-1 bg-red-100 text-red-800 rounded-full font-bold text-[10px] flex items-center gap-1 whitespace-nowrap shadow-2xs"><i class="fa-solid fa-calendar-xmark"></i> Feriado (Cerrado)</span>`;
+        } else {
+            return `<span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full font-bold text-[10px] flex items-center gap-1 whitespace-nowrap shadow-2xs"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Cerrado</span>`;
+        }
+    }
+
+    // Lógica para evaluar un servicio con bloques horarios
+    function evaluarBloques(bloques, diasPermitidos) {
+        if (esFeriado) return 'feriado'; // Cortafuegos: Si es feriado, bloqueamos de inmediato
+        if (!diasPermitidos.includes(diaSemana)) return 'cerrado';
+
+        for (let b of bloques) {
+            const inicio = horaAMinutos(b.inicio);
+            const fin = horaAMinutos(b.fin);
+
+            if (minutosActuales >= inicio && minutosActuales <= fin) {
+                if (fin - minutosActuales <= 30) {
+                    return 'cierra-pronto';
+                }
+                return 'abierto';
+            }
+        }
+        return 'cerrado';
+    }
+
+    // Evaluaciones
+    const estadoFarmacia = evaluarBloques([{ inicio: '08:00', fin: '17:00' }], [1, 2, 3, 4]); // Simplificando lógica si L-J, ajustarViernes si necesario
+    
+    // Farmacia (L-J: 08:00-17:00 | V: 08:00-16:00)
+    document.getElementById('estado-farmacia').innerHTML = crearBadge(
+        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:00', fin: '16:00' }], [5]) : evaluarBloques([{ inicio: '08:00', fin: '17:00' }], [1, 2, 3, 4]))
+    );
+
+    // Vacunatorio
+    document.getElementById('estado-vacunatorio').innerHTML = crearBadge(
+        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:45', fin: '12:30' }, { inicio: '14:00', fin: '15:30' }], [5]) : evaluarBloques([{ inicio: '08:45', fin: '12:30' }, { inicio: '14:00', fin: '16:30' }], [1, 2, 3, 4]))
+    );
+
+    // Leche / PNAC
+    document.getElementById('estado-leche').innerHTML = crearBadge(
+        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:30', fin: '15:30' }], [5]) : evaluarBloques([{ inicio: '08:30', fin: '16:30' }], [1, 2, 3, 4]))
+    );
+
+    // OIRS
+    document.getElementById('estado-oirs').innerHTML = crearBadge(
+        esFeriado ? 'feriado' : (diaSemana === 5 ? evaluarBloques([{ inicio: '08:00', fin: '13:00' }, { inicio: '14:00', fin: '16:00' }], [5]) : evaluarBloques([{ inicio: '08:00', fin: '13:00' }, { inicio: '14:00', fin: '17:00' }], [1, 2, 3, 4]))
+    );
+
+    // Visitas
+    document.getElementById('estado-visitas').innerHTML = crearBadge(evaluarBloques([{ inicio: '11:30', fin: '17:30' }], [0, 1, 2, 3, 4, 5, 6]));
+
+    // Línea 800
+    document.getElementById('estado-horas').innerHTML = crearBadge(evaluarBloques([{ inicio: '08:30', fin: '10:00' }], [1, 3]));
+}
