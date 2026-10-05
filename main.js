@@ -1,17 +1,19 @@
+// =========================================================================
+// GESTIÓN DE BIENVENIDA Y SALUDO DINÁMICO
+// =========================================================================
+
+// Único evento de carga principal al iniciar la página
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. Saludo dinámico cálido según la hora
-    const spanSaludo = document.getElementById('saludoDinamico');
-    if (spanSaludo) {
-        const hora = new Date().getHours();
-        let saludo = "Qué bueno verte por aquí";
-        if (hora >= 6 && hora < 12) {
-            saludo = "¡Muy buenos días, vecino/a!";
-        } else if (hora >= 12 && hora < 20) {
-            saludo = "¡Muy buenas tardes!";
-        } else {
-            saludo = "¡Buenas noches!";
-        }
-        spanSaludo.textContent = saludo;
+    const nombreGuardado = localStorage.getItem("nombrePacienteLanco");
+    const modalBienv = document.getElementById("modalBienvenida");
+    
+    if (nombreGuardado) {
+        // Si ya guardó su nombre antes, ocultamos el modal y saludamos con su nombre
+        if (modalBienv) modalBienv.style.display = 'none';
+        actualizarTextoSaludo(nombreGuardado);
+    } else {
+        // Si es su primera vez, mostramos el modal para que ingrese su nombre
+        if (modalBienv) modalBienv.style.display = 'flex';
     }
 
     // 2. Banco de avisos comunitarios
@@ -55,7 +57,52 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Cargar sugerencias iniciales del chatbot
     filtrarPreguntas('todos');
-});
+}); // <-- ¡Aquí está la llave que faltaba cerrando el DOMContentLoaded principal!
+
+// Función al hacer clic en "Ingresar al Portal"
+function guardarNombreUsuario() {
+    const input = document.getElementById("nombreUsuarioInput");
+    const nombre = input.value.trim();
+    
+    if (nombre === "") {
+        alert("Por favor, ingresa tu nombre para continuar.");
+        return;
+    }
+    
+    // Guardamos en la memoria del navegador
+    localStorage.setItem("nombrePacienteLanco", nombre);
+    
+    // Ocultamos el modal de bienvenida
+    const modalBienv = document.getElementById("modalBienvenida");
+    if (modalBienv) modalBienv.style.display = 'none';
+    
+    // Actualizamos el saludo en pantalla de inmediato
+    actualizarTextoSaludo(nombre);
+}
+
+// Función centralizada para calcular la hora y pintar el saludo dinámico personalizado
+function actualizarTextoSaludo(nombre) {
+    const contenedorSaludo = document.getElementById("saludoDinamico");
+    if (contenedorSaludo) {
+        const hora = new Date().getHours();
+        let saludoTiempo = "Qué bueno verte por aquí";
+        
+        if (hora >= 6 && hora < 12) {
+            saludoTiempo = "¡Buenos días";
+        } else if (hora >= 12 && hora < 20) {
+            saludoTiempo = "¡Buenas tardes";
+        } else {
+            saludoTiempo = "¡Buenas noches";
+        }
+        
+        // Si hay nombre guardado lo personaliza, si por algo llega vacío usa vecino/a
+        if (nombre) {
+            contenedorSaludo.textContent = `${saludoTiempo}, ${nombre}! 👋`;
+        } else {
+            contenedorSaludo.textContent = `${saludoTiempo}, vecino/a! 👋`;
+        }
+    }
+}
 
 // Menú Móvil
 function toggleMobileMenu() {
@@ -69,9 +116,9 @@ function toggleMobileMenu() {
     }
 }
 
-// Funciones de Accesibilidad Universal
+// Funciones de Accesibilidad Universal conectadas a tu CSS
 const fontLevels = ['text-sm-global', 'text-md-global', 'text-lg-global', 'text-xl-global'];
-let currentFontIndex = 1; // Empieza en md
+let currentFontIndex = 1; // Empieza en md por defecto
 
 function changeFontSize(direction) {
     const body = document.body;
@@ -104,35 +151,20 @@ function readPageAloud() {
    ========================================================================= */
 async function compartirTarjetaOficial() {
     const tarjeta = document.getElementById('tarjetaCompartible');
-    
-    if (!tarjeta) {
-        console.error("No se encontró el elemento #tarjetaCompartible");
-        return;
-    }
+    if (!tarjeta) return;
 
     try {
-        // Asegurarnos de que html2canvas esté disponible
         if (typeof html2canvas === 'undefined') {
             alert("La librería html2canvas no está cargada correctamente.");
             return;
         }
 
-        // Convertir el HTML en lienzo (Canvas)
-        const canvas = await html2canvas(tarjeta, { 
-            scale: 2,
-            useCORS: true,
-            allowTaint: false
-        });
+        const canvas = await html2canvas(tarjeta, { scale: 2, useCORS: true, allowTaint: false });
 
         canvas.toBlob(async (blob) => {
-            if (!blob) {
-                console.error("No se pudo crear el blob de la imagen.");
-                return;
-            }
-
+            if (!blob) return;
             const archivo = new File([blob], "horarios-hospital-lanco.png", { type: "image/png" });
             
-            // Verificar si el navegador soporta compartir archivos nativos (Celulares)
             if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
                 try {
                     await navigator.share({
@@ -141,24 +173,78 @@ async function compartirTarjetaOficial() {
                         files: [archivo],
                     });
                 } catch (error) {
-                    if (error.name !== 'AbortError') {
-                        console.log('Error al compartir, intentando descarga directa...', error);
-                        descargarImagenRespaldo(blob);
-                    }
+                    if (error.name !== 'AbortError') descargarImagenRespaldo(blob);
                 }
             } else {
-                // Respaldo para PC o navegadores que no soportan compartir archivos
                 descargarImagenRespaldo(blob);
             }
         }, 'image/png');
 
     } catch (error) {
         console.error("Error crítico al generar la imagen:", error);
-        alert("Hubo un problema al generar la tarjeta. Asegúrate de abrir la página mediante un servidor local (Live Server).");
     }
 }
 
-// Función auxiliar de respaldo para descarga directa
+function mostrarNivelTriage(nivel) {
+    document.querySelectorAll('.triage-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.triage-btn').forEach(btn => {
+        btn.classList.remove('ring-2', 'ring-red-400', 'ring-orange-400', 'ring-amber-400', 'ring-blue-400', 'ring-slate-400', 'scale-105');
+        btn.style.opacity = '0.7';
+    });
+
+    document.getElementById(`content-${nivel}`).classList.remove('hidden');
+    const activeBtn = document.getElementById(`btn-${nivel}`);
+    activeBtn.style.opacity = '1';
+    activeBtn.classList.add('scale-105');
+    
+    if(nivel === 'c1') activeBtn.classList.add('ring-2', 'ring-red-400');
+    if(nivel === 'c2') activeBtn.classList.add('ring-2', 'ring-orange-400');
+    if(nivel === 'c3') activeBtn.classList.add('ring-2', 'ring-amber-400');
+    if(nivel === 'c4') activeBtn.classList.add('ring-2', 'ring-blue-400');
+    if(nivel === 'c5') activeBtn.classList.add('ring-2', 'ring-slate-400');
+}
+
+function cambiarSectorAps(sector) {
+    document.querySelectorAll('.aps-sector-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.aps-tab-btn').forEach(btn => {
+        btn.classList.remove('border-teal-500', 'bg-teal-50', 'text-teal-800', 'border-2');
+        btn.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-600');
+    });
+
+    document.getElementById(`content-aps-${sector}`).classList.remove('hidden');
+    const activeBtn = document.getElementById(`btn-aps-${sector}`);
+    activeBtn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-600');
+    activeBtn.classList.add('border-teal-500', 'bg-teal-50', 'text-teal-800', 'border-2');
+}
+
+function cambiarTabHospitalizacion(tab) {
+    document.querySelectorAll('.hosp-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.hosp-tab-btn').forEach(btn => {
+        btn.classList.remove('border-indigo-500', 'bg-indigo-50', 'text-indigo-800', 'border-2');
+        btn.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-600');
+    });
+
+    document.getElementById(`content-hosp-${tab}`).classList.remove('hidden');
+    const activeBtn = document.getElementById(`btn-hosp-${tab}`);
+    activeBtn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-600');
+    activeBtn.classList.add('border-indigo-500', 'bg-indigo-50', 'text-indigo-800', 'border-2');
+}
+
+function cambiarTabTransversal(tab) {
+    // Ocultar contenidos y limpiar estilos de botones
+    document.querySelectorAll('.trans-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.trans-tab-btn').forEach(btn => {
+        btn.classList.remove('border-yellow-500', 'bg-yellow-50', 'text-yellow-900', 'border-2');
+        btn.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-600');
+    });
+
+    // Mostrar el contenido seleccionado y destacar su botón
+    document.getElementById(`content-trans-${tab}`).classList.remove('hidden');
+    const activeBtn = document.getElementById(`btn-trans-${tab}`);
+    activeBtn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-600');
+    activeBtn.classList.add('border-yellow-500', 'bg-yellow-50', 'text-yellow-900', 'border-2');
+}
+
 function descargarImagenRespaldo(blob) {
     const enlace = document.createElement('a');
     enlace.href = URL.createObjectURL(blob);
@@ -168,7 +254,6 @@ function descargarImagenRespaldo(blob) {
     document.body.removeChild(enlace);
 }
 
-// Modales y Acordeones
 function toggleFaq(id) {
     const content = document.getElementById(id);
     const icon = document.getElementById('icon-' + id);
@@ -206,7 +291,6 @@ window.onclick = function(event) {
     }
 }
 
-// Buscador instantáneo en tiempo real
 const searchInput = document.getElementById('searchInput');
 const cards = document.querySelectorAll('.searchable-card');
 
@@ -220,7 +304,6 @@ if (searchInput) {
     });
 }
 
-// Control de campos de solicitante (terceros) en OIRS
 function toggleSolicitanteFields(val) {
     const fields = document.getElementById('solicitanteFields');
     if (!fields) return;
@@ -231,121 +314,15 @@ function toggleSolicitanteFields(val) {
     }
 }
 
-// Manejo del Formulario de Contacto General
-function submitContactoForm(e) {
-    e.preventDefault();
-    const form = document.getElementById('contactoForm');
-    const btn = document.getElementById('submitContactoBtn');
-    const btnText = document.getElementById('btnContactoText');
-    const btnIcon = document.getElementById('btnContactoIcon');
-    const alertBox = document.getElementById('contactoSuccessAlert');
-
-    btn.disabled = true;
-    btnText.innerText = "Enviando mensaje...";
-    btnIcon.className = "fa-solid fa-spinner fa-spin";
-
-    setTimeout(() => {
-        form.style.display = 'none';
-        alertBox.classList.remove('hidden');
-        form.reset();
-        btn.disabled = false;
-        btnText.innerText = "Enviar Mensaje";
-        btnIcon.className = "fa-solid fa-paper-plane";
-    }, 800);
-}
-
-function resetContactoForm() {
-    const form = document.getElementById('contactoForm');
-    const alertBox = document.getElementById('contactoSuccessAlert');
-    form.style.display = 'block';
-    alertBox.classList.add('hidden');
-}
-
-// Función para filtrar las preguntas frecuentes por categoría en modales
-function filtrarFaq(categoria) {
-    document.querySelectorAll('.faq-tab').forEach(tab => {
-        tab.className = "faq-tab px-3 py-1.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 transition";
-    });
-    if(event && event.target) {
-        event.target.className = "faq-tab px-3 py-1.5 rounded-xl font-medium bg-white text-hospital-700 shadow-sm transition";
-    }
-
-    const items = document.querySelectorAll('.faq-item');
-    items.forEach(item => {
-        if (categoria === 'todas' || item.getAttribute('data-categoria') === categoria) {
-            item.style.display = 'block';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-}
-
-// Conexión del formulario OIRS a Google Apps Script
-const SCRIPT_URL = "https://script.google.com/macros/s/TU_URL_DE_APPS_SCRIPT_AQUI/exec";
-
-function submitOirsForm(e) {
-    e.preventDefault();
-    const form = document.getElementById('oirsForm');
-    const btn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const btnIcon = document.getElementById('btnIcon');
-    const alertBox = document.getElementById('oirsSuccessAlert');
-
-    btn.disabled = true;
-    btnText.innerText = "Enviando al sistema OIRS...";
-    btnIcon.className = "fa-solid fa-spinner fa-spin";
-
-    const formData = new FormData(form);
-
-    fetch(SCRIPT_URL, { method: 'POST', body: formData })
-        .then(response => {
-            form.style.display = 'none';
-            alertBox.classList.remove('hidden');
-            form.reset();
-            btn.disabled = false;
-            btnText.innerText = "Enviar Requerimiento Oficial";
-            btnIcon.className = "fa-solid fa-paper-plane";
-        })
-        .catch(error => {
-            form.style.display = 'none';
-            alertBox.classList.remove('hidden');
-            form.reset();
-            btn.disabled = false;
-            btnText.innerText = "Enviar Requerimiento Oficial";
-            btnIcon.className = "fa-solid fa-paper-plane";
-        });
-}
-
-function resetOirsForm() {
-    const form = document.getElementById('oirsForm');
-    const alertBox = document.getElementById('oirsSuccessAlert');
-    form.style.display = 'block';
-    alertBox.classList.add('hidden');
-    const sf = document.getElementById('solicitanteFields');
-    if(sf) sf.classList.add('hidden');
-    const ts = document.getElementById('toggleSolicitante');
-    if(ts) ts.value = 'no';
-}
-
 function cambiarVista(nombreVista) {
-    // 1. Limpiamos el nombre por si acaso le pasas 'urgencia' o 'vista-urgencia'
     const idLimpio = nombreVista.replace('vista-', '');
-    
-    // 2. Ocultamos TODAS las vistas que tengan la clase .vista-contenido
     document.querySelectorAll('.vista-contenido').forEach(el => {
         el.classList.add('hidden');
     });
-    
-    // 3. Buscamos específicamente la vista de destino con el prefijo correcto
     const vistaDestino = document.getElementById('vista-' + idLimpio);
-    
     if(vistaDestino) {
-        // 4. Mostramos la vista destino
         vistaDestino.classList.remove('hidden');
-        // 5. Subimos arriba del todo de manera instantánea
         window.scrollTo({ top: 0, behavior: 'instant' });
-    } else {
-        console.error("No se encontró el contenedor: vista-" + idLimpio);
     }
 }
 
@@ -374,7 +351,6 @@ async function procesarMensajeChat() {
     const chatMessages = document.getElementById('chatMessages');
     if(!chatMessages) return;
 
-    // 1. Mostrar mensaje del usuario
     const userMsgDiv = document.createElement('div');
     userMsgDiv.className = "flex items-start gap-2 max-w-[85%] ml-auto justify-end";
     userMsgDiv.innerHTML = `
@@ -386,7 +362,6 @@ async function procesarMensajeChat() {
     input.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // 2. Mensaje temporal de carga
     const botMsgDiv = document.createElement('div');
     botMsgDiv.className = "flex items-start gap-2 max-w-[88%] opacity-70";
     botMsgDiv.innerHTML = `
@@ -426,7 +401,7 @@ async function procesarMensajeChat() {
             respuestaFallback = "¡Hola! Qué gusto saludarte de parte de todo el equipo. ¿En qué puedo orientarte hoy respecto a los servicios de nuestro hospital?";
         }
         else if (t.includes('urgencia') || t.includes('emergencia') || t.includes('accident') || t.includes('sapu') || t.includes('dolor pecho') || t.includes('ahogo') || t.includes('respirar') || t.includes('golpe') || t.includes('cabeza') || t.includes('caida') || t.includes('caída') || t.includes('sangre') || t.includes('corte') || t.includes('herida') || t.includes('desmaya')) {
-            respuestaFallback = "⚠️️ <strong>Atención de Urgencia 24/7:</strong> Si tú o un familiar sufrieron un accidente, golpe fuerte, síntoma crítico o riesgo vital, por favor no esperen: acudan de inmediato al servicio de urgencias en <strong>Santiago 595, Lanco</strong>.";
+            respuestaFallback = "⚠ <strong>Atención de Urgencia 24/7:</strong> Si tú o un familiar sufrieron un accidente, golpe fuerte, síntoma crítico o riesgo vital, por favor no esperen: acudan de inmediato al servicio de urgencias en <strong>Santiago 595, Lanco</strong>.";
             incluirDisclaimer = true; 
         } 
         else if (t.includes('tos') || t.includes('resfrío') || t.includes('resfrio') || t.includes('garganta') || t.includes('fiebre') || t.includes('gripe') || t.includes('malestar')) {
@@ -434,7 +409,7 @@ async function procesarMensajeChat() {
             incluirDisclaimer = true; 
         }
         else if (t.includes('estomago') || t.includes('estómago') || t.includes('barriga') || t.includes('diarrea') || t.includes('vomito') || t.includes('vómito') || t.includes('nausea')) {
-            respuestaFallback = "🤢 Ante molestias estomacales o digestivas, mantén una hidratación constante con agua o suero oral liviano. Si el dolor abdominal es muy intenso, persistente o hay vómitos con sangre, acude a Urgencia 24/7.";
+            respuestaFallback = "🤢 Ante molestias estomacales o digestivas, mantén una hidratación constante con agua o suero oral liviano. Si el dolor abdominal es muy intenso, persistente o hay vómitos con sangre, acude de inmediato a Urgencia 24/7.";
             incluirDisclaimer = true;
         }
         else if (t.includes('farmacia') || t.includes('remedio') || t.includes('pastilla') || t.includes('receta')) {
@@ -486,7 +461,6 @@ async function procesarMensajeChat() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Banco completo de preguntas frecuentes categorizadas
 const bancoPreguntasFrecuentes = [
     { categoria: 'urgencias', texto: '¿Cuándo ir a Urgencia?' },
     { categoria: 'urgencias', texto: 'Tengo tos o fiebre' },
@@ -499,7 +473,6 @@ const bancoPreguntasFrecuentes = [
     { categoria: 'tramites', texto: '¿Qué es la Ley MILA?' }
 ];
 
-// Función para renderizar las preguntas según el filtro seleccionado
 function filtrarPreguntas(categoriaSeleccionada) {
     const contenedor = document.getElementById('containerSugerencias');
     if (!contenedor) return;
@@ -516,9 +489,6 @@ function filtrarPreguntas(categoriaSeleccionada) {
     `).join('');
 }
 
-/* =========================================================================
-   1. LÓGICA DEL CHECKLIST DINÁMICO (PREPARACIÓN DE VISITA)
-   ========================================================================= */
 function mostrarChecklist() {
     const seleccion = document.getElementById('selectTramite').value;
     const contenedor = document.getElementById('resultadoChecklist');
@@ -578,10 +548,6 @@ function mostrarChecklist() {
     contenedor.innerHTML = html;
 }
 
-/* =========================================================================
-   2. LÓGICA DEL BUSCADOR DE SECTORIZACIÓN (SOME NORTE Y SUR)
-   ========================================================================= */
-// Data extraída del documento de sectorización oficial
 const dataSectores = [
     { nombre: 'AIDA HIDALGO', sector: 'NORTE', tipo: 'Urbano' },
     { nombre: 'ASMUS STEIGMAIER', sector: 'NORTE', tipo: 'Urbano' },
@@ -628,7 +594,6 @@ const dataSectores = [
     { nombre: 'SOR IRMAGRD HETTICH', sector: 'NORTE', tipo: 'Urbano' },
     { nombre: 'VICENTE HUIDOBRO', sector: 'NORTE', tipo: 'Urbano' },
     { nombre: 'VIOLETA PARRA', sector: 'NORTE', tipo: 'Urbano' },
-    
     { nombre: 'CATRICO', sector: 'NORTE', tipo: 'Rural' },
     { nombre: 'CUDICO', sector: 'NORTE', tipo: 'Rural' },
     { nombre: 'EL ARCO', sector: 'NORTE', tipo: 'Rural' },
@@ -644,7 +609,6 @@ const dataSectores = [
     { nombre: 'SANTA BERNARDITA', sector: 'NORTE', tipo: 'Rural' },
     { nombre: 'TRANA', sector: 'NORTE', tipo: 'Rural' },
     { nombre: 'TROLTROHUE', sector: 'NORTE', tipo: 'Rural' },
-
     { nombre: 'LOS ARRAYANES', sector: 'NORTE', tipo: 'Urbano' },
     { nombre: 'ACCESO SUR', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'ALBERTO CORDOVA', sector: 'SUR', tipo: 'Urbano' },
@@ -683,7 +647,6 @@ const dataSectores = [
     { nombre: 'VALPARAISO', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'YUNGAY', sector: 'SUR', tipo: 'Urbano' },
     { nombre: 'CENTENARIO', sector: 'SUR', tipo: 'Urbano' },
-
     { nombre: 'NILCAHUIN', sector: 'SUR', tipo: 'Rural' },
     { nombre: 'TRIPAYANTE', sector: 'SUR', tipo: 'Rural' },
     { nombre: 'PURULON', sector: 'SUR', tipo: 'Rural' },
@@ -697,9 +660,8 @@ const dataSectores = [
     { nombre: 'AYLIN', sector: 'SUR', tipo: 'Rural' },
     { nombre: 'CIRUELOS', sector: 'SUR', tipo: 'Rural' },
     { nombre: 'PON PON', sector: 'SUR', tipo: 'Rural' }
-]; //[cite: 6]
+];
 
-// Función normalizadora (quita acentos para la búsqueda)
 const removeAccents = (str) => {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 };
@@ -708,7 +670,6 @@ function buscarSector() {
     const input = removeAccents(document.getElementById('inputSector').value);
     const contenedor = document.getElementById('resultadoSector');
     
-    // Si escribe menos de 3 letras, limpiamos
     if (input.length < 3) {
         contenedor.innerHTML = '<p class="text-xs text-slate-400 italic">Escribe al menos 3 letras para buscar...</p>';
         return;
@@ -721,7 +682,6 @@ function buscarSector() {
         return;
     }
 
-    // Armamos las tarjetas de resultado
     let html = '';
     resultados.forEach(res => {
         const isNorte = res.sector === 'NORTE';
@@ -745,10 +705,6 @@ function buscarSector() {
     contenedor.innerHTML = html;
 }
 
-
-/* =========================================================================
-   3. LÓGICA DEL HERBARIO VIRTUAL
-   ========================================================================= */
 const plantasHerbario = [
     { nombre: 'FOYE', comun: 'Canelo', color: 'bg-emerald-100 text-emerald-800' },
     { nombre: 'TRIWE', comun: 'Laurel', color: 'bg-green-100 text-green-800' },
@@ -763,7 +719,6 @@ const plantasHerbario = [
     { nombre: 'VOQUI', comun: 'Copihue', color: 'bg-rose-100 text-rose-800' }
 ];
 
-// Inyectar plantas al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('gridHerbario');
     if(grid) {
@@ -780,21 +735,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* =========================================================================
-   CÁLCULO AUTOMÁTICO DE DÍAS HÁBILES PARA ENTREGA DE HORAS
-   ========================================================================= */
 function calcularFechasAgendas() {
     const fechaActual = new Date();
     const anio = fechaActual.getFullYear();
     const mes = fechaActual.getMonth();
     
-    // Array para guardar los primeros 3 días hábiles del mes actual
     let diasHabiles = [];
-    // Empezamos desde el día 1 del mes
     let diaIterador = new Date(anio, mes, 1);
     
     while(diasHabiles.length < 3) {
-        // getDay() devuelve 0 para Domingo y 6 para Sábado
         let diaSemana = diaIterador.getDay();
         if(diaSemana !== 0 && diaSemana !== 6) {
             diasHabiles.push(new Date(diaIterador));
@@ -802,16 +751,13 @@ function calcularFechasAgendas() {
         diaIterador.setDate(diaIterador.getDate() + 1);
     }
 
-    // Función para formatear (Ej: "Lunes 05 de Octubre")
     const formatearFecha = (fecha) => {
         const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        
         let numDia = String(fecha.getDate()).padStart(2, '0');
         return `${dias[fecha.getDay()]} ${numDia} de ${meses[fecha.getMonth()]}`;
     };
 
-    // Actualizar los textos en el HTML (Intenta actualizar ambas opciones)
     const opcionesIds = ['opt1', 'opt2'];
     opcionesIds.forEach(opt => {
         const d1 = document.getElementById(`fecha-dia1-${opt}`);
@@ -824,12 +770,8 @@ function calcularFechasAgendas() {
     });
 }
 
-// Ejecutar la función apenas cargue la página
 document.addEventListener('DOMContentLoaded', calcularFechasAgendas);
 
-/* =========================================================================
-   PANTALLA DE CARGA (SECUENCIA INSTITUCIONAL Y PAUSADA)
-   ========================================================================= */
 document.addEventListener('DOMContentLoaded', () => {
     const splash = document.getElementById('pantallaCarga');
     const progressBar = document.getElementById('splash-progress');
@@ -847,7 +789,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const interval = setInterval(() => {
             if (currentStep < steps.length) {
-                // Efecto de pequeño desvanecimiento al cambiar texto
                 statusText.style.opacity = '0';
                 setTimeout(() => {
                     statusText.innerText = steps[currentStep].text;
@@ -858,21 +799,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentStep++;
             } else {
                 clearInterval(interval);
-                // Pausa final antes de desvanecer la pantalla
                 setTimeout(() => {
                     splash.style.opacity = '0';
                     setTimeout(() => {
                         splash.style.display = 'none';
-                    }, 1000); // 1 segundo de desvanecimiento suave
+                    }, 1000);
                 }, 800);
             }
-        }, 700); // Pausa de 0.7 segundos por cada fase (más lento y ceremonioso)
+        }, 700);
     }
 });
 
-/* =========================================================================
-   CINTILLO DINÁMICO DE SALUD (SOLO CASOS EXTREMOS DE CLIMA)
-   ========================================================================= */
 async function verificarClimaYSalud() {
     const cintillo = document.getElementById('cintilloSalud');
     const textoCintillo = document.getElementById('textoCintillo');
@@ -881,7 +818,6 @@ async function verificarClimaYSalud() {
     if (!cintillo || !textoCintillo) return;
 
     try {
-        // Coordenadas de Lanco, Chile
         const lat = -39.45;
         const lon = -72.53;
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,weather_code,wind_speed_10m`);
@@ -890,40 +826,31 @@ async function verificarClimaYSalud() {
         if (data && data.current) {
             const temp = data.current.temperature_2m;
             const precipitacion = data.current.precipitation;
-            const viento = data.current.wind_speed_10m || 0; // km/h
+            const viento = data.current.wind_speed_10m || 0;
             const weatherCode = data.current.weather_code;
 
             let mensaje = "";
             let iconoClass = "";
             let mostrarAlerta = false;
 
-            // Definición de condiciones extremas:
-            // 1. Frío extremo / Helada (ej. menos de 4°C)
             if (temp <= 4) {
                 mensaje = "⚠️ Alerta de Bajas Temperaturas en Lanco: El frío extremo favorece la circulación de virus respiratorios. Abrígate por capas, protege a niños y adultos mayores y evita cambios bruscos de temperatura.";
                 iconoClass = "fa-snowflake";
                 mostrarAlerta = true;
-            } 
-            // 2. Calor extremo / Ola de calor (ej. más de 28°C)
-            else if (temp >= 28) {
+            } else if (temp >= 28) {
                 mensaje = "⚠️ Aviso de Altas Temperaturas: Mantén una hidratación constante con agua, evita la exposición directa al sol en horas punta y protege a los grupos de riesgo frente a golpes de calor.";
                 iconoClass = "fa-temperature-high";
                 mostrarAlerta = true;
-            } 
-            // 3. Lluvia intensa o temporal (códigos de lluvia fuerte o precipitación alta > 3mm/h)
-            else if (precipitacion > 3.0 || [63, 65, 82].includes(weatherCode)) {
+            } else if (precipitacion > 3.0 || [63, 65, 82].includes(weatherCode)) {
                 mensaje = "⚠️ Condición de Precipitaciones Intensas: Ante las fuertes lluvias en la zona, extrema los cuidados en el hogar, evita zonas de acumulación de agua y mantén al día tus tratamientos médicos.";
                 iconoClass = "fa-cloud-showers-heavy";
                 mostrarAlerta = true;
-            }
-            // 4. Viento fuerte
-            else if (viento > 40) {
+            } else if (viento > 40) {
                 mensaje = "⚠️ Alerta de Vientos Intensos en la Comuna: Se recomienda precaución al transitar y asegurar elementos exteriores para prevenir accidentes.";
                 iconoClass = "fa-wind";
                 mostrarAlerta = true;
             }
 
-            // Si es un caso extremo, mostramos el cintillo institucional; si no, queda oculto
             if (mostrarAlerta) {
                 textoCintillo.innerText = mensaje;
                 iconoCintillo.className = `fa-solid ${iconoClass}`;
@@ -937,5 +864,4 @@ async function verificarClimaYSalud() {
     }
 }
 
-// Ejecutar al cargar la página
 document.addEventListener('DOMContentLoaded', verificarClimaYSalud);

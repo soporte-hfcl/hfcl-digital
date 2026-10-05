@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicon del Hospital Familiar y Comunitario de Lanco -->
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="https://i.ibb.co/5gHpwbcX/logo-hl.png">
     <title>Portal Pacientes - Hospital Familiar y Comunitario de Lanco</title>
 
@@ -646,13 +646,11 @@
             </section>
 
         </div><!-- Fin Vista Inicio -->
+<!-- ================================================================= -->
+        <!-- VISTA EXCLUSIVA: URGENCIA (Versión Completa e Informativa)        -->
         <!-- ================================================================= -->
-        <!-- VISTA EXCLUSIVA: URGENCIA                                         -->
-        <!-- ================================================================= -->
-        <div id="vista-urgencia" class="vista-contenido hidden">
-            <!-- Contenido de Urgencia -->
-
-
+        <div id="vista-urgencia" class="vista-contenido hidden space-y-6">
+            
             <!-- Botón Superior para Volver al Inicio -->
             <div>
                 <button onclick="cambiarVista('inicio')"
@@ -667,67 +665,145 @@
                 </div>
                 <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
-                        <div
-                            class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                        <div class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
                             <i class="fa-solid fa-truck-medical"></i>
                         </div>
                         <div>
-                            <span
-                                class="text-xs uppercase tracking-wider text-red-600 font-semibold bg-red-50 px-3 py-1 rounded-full border border-red-100 inline-block mb-1">Servicio
-                                de Urgencia</span>
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Atención y Categorización de
-                                Urgencia (24/7)</h2>
+                            <span class="text-xs uppercase tracking-wider text-red-600 font-semibold bg-red-50 px-3 py-1 rounded-full border border-red-100 inline-block mb-1">Servicio de Urgencia 24/7</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Atención y Protocolo de Categorización (Triage)</h2>
                         </div>
                     </div>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
-                    Espacio clínico destinado a la resolución de situaciones de salud agudas. Recuerda que la atención
-                    se rige estrictamente por la <strong>gravedad clínica del paciente (Triage C1 a C5)</strong> y no
-                    por el orden de llegada.
+                    Espacio clínico destinado a la resolución de situaciones de salud agudas de forma continuada. La categorización u obligación de <strong>Triage</strong> es un proceso de valoración clínica rápida realizado por enfermería al ingreso, priorizando la atención según el <strong>riesgo vital del paciente y no por el orden de llegada</strong>.
                 </p>
             </section>
 
-            <!-- Tarjetas informativas de Urgencia -->
+<!-- Sección Interactiva: Niveles de Categorización (Triage) -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-stethoscope text-red-600"></i> Clasificación Oficial de Gravedad (Triage)
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                            Haz clic en cada nivel para conocer su descripción clínica, tiempos estimados y ejemplos:
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botones de Pestañas (Niveles C1 al C5) -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                    <button onclick="mostrarNivelTriage('c1')" id="btn-c1" class="triage-btn p-3 rounded-2xl border-2 border-red-200 bg-red-50 text-red-700 font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 shadow-sm ring-2 ring-red-400">
+                        <span class="text-sm">C1</span>
+                        <span class="text-[10px] uppercase font-semibold">Resucitación</span>
+                    </button>
+                    <button onclick="mostrarNivelTriage('c2')" id="btn-c2" class="triage-btn p-3 rounded-2xl border-2 border-orange-200 bg-orange-50/50 text-orange-700 font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 hover:bg-orange-50">
+                        <span class="text-sm">C2</span>
+                        <span class="text-[10px] uppercase font-semibold">Emergencia</span>
+                    </button>
+                    <button onclick="mostrarNivelTriage('c3')" id="btn-c3" class="triage-btn p-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-amber-700 font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 hover:bg-amber-50">
+                        <span class="text-sm">C3</span>
+                        <span class="text-[10px] uppercase font-semibold">Moderada</span>
+                    </button>
+                    <button onclick="mostrarNivelTriage('c4')" id="btn-c4" class="triage-btn p-3 rounded-2xl border-2 border-blue-200 bg-blue-50/50 text-blue-700 font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 hover:bg-blue-50">
+                        <span class="text-sm">C4</span>
+                        <span class="text-[10px] uppercase font-semibold">Leve</span>
+                    </button>
+                    <button onclick="mostrarNivelTriage('c5')" id="btn-c5" class="triage-btn col-span-2 sm:col-span-1 p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 hover:bg-slate-100">
+                        <span class="text-sm">C5</span>
+                        <span class="text-[10px] uppercase font-semibold">No Urgente</span>
+                    </button>
+                </div>
+
+                <!-- Panel de Contenido Dinámico del Triage -->
+                <div class="relative bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80 min-h-[140px] flex items-center transition-all duration-300">
+                    
+                    <!-- Contenido C1 -->
+                    <div id="content-c1" class="triage-content space-y-2 w-full">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <span class="font-extrabold text-red-700 text-sm uppercase">C1: Resucitación / Riesgo Vital Inmediato</span>
+                            <span class="bg-red-600 text-white text-[10px] px-2.5 py-0.5 rounded-full font-bold">Atención Inmediata</span>
+                        </div>
+                        <p class="text-slate-700 text-xs sm:text-sm"><strong>Descripción clínica:</strong> Condición que compromete la vida de forma inminente, requiriendo maniobras de reanimación avanzadas sin ningún tipo de demora.</p>
+                        <p class="text-slate-500 text-xs"><em>Ejemplos frecuentes:</em> Paro cardiorrespiratorio, shock severo, politraumatismo grave o inconsciencia profunda.</p>
+                    </div>
+
+                    <!-- Contenido C2 -->
+                    <div id="content-c2" class="triage-content space-y-2 w-full hidden">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <span class="font-extrabold text-orange-700 text-sm uppercase">C2: Emergencia / Alto Riesgo</span>
+                            <span class="bg-orange-500 text-white text-[10px] px-2.5 py-0.5 rounded-full font-bold">&lt; 30 minutos</span>
+                        </div>
+                        <p class="text-slate-700 text-xs sm:text-sm"><strong>Descripción clínica:</strong> Paciente con alteración aguda de conciencia, dolor de alta intensidad o riesgo inminente de rápido deterioro clínico.</p>
+                        <p class="text-slate-500 text-xs"><em>Ejemplos frecuentes:</em> Dolor torácico agudo (sospecha de infarto), dificultad respiratoria severa, hemorragias masivas.</p>
+                    </div>
+
+                    <!-- Contenido C3 -->
+                    <div id="content-c3" class="triage-content space-y-2 w-full hidden">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <span class="font-extrabold text-amber-700 text-sm uppercase">C3: Urgencia Moderada</span>
+                            <span class="bg-amber-500 text-white text-[10px] px-2.5 py-0.5 rounded-full font-bold">&lt; 90 minutos</span>
+                        </div>
+                        <p class="text-slate-700 text-xs sm:text-sm"><strong>Descripción clínica:</strong> Condición aguda sin compromiso vital inmediato, pero que requiere de exámenes o tratamiento médico en el centro asistencial.</p>
+                        <p class="text-slate-500 text-xs"><em>Ejemplos frecuentes:</em> Fiebre alta en niños o adultos mayores, dolor abdominal moderado, fracturas menores o heridas que requieren sutura.</p>
+                    </div>
+
+                    <!-- Contenido C4 -->
+                    <div id="content-c4" class="triage-content space-y-2 w-full hidden">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <span class="font-extrabold text-blue-700 text-sm uppercase">C4: Menor Gravedad (Patología Aguda Leve)</span>
+                            <span class="bg-blue-500 text-white text-[10px] px-2.5 py-0.5 rounded-full font-bold">&lt; 120 minutos</span>
+                        </div>
+                        <p class="text-slate-700 text-xs sm:text-sm"><strong>Descripción clínica:</strong> Problema de salud de baja complejidad, sin riesgo vital actual ni potencial a mediano plazo.</p>
+                        <p class="text-slate-500 text-xs"><em>Ejemplos frecuentes:</em> Cuadros respiratorios altos sin dificultad (resfríos), contusiones leves, esguinces grado 1.</p>
+                    </div>
+
+                    <!-- Contenido C5 -->
+                    <div id="content-c5" class="triage-content space-y-2 w-full hidden">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <span class="font-extrabold text-slate-700 text-sm uppercase">C5: Atención General / No Urgente</span>
+                            <span class="bg-slate-500 text-white text-[10px] px-2.5 py-0.5 rounded-full font-bold">&lt; 180 minutos</span>
+                        </div>
+                        <p class="text-slate-700 text-xs sm:text-sm"><strong>Descripción clínica:</strong> Padecimientos de larga evolución o patologías de carácter ambulatorio que pueden resolverse eficientemente en la red de atención primaria.</p>
+                        <p class="text-slate-500 text-xs"><em>Ejemplos frecuentes:</em> Síntomas de varios días sin cambios, solicitudes de recetas médicas habituales.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Tarjetas informativas inferiores de Apoyo -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+                <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-100 shadow-sm space-y-3">
                     <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 text-base">¿Cuándo acudir a Urgencia?</h3>
+                    <h3 class="font-bold text-slate-900 text-base">¿Cuándo acudir al Servicio de Urgencia?</h3>
                     <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc list-inside">
-                        <li>Dificultad respiratoria severa o sensación de ahogo.</li>
-                        <li>Dolor en el pecho de inicio súbito ( sospecha de infarto).</li>
-                        <li>Pérdida de conciencia o desmayos repentinos.</li>
+                        <li>Dificultad respiratoria severa o sensación inminente de ahogo.</li>
+                        <li>Dolor en el pecho de inicio súbito (sospecha de evento cardíaco).</li>
+                        <li>Pérdida de conciencia, desmayos repentinos o confusión mental aguda.</li>
                         <li>Accidentes graves, golpes fuertes en la cabeza o fracturas expuestas.</li>
-                        <li>Hemorragias abundantes que no se detienen.</li>
+                        <li>Hemorragias abundantes que no ceden con compresión local.</li>
                     </ul>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-                    <div
-                        class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-clipboard-list"></i>
+                <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-100 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-circle-info"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 text-base">Proceso de Categorización (Triage)</h3>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        Al ingresar, un enfermero o matrón evaluará tus síntomas para asignarte una categoría de
-                        urgencia:
-                    </p>
-                    <div class="text-xs space-y-1.5 font-medium text-slate-700">
-                        <div class="p-2 bg-red-50 text-red-800 rounded-lg border border-red-200"><strong>C1 -
-                                C2:</strong> Riesgo vital / Emergencia (Atención inmediata)</div>
-                        <div class="p-2 bg-yellow-50 text-yellow-800 rounded-lg border border-yellow-200">
-                            <strong>C3:</strong> Urgencia media (Esperas según gravedad)</div>
-                        <div class="p-2 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-200"><strong>C4
-                                - C5:</strong> Consulta general / Menor complejidad</div>
-                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Recomendaciones para el Paciente</h3>
+                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2.5 leading-relaxed">
+                        <li>📌 Traiga siempre su <strong>Cédula de Identidad</strong> para agilizar el registro administrativo de ingreso.</li>
+                        <li>⏱️ Recuerde que los tiempos de espera son estimados y varían según la llegada prioritaria de pacientes críticos (C1 y C2).</li>
+                        <li>🤝 Se solicita acudir con un máximo de un acompañante para mantener despejadas las salas de espera clínicas.</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        </div>
 
-        <!-- ================================================================= -->
-        <!-- VISTA EXCLUSIVA: APS (ATENCIÓN PRIMARIA)                          -->
+        </div>
+       <!-- ================================================================= -->
+        <!-- VISTA EXCLUSIVA: APS (ATENCIÓN PRIMARIA) - VERSIÓN INTERACTIVA    -->
         <!-- ================================================================= -->
         <div id="vista-aps" class="vista-contenido hidden space-y-6">
 
@@ -745,99 +821,114 @@
                 </div>
                 <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
-                        <div
-                            class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                        <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
                             <i class="fa-solid fa-stethoscope"></i>
                         </div>
                         <div>
-                            <span
-                                class="text-xs uppercase tracking-wider text-teal-700 font-semibold bg-teal-50 px-3 py-1 rounded-full border border-teal-100 inline-block mb-1">Modelo
-                                de Salud Familiar</span>
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Atención Primaria de Salud
-                                (APS)</h2>
+                            <span class="text-xs uppercase tracking-wider text-teal-700 font-semibold bg-teal-50 px-3 py-1 rounded-full border border-teal-100 inline-block mb-1">Modelo de Salud Familiar</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Atención Primaria de Salud (APS)</h2>
                         </div>
                     </div>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
-                    Nuestro enfoque preventivo y promocional de salud. La atención se organiza territorialmente a través
-                    de <strong>SOME Sur y SOME Norte</strong> para brindar un seguimiento continuo a ti y a tu familia
-                    en cada etapa del ciclo vital.
+                    Nuestro enfoque preventivo y promocional de salud. La atención se organiza territorialmente a través de <strong>SOME Sur y SOME Norte</strong> para brindar un seguimiento continuo a ti y a tu familia en cada etapa del ciclo vital.
                 </p>
             </section>
 
-            <!-- Tarjetas informativas de APS -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- SOME Sur y Norte -->
-                <div
-                    class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3">
-                    <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-map-location-dot"></i>
-                    </div>
-                    <h3 class="font-bold text-slate-900 text-base">Sectorización (SOME Sur y Norte)</h3>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        La comuna está dividida en sectores para organizar tu atención médica con un equipo de cabecera
-                        asignado:
+            <!-- Sección Interactiva: Selector de Sectorización (SOME Norte vs Sur) -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-5">
+                <div>
+                    <h3 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-teal-600"></i> Sectorización Territorial (SOME)
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                        Selecciona tu sector para conocer los detalles de asignación y equipo médico de cabecera:
                     </p>
-                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc list-inside mt-2">
-                        <li><strong>SOME Norte:</strong> Atención a pacientes de la zona norte urbana y postas rurales
-                            correspondientes.</li>
-                        <li><strong>SOME Sur:</strong> Atención a pacientes de la zona sur urbana e intersectorial.</li>
-                    </ul>
                 </div>
 
-                <!-- Prestaciones y Controles -->
-                <div
-                    class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3">
+                <!-- Botones de Pestañas Interactivas -->
+                <div class="grid grid-cols-2 gap-3 max-w-md">
+                    <button onclick="cambiarSectorAps('norte')" id="btn-aps-norte" class="aps-tab-btn py-3 px-4 rounded-2xl border-2 border-teal-500 bg-teal-50 text-teal-800 font-bold text-xs transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-compass"></i> SOME Norte
+                    </button>
+                    <button onclick="cambiarSectorAps('sur')" id="btn-aps-sur" class="aps-tab-btn py-3 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-600 font-bold text-xs transition flex items-center justify-center gap-2 hover:bg-slate-100">
+                        <i class="fa-solid fa-compass"></i> SOME Sur
+                    </button>
+                </div>
+
+                <!-- Contenido Dinámico de los Sectores -->
+                <div class="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80 min-h-[110px] flex items-center">
+                    <!-- Info Norte -->
+                    <div id="content-aps-norte" class="aps-sector-content space-y-1.5 w-full">
+                        <h4 class="font-bold text-teal-900 text-sm">Sector Norte Urbano y Rural</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">Orientado a la atención de los vecinos del sector norte de Lanco y cobertura coordinada con las postas de salud rural de la jurisdicción territorial norte.</p>
+                        <span class="inline-block text-[11px] font-semibold text-teal-700 bg-teal-100/60 px-2.5 py-0.5 rounded-full mt-1">Equipo de Cabecera Asignado</span>
+                    </div>
+
+                    <!-- Info Sur -->
+                    <div id="content-aps-sur" class="aps-sector-content space-y-1.5 w-full hidden">
+                        <h4 class="font-bold text-teal-900 text-sm">Sector Sur Urbano e Intersectorial</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">Enfocado en la población del sector sur de la comuna, garantizando el seguimiento clínico continuo, controles crónicos y atención territorial integrada.</p>
+                        <span class="inline-block text-[11px] font-semibold text-teal-700 bg-teal-100/60 px-2.5 py-0.5 rounded-full mt-1">Equipo de Cabecera Asignado</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tarjetas de Prestaciones y Controles Preventivos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Programas de Salud -->
+                <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-100 shadow-sm space-y-4">
                     <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-user-doctor"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 text-base">Prestaciones y Controles</h3>
+                    <h3 class="font-bold text-slate-900 text-base">Prestaciones y Controles del Ciclo Vital</h3>
                     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        A través de tu SOME correspondiente, accedes a controles regulares tales como:
+                        A través de tu SOME correspondiente, accedes de forma programada a los siguientes programas preventivos:
                     </p>
-                    <div class="grid grid-cols-2 gap-2 text-[11px] sm:text-xs font-medium text-slate-700 mt-2">
-                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i
-                                class="fa-solid fa-heart-pulse text-teal-600 w-3"></i> Prog. Cardiovascular</div>
-                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i
-                                class="fa-solid fa-baby text-teal-600 w-3"></i> Control Niño Sano</div>
-                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i
-                                class="fa-solid fa-person-pregnant text-teal-600 w-3"></i> Salud Maternal</div>
-                        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i
-                                class="fa-solid fa-tooth text-teal-600 w-3"></i> Atención Dental</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-medium text-slate-700">
+                        <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex items-center gap-2.5 hover:bg-teal-50/40 transition">
+                            <i class="fa-solid fa-heart-pulse text-teal-600 text-sm w-4"></i> Programas Cardiovasculares
+                        </div>
+                        <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex items-center gap-2.5 hover:bg-teal-50/40 transition">
+                            <i class="fa-solid fa-baby text-teal-600 text-sm w-4"></i> Control Niño Sano y Vacunatorio
+                        </div>
+                        <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex items-center gap-2.5 hover:bg-teal-50/40 transition">
+                            <i class="fa-solid fa-person-pregnant text-teal-600 text-sm w-4"></i> Salud Maternal y Ginecológica
+                        </div>
+                        <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex items-center gap-2.5 hover:bg-teal-50/40 transition">
+                            <i class="fa-solid fa-tooth text-teal-600 text-sm w-4"></i> Atención Odontológica Integral
+                        </div>
                     </div>
                 </div>
 
-                <!-- Agendamiento de Horas (Ocupa ambas columnas) -->
-                <div
-                    class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl flex-shrink-0">
-                        <i class="fa-solid fa-phone-volume"></i>
-                    </div>
-                    <div class="w-full">
-                        <h3 class="font-bold text-slate-900 text-base text-center sm:text-left">¿Necesitas atención
-                            médica general (Morbilidad)?</h3>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1 mb-3 text-center sm:text-left">
-                            Para atenciones del día, llama a nuestra línea gratuita <strong>800 360 035</strong> los
-                            días <strong>Lunes y Miércoles de 08:30 a 10:00 hrs</strong>. Si requieres agendar horas de
-                            controles (crónicos, dentales, etc.), te invitamos a revisar nuestro calendario oficial.
-                        </p>
-                        <div class="flex justify-center sm:justify-start">
-                            <!-- Fíjate cómo conectamos este botón al modal que ya tenías creado -->
-                            <button onclick="openModal('modalAps')"
-                                class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm">
-                                <i class="fa-solid fa-calendar-days"></i> Ver Cronograma de Horas
-                            </button>
+                <!-- Agendamiento y Línea 800 -->
+                <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-100 shadow-sm space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-phone-volume"></i>
                         </div>
+                        <h3 class="font-bold text-slate-900 text-base">Solicitud de Horas Médicas (Morbilidad)</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Para atención médica general del día, utiliza nuestra línea gratuita de agendamiento telefónico:
+                        </p>
+                        <div class="p-3.5 bg-amber-50/70 rounded-2xl border border-amber-200/80 text-xs text-amber-900 space-y-1">
+                            <p class="font-bold">📞 Fono Gratuito: 800 360 035</p>
+                            <p class="text-amber-800">Horario de atención telefónica: <strong>Lunes y Miércoles de 08:30 a 10:00 hrs</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="openModal('modalAps')" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                            <i class="fa-solid fa-calendar-days"></i> Ver Cronograma Completo de Horas
+                        </button>
                     </div>
                 </div>
 
             </div>
         </div>
-
-        <!-- ================================================================= -->
-        <!-- VISTA EXCLUSIVA: HOSPITALIZACIÓN                                  -->
+      <!-- ================================================================= -->
+        <!-- VISTA EXCLUSIVA: HOSPITALIZACIÓN (ACTUALIZADA CON NORMATIVA OFICIAL)-->
         <!-- ================================================================= -->
         <div id="vista-hospitalizacion" class="vista-contenido hidden space-y-6">
 
@@ -855,105 +946,100 @@
                 </div>
                 <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
-                        <div
-                            class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
                             <i class="fa-solid fa-bed-pulse"></i>
                         </div>
                         <div>
-                            <span
-                                class="text-xs uppercase tracking-wider text-indigo-700 font-semibold bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 inline-block mb-1">Unidad
-                                de Cuidados</span>
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Hospitalización</h2>
+                            <span class="text-xs uppercase tracking-wider text-indigo-700 font-semibold bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 inline-block mb-1">Unidad de Cuidados</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Hospitalización e Indiferenciada</h2>
                         </div>
                     </div>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
-                    Servicio dedicado al cuidado, tratamiento y recuperación de pacientes que requieren observación
-                    continua. Promovemos una estadía segura, respetuosa y conectada con la familia a través de la Ley
-                    MILA y nuestros protocolos de visita.
+                    Servicio dedicado al cuidado y recuperación de pacientes. Conoce los horarios de visita vigentes, las normativas de artículos personales, la Ley MILA y los canales oficiales de información médica.
                 </p>
             </section>
 
-            <!-- Tarjetas informativas de Hospitalización -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- Horarios de Visita y Normas -->
-                <div
-                    class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3 flex flex-col justify-between">
-                    <div>
-                        <div
-                            class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg mb-3">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-900 text-base">Visitas y Artículos Permitidos</h3>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1">
-                            Las visitas están habilitadas de <strong>Lunes a Domingo de 11:30 a 17:30 hrs</strong>
-                            (máximo 6 personas por paciente, ingresando de a uno). Revisa qué útiles de aseo están
-                            permitidos ingresar y el reglamento de la unidad.
-                        </p>
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="openModal('modalHospitalizado')"
-                            class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                            <i class="fa-solid fa-book-medical"></i> Ver Guía de Hospitalización
-                        </button>
-                    </div>
+            <!-- Sección de Pestañas Interactivas Actualizadas -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+                <div>
+                    <h3 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-indigo-600"></i> Normativa y Guía de la Unidad
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                        Selecciona una categoría para revisar los detalles oficiales:
+                    </p>
                 </div>
 
-                <!-- Ley MILA -->
-                <div
-                    class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-3 flex flex-col justify-between">
-                    <div>
-                        <div
-                            class="w-10 h-10 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-lg mb-3">
-                            <i class="fa-solid fa-hands-holding-child"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-900 text-base">Acompañamiento Digno (Ley MILA)</h3>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1">
-                            Garantizamos el derecho al acompañamiento continuo de niños, niñas, adolescentes y personas
-                            gestantes durante su proceso de hospitalización o atención ambulatoria.
-                        </p>
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="openModal('modalMila')"
-                            class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                            <i class="fa-solid fa-scale-balanced"></i> Conocer Derechos Ley MILA
-                        </button>
-                    </div>
+                <!-- Botones de Pestañas -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    <button onclick="cambiarTabHospitalizacion('visitas')" id="btn-hosp-visitas" class="hosp-tab-btn py-3 px-4 rounded-2xl border-2 border-indigo-500 bg-indigo-50 text-indigo-800 font-bold text-xs transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-users"></i> Visitas y Requisitos
+                    </button>
+                    <button onclick="cambiarTabHospitalizacion('mila')" id="btn-hosp-mila" class="hosp-tab-btn py-3 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-600 font-bold text-xs transition flex items-center justify-center gap-2 hover:bg-slate-100">
+                        <i class="fa-solid fa-hands-holding-child"></i> Ley MILA
+                    </button>
+                    <button onclick="cambiarTabHospitalizacion('contacto')" id="btn-hosp-contacto" class="hosp-tab-btn py-3 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-600 font-bold text-xs transition flex items-center justify-center gap-2 hover:bg-slate-100">
+                        <i class="fa-solid fa-phone-volume"></i> Informes y Normas
+                    </button>
                 </div>
 
-                <!-- Entrega de Información (Ocupa ambas columnas) -->
-                <div
-                    class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl flex-shrink-0">
-                        <i class="fa-solid fa-phone-volume"></i>
-                    </div>
-                    <div class="w-full text-center sm:text-left">
-                        <h3 class="font-bold text-slate-900 text-base">Información Médica Telefónica</h3>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1 mb-3">
-                            Para familiares responsables y autorizados. Puedes comunicarte directamente a la unidad
-                            llamando al <a href="tel:632686139" class="font-bold text-indigo-600 hover:underline">63 268
-                                6139</a> en los siguientes horarios estipulados:
-                        </p>
-                        <div
-                            class="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start text-xs font-medium text-slate-700">
-                            <div
-                                class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2">
-                                <i class="fa-regular fa-clock text-indigo-500"></i> Lunes a Viernes: 14:00 - 16:00 hrs
+                <!-- Panel de Contenido Dinámico Actualizado -->
+                <div class="bg-slate-50/80 rounded-2xl p-5 sm:p-6 border border-slate-200/80 min-h-[180px] flex items-center">
+                    
+                    <!-- Contenido 1: Visitas y Requisitos -->
+                    <div id="content-hosp-visitas" class="hosp-content space-y-3 w-full">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-solid fa-users"></i>
                             </div>
-                            <div
-                                class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2">
-                                <i class="fa-regular fa-clock text-indigo-500"></i> Sábados y Domingos: 10:00 - 12:00
-                                hrs
-                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Horarios y Requisitos de Visita</h4>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Las visitas se realizan de <strong>lunes a domingo de 11:30 hrs a 17:30 hrs</strong>. Se permite un máximo de 6 visitas por paciente, ingresando de manera individual (1 familiar por paciente e ir rotando). Edad permitida para ingreso: <strong>mayores de 12 años</strong>.
+                        </p>
+                        <div class="pt-2">
+                            <button onclick="openModal('modalHospitalizado')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm w-fit">
+                                <i class="fa-solid fa-book-medical"></i> Ver Reglamento y Artículos de Aseo
+                            </button>
                         </div>
                     </div>
-                </div>
 
-            </div>
+                    <!-- Contenido 2: Ley MILA -->
+                    <div id="content-hosp-mila" class="hosp-content space-y-3 w-full hidden">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-solid fa-hands-holding-child"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Acompañamiento Digno y Ley MILA</h4>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Garantizamos el derecho al acompañamiento continuo de niños, niñas, adolescentes y personas gestantes durante su hospitalización, asegurando un entorno de contención familiar y apego.
+                        </p>
+                        <div class="pt-2">
+                            <button onclick="openModal('modalMila')" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm w-fit">
+                                <i class="fa-solid fa-scale-balanced"></i> Conocer Derechos MILA
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Contenido 3: Informes y Normas -->
+                    <div id="content-hosp-contacto" class="hosp-content space-y-3 w-full hidden">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Informes Telefónicos y Tutor Responsable</h4>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Al ingreso debe quedar consignado <strong>un (1) familiar y/o tutor</strong> a cargo de entregar y recibir la información del paciente. Para consultas telefónicas, llama al <a href="tel:632686139" class="font-bold text-indigo-600 hover:underline">63 268 6139</a> de lunes a domingo de <strong>14:00 a 16:00 hrs</strong>.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
         </div>
-        <!-- ================================================================= -->
+       <!-- ================================================================= -->
         <!-- VISTA EXCLUSIVA: SERVICIOS TRANSVERSALES Y APOYO CLÍNICO          -->
         <!-- ================================================================= -->
         <div id="vista-transversales" class="vista-contenido hidden space-y-6">
@@ -972,132 +1058,130 @@
                 </div>
                 <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
-                        <div
-                            class="w-14 h-14 rounded-2xl bg-yellow-50 text-yellow-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-50 text-yellow-700 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
                             <i class="fa-solid fa-network-wired"></i>
                         </div>
                         <div>
-                            <span
-                                class="text-xs uppercase tracking-wider text-yellow-700 font-semibold bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100 inline-block mb-1">Apoyo
-                                y Tratamiento</span>
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Servicios Transversales</h2>
+                            <span class="text-xs uppercase tracking-wider text-yellow-700 font-semibold bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100 inline-block mb-1">Apoyo y Tratamiento</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Servicios Transversales y Unidades de Apoyo</h2>
                         </div>
                     </div>
                 </div>
                 <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed max-w-3xl">
-                    Unidades de apoyo clínico que prestan servicios a toda la red del hospital, incluyendo entrega de
-                    fármacos, toma de exámenes, inmunización y procedimientos específicos indicados por nuestros
-                    profesionales.
+                    Unidades de apoyo clínico que prestan servicios a toda la red del hospital, incluyendo entrega de fármacos, toma de exámenes, inmunización y procedimientos específicos indicados por nuestros profesionales.
                 </p>
             </section>
 
-            <!-- Tarjetas informativas de Servicios Transversales -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                <!-- Sector Transversal (Procedimientos y Profesionales) -->
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-                    <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-                        <div
-                            class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-lg">
-                            <i class="fa-solid fa-user-nurse"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-900 text-base">Sector Transversal y Procedimientos</h3>
-                    </div>
-
-                    <p class="text-xs text-slate-600">
-                        Área de atención que agrupa a: <strong>Matrona, Procedimiento, Kinesiólogo y Terapeuta
-                            Ocupacional</strong>. Por favor, espere su turno en la sala de espera (prohibido el ingreso
-                        a personal no autorizado).
+            <!-- Sección Interactiva: Pestañas de Navegación Transversal -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+                <div>
+                    <h3 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-yellow-600"></i> Selecciona el Servicio o Unidad:
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                        Revisa los normativos, prestaciones y horarios actualizados de cada área:
                     </p>
-
-                    <!-- Normativas de Procedimiento extraídas de las fotos -->
-                    <div class="space-y-2 mt-3">
-                        <div class="bg-red-50 p-3 rounded-xl border border-red-100 text-xs text-red-900 space-y-1">
-                            <strong class="font-bold flex items-center gap-1.5"><i
-                                    class="fa-solid fa-syringe text-red-600"></i> Administración de
-                                Medicamentos</strong>
-                            <p class="text-red-800 leading-tight">Solo con indicación de un médico de nuestro
-                                establecimiento o proveniente del Hospital Base Valdivia. <strong>No se administran
-                                    medicamentos comprados de forma particular.</strong></p>
-                        </div>
-
-                        <div class="bg-pink-50 p-3 rounded-xl border border-pink-100 text-xs text-pink-900 space-y-1">
-                            <strong class="font-bold flex items-center gap-1.5"><i
-                                    class="fa-solid fa-clipboard-user text-pink-600"></i> Métodos
-                                Anticonceptivos</strong>
-                            <p class="text-pink-800 leading-tight">Para la administración de métodos anticonceptivos, es
-                                requisito obligatorio <strong>asistir con Carnet de Control Ginecológico</strong>.</p>
-                        </div>
-                    </div>
-
-                    <!-- Horarios Procedimiento -->
-                    <div class="mt-4 pt-3 border-t border-slate-100">
-                        <strong class="text-slate-800 text-xs block mb-1">Horarios de Procedimiento:</strong>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-medium text-slate-700">
-                            <div class="p-2 bg-slate-50 rounded-lg border border-slate-100"><i
-                                    class="fa-regular fa-clock text-orange-500"></i> <strong>L a J:</strong> 08:00 -
-                                12:45 y 14:00 - 16:45 hrs.</div>
-                            <div class="p-2 bg-slate-50 rounded-lg border border-slate-100"><i
-                                    class="fa-regular fa-clock text-orange-500"></i> <strong>Viernes:</strong> 08:00 -
-                                12:45 y 14:00 - 15:45 hrs.</div>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Unidades de Apoyo (Farmacia, Leche, Rayos, Vacunatorio) -->
-                <div
-                    class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-                            <div
-                                class="w-10 h-10 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-lg">
+                <!-- Botones de Pestañas -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg">
+                    <button onclick="cambiarTabTransversal('procedimientos')" id="btn-trans-procedimientos" class="trans-tab-btn py-3 px-4 rounded-2xl border-2 border-yellow-500 bg-yellow-50 text-yellow-900 font-bold text-xs transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-user-nurse"></i> Procedimientos y Matrona
+                    </button>
+                    <button onclick="cambiarTabTransversal('apoyo')" id="btn-trans-apoyo" class="trans-tab-btn py-3 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-600 font-bold text-xs transition flex items-center justify-center gap-2 hover:bg-slate-100">
+                        <i class="fa-solid fa-pills"></i> Farmacia, Leche y Vacunas
+                    </button>
+                </div>
+
+                <!-- Panel de Contenido Dinámico -->
+                <div class="bg-slate-50/80 rounded-2xl p-5 sm:p-6 border border-slate-200/80 min-h-[220px] flex items-center">
+                    
+                    <!-- Contenido 1: Sector Transversal y Procedimientos -->
+                    <div id="content-trans-procedimientos" class="trans-content space-y-4 w-full">
+                        <div class="flex items-center gap-3 border-b border-slate-200/60 pb-3">
+                            <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-solid fa-user-nurse"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Sector Transversal, Matrona y Kinesiología</h4>
+                                <p class="text-[11px] text-slate-500">Área de atención ambulatoria centralizada.</p>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-slate-600">
+                            Agrupa las atenciones de <strong>Matrona, Procedimientos, Kinesiólogo y Terapeuta Ocupacional</strong>. Por favor, espere su turno ordenadamente en la sala de espera (prohibido el ingreso a personal no autorizado).
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="bg-red-50/80 p-3 rounded-xl border border-red-200/70 text-xs text-red-900 space-y-1">
+                                <strong class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-syringe text-red-600"></i> Administración de Fármacos</strong>
+                                <p class="text-red-800 text-[11px] leading-tight">Solo con indicación médica de nuestro establecimiento o del Hospital Base Valdivia. No se administran medicamentos comprados en forma particular.</p>
+                            </div>
+
+                            <div class="bg-pink-50/80 p-3 rounded-xl border border-pink-200/70 text-xs text-pink-900 space-y-1">
+                                <strong class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-clipboard-user text-pink-600"></i> Métodos Anticonceptivos</strong>
+                                <p class="text-pink-800 text-[11px] leading-tight">Requisito obligatorio: <strong>asistir con Carnet de Control Ginecológico</strong> para su entrega y control periódico.</p>
+                            </div>
+                        </div>
+
+                        <!-- Horarios específicos de Procedimiento -->
+                        <div class="pt-2 border-t border-slate-200/60 flex flex-col sm:flex-row gap-2 justify-between text-xs text-slate-700">
+                            <div><i class="fa-regular fa-clock text-orange-600"></i> <strong>Lunes a Jueves:</strong> 08:00 - 12:45 y 14:00 - 16:45 hrs.</div>
+                            <div><i class="fa-regular fa-clock text-orange-600"></i> <strong>Viernes:</strong> 08:00 - 12:45 y 14:00 - 15:45 hrs.</div>
+                        </div>
+                    </div>
+
+                    <!-- Contenido 2: Unidades de Apoyo (Farmacia, Leche, Rayos, Vacunatorio) -->
+                    <div id="content-trans-apoyo" class="trans-content space-y-4 w-full hidden">
+                        <div class="flex items-center gap-3 border-b border-slate-200/60 pb-3">
+                            <div class="w-9 h-9 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-sm shrink-0">
                                 <i class="fa-solid fa-pills"></i>
                             </div>
-                            <h3 class="font-bold text-slate-900 text-base">Unidades de Apoyo Clínico</h3>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3 mt-4">
-                            <div
-                                class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
-                                <i class="fa-solid fa-prescription-bottle-medical text-xl text-yellow-600"></i>
-                                <span class="font-bold text-xs text-slate-800">Farmacia</span>
-                            </div>
-                            <div
-                                class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
-                                <i class="fa-solid fa-baby text-xl text-sky-600"></i>
-                                <span class="font-bold text-xs text-slate-800">Leche (PNAC)</span>
-                            </div>
-                            <div
-                                class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
-                                <i class="fa-solid fa-x-ray text-xl text-slate-700"></i>
-                                <span class="font-bold text-xs text-slate-800">Rayos X</span>
-                            </div>
-                            <div
-                                class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center text-center gap-1">
-                                <i class="fa-solid fa-virus-covid text-xl text-emerald-600"></i>
-                                <span class="font-bold text-xs text-slate-800">Vacunatorio</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Farmacia, Leche (PNAC), Rayos X y Vacunatorio</h4>
+                                <p class="text-[11px] text-slate-500">Unidades de provisión y diagnóstico para la red.</p>
                             </div>
                         </div>
 
-                        <!-- Horarios específicos del Vacunatorio según foto -->
-                        <div class="mt-4 bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-xs">
-                            <strong class="text-emerald-900 block mb-1 flex items-center gap-1.5"><i
-                                    class="fa-solid fa-clock"></i> Horario Específico Vacunatorio:</strong>
-                            <p class="text-emerald-800 leading-tight"><strong>Lunes a Jueves:</strong> Mañana 08:45 a
-                                12:30 / Tarde 14:00 a 16:30.<br><strong>Viernes:</strong> Mañana 08:45 a 12:30 / Tarde
-                                14:00 a 15:30.</p>
+                        <!-- Tarjetas de iconos rápidos -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                            <div class="p-2.5 bg-white rounded-xl border border-slate-200/80 flex flex-col items-center text-center gap-1 shadow-2xs">
+                                <i class="fa-solid fa-prescription-bottle-medical text-lg text-yellow-600"></i>
+                                <span class="font-bold text-[11px] text-slate-800">Farmacia</span>
+                            </div>
+                            <div class="p-2.5 bg-white rounded-xl border border-slate-200/80 flex flex-col items-center text-center gap-1 shadow-2xs">
+                                <i class="fa-solid fa-baby text-lg text-sky-600"></i>
+                                <span class="font-bold text-[11px] text-slate-800">Leche (PNAC)</span>
+                            </div>
+                            <div class="p-2.5 bg-white rounded-xl border border-slate-200/80 flex flex-col items-center text-center gap-1 shadow-2xs">
+                                <i class="fa-solid fa-x-ray text-lg text-slate-700"></i>
+                                <span class="font-bold text-[11px] text-slate-800">Rayos X</span>
+                            </div>
+                            <div class="p-2.5 bg-white rounded-xl border border-slate-200/80 flex flex-col items-center text-center gap-1 shadow-2xs">
+                                <i class="fa-solid fa-virus-covid text-lg text-emerald-600"></i>
+                                <span class="font-bold text-[11px] text-slate-800">Vacunatorio</span>
+                            </div>
+                        </div>
+
+                        <!-- Horario del Vacunatorio detallado -->
+                        <div class="bg-emerald-50/80 p-3 rounded-xl border border-emerald-200/70 text-xs text-emerald-900 space-y-1">
+                            <strong class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-shield-heart text-emerald-700"></i> Horario del Vacunatorio:</strong>
+                            <p class="text-emerald-800 text-[11px] leading-tight">
+                                <strong>Lunes a Jueves:</strong> Mañana 08:45 a 12:30 / Tarde 14:00 a 16:30.<br>
+                                <strong>Viernes:</strong> Mañana 08:45 a 12:30 / Tarde 14:00 a 15:30.
+                            </p>
+                        </div>
+
+                        <!-- Botón para abrir modal de horarios -->
+                        <div class="pt-1">
+                            <button onclick="openModal('modalFarmaciaHorarios')" class="w-full py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+                                <i class="fa-regular fa-clock"></i> Ver Horarios Completos (Farmacia, Rayos y Leche)
+                            </button>
                         </div>
                     </div>
 
-                    <div class="pt-4 border-t border-slate-100 mt-4">
-                        <button onclick="openModal('modalFarmaciaHorarios')"
-                            class="w-full py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
-                            <i class="fa-regular fa-clock"></i> Ver Horarios de Farmacia, Rayos y Leche
-                        </button>
-                    </div>
                 </div>
-
-            </div>
+            </section>
         </div>
 
         <!-- =========================================================================
@@ -1494,84 +1578,6 @@
             </div>
         </div>
 
-
-        <!-- Modal 1: Urgencia y Triage (C1-C5) -->
-        <div id="modalUrgencia"
-            class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-            <div
-                class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-                <button onclick="closeModal('modalUrgencia')"
-                    class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-truck-medical"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs uppercase tracking-wider text-red-600 font-semibold">Servicio de
-                            Urgencia</span>
-                        <h3 class="text-xl font-bold text-slate-900">Módulo Urgencia y Categorización (Triage)</h3>
-                    </div>
-                </div>
-
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    El Servicio de Urgencia opera las 24 horas. La atención se rige por la <strong>gravedad clínica y no
-                        por orden de llegada</strong> mediante los siguientes niveles:
-                </p>
-
-                <div class="space-y-3 text-xs sm:text-sm">
-                    <div class="bg-red-50 p-3.5 rounded-2xl border border-red-200">
-                        <div class="flex justify-between items-center font-bold text-red-700 uppercase">
-                            <span>C1: Resucitación / Riesgo Vital</span>
-                            <span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full">Inmediata</span>
-                        </div>
-                        <p class="text-slate-600 text-xs mt-1">Paro cardiorrespiratorio, shock, politrauma severo.</p>
-                    </div>
-                    <div class="bg-orange-50 p-3.5 rounded-2xl border border-orange-200">
-                        <div class="flex justify-between items-center font-bold text-orange-700 uppercase">
-                            <span>C2: Emergencia / Alto Riesgo</span>
-                            <span class="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full">&lt; 30
-                                min</span>
-                        </div>
-                        <p class="text-slate-600 text-xs mt-1">Dolor torácico agudo, pérdida de conciencia súbita.</p>
-                    </div>
-                    <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200">
-                        <div class="flex justify-between items-center font-bold text-amber-700 uppercase">
-                            <span>C3: Urgencia Moderada</span>
-                            <span class="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full">&lt; 90
-                                min</span>
-                        </div>
-                        <p class="text-slate-600 text-xs mt-1">Fiebre alta en niños, dolor abdominal moderado.</p>
-                    </div>
-                    <div class="bg-blue-50 p-3.5 rounded-2xl border border-blue-200">
-                        <div class="flex justify-between items-center font-bold text-blue-700 uppercase">
-                            <span>C4: Menor Gravedad</span>
-                            <span class="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full">&lt; 120
-                                min</span>
-                        </div>
-                        <p class="text-slate-600 text-xs mt-1">Cuadros respiratorios leves, contusiones menores.</p>
-                    </div>
-                    <div class="bg-slate-100 p-3.5 rounded-2xl border border-slate-200">
-                        <div class="flex justify-between items-center font-bold text-slate-700 uppercase">
-                            <span>C5: No Urgente</span>
-                            <span class="bg-slate-500 text-white text-[10px] px-2 py-0.5 rounded-full">&lt; 180
-                                min</span>
-                        </div>
-                        <p class="text-slate-600 text-xs mt-1">Síntomas de larga data, recetas habituales (derivable a
-                            Policlínico).</p>
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <button onclick="closeModal('modalUrgencia')"
-                        class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-sm transition">
-                        Cerrar Módulo Urgencia
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <!-- Modal 2: APS y Cronograma de Entrega de Horas -->
         <div id="modalAps"
             class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
@@ -1676,6 +1682,37 @@
                 </div>
             </div>
         </div>
+
+        <!-- Cuadro Interactivo de Bienvenida y Nombre -->
+<div id="modalBienvenida" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl relative text-center">
+        
+        <!-- Icono Institucional -->
+        <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-2xl mx-auto shadow-inner">
+            <i class="fa-solid fa-user-nurse"></i>
+        </div>
+
+        <div class="space-y-2">
+            <h3 class="text-xl font-extrabold text-slate-900">¡Bienvenido al Portal de Salud!</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Hospital Familiar y Comunitario de Lanco. Para brindarte una experiencia más cercana, por favor indícanos tu nombre:
+            </p>
+        </div>
+
+        <!-- Input para el Nombre -->
+        <div class="space-y-3">
+            <input type="text" id="nombreUsuarioInput" placeholder="Ej. Juan Pérez" 
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm text-center text-slate-900 font-medium focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 transition">
+            
+            <button onclick="guardarNombreUsuario()" 
+                class="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white rounded-2xl font-semibold text-sm transition shadow-md">
+                Ingresar al Portal
+            </button>
+        </div>
+        
+        <p class="text-[11px] text-slate-400">Tu nombre solo se usará para personalizar tu saludo en este dispositivo.</p>
+    </div>
+</div>
 
         <!-- Modal Nuevo: Horarios Farmacia, Leche, Rayos y Vacunatorio -->
         <div id="modalFarmaciaHorarios"
@@ -1886,94 +1923,77 @@
         </div>
 
         <!-- Modal 4: Hospitalización -->
-        <div id="modalHospitalizado"
-            class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-            <div
-                class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-                <button onclick="closeModal('modalHospitalizado')"
-                    class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <div class="flex items-center gap-3">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-bed-pulse"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs uppercase tracking-wider text-indigo-600 font-semibold">Unidad de
-                            Cuidados</span>
-                        <h3 class="text-xl font-bold text-slate-900">Guía y Reglamento de Hospitalización</h3>
-                    </div>
-                </div>
+        <!-- Modal Oficial: Reglamento y Guía de Hospitalización -->
+<div id="modalHospitalizado" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto my-auto">
+        
+        <!-- Botón Cerrar -->
+        <button onclick="closeModal('modalHospitalizado')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
-                <div class="space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
-                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-indigo-700">
-                            <i class="fa-solid fa-users"></i> Información de Visitas
-                        </h4>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li><strong>Horario:</strong> Lunes a domingo de 11:30 a 17:30 hrs.</li>
-                            <li><strong>Edad mínima:</strong> 12 años para el ingreso.</li>
-                            <li><strong>Aforo:</strong> Se permiten hasta 6 visitas por paciente, las cuales deben
-                                ingresar de manera individual.</li>
-                            <li><strong>Responsable:</strong> Al ingreso debe quedar consignada una persona encargada de
-                                entregar y recibir información del paciente.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
-                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-indigo-700">
-                            <i class="fa-solid fa-suitcase"></i> Artículos que debe traer (Uso personal)
-                        </h4>
-                        <p class="text-[11px] text-slate-500">Todo paciente debe traer útiles de uso personal que deben
-                            ser renovados según su utilización:</p>
-                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1 pl-5 list-disc">
-                            <li>Jabón líquido</li>
-                            <li>Toalla y Confort</li>
-                            <li>Desodorante</li>
-                            <li>Crema</li>
-                            <li>Pasta de dientes y cepillo</li>
-                            <li>Pañales (si es requerido)</li>
-                            <li>Máquina de afeitar desechable</li>
-                            <li>Medicamentos de uso crónico en cajas originales (NO en pastilleros)</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
-                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-indigo-700">
-                            <i class="fa-solid fa-triangle-exclamation"></i> Reglamento de la Unidad
-                        </h4>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>No se permite el ingreso de alimentos externos.</li>
-                            <li>No se permite fumar en el recinto.</li>
-                            <li>Prohibido grabar o tomar fotografías en las dependencias hospitalarias.</li>
-                            <li><strong>Recepción de útiles y pertenencias:</strong> Se reciben a través de la caseta de
-                                guardias, quienes llamarán al servicio de hospitalizados para su entrega.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 space-y-2">
-                        <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-phone-volume"></i> Entrega de Información Telefónica
-                        </h4>
-                        <p><strong>Teléfono directo:</strong> <a href="tel:632686139"
-                                class="text-indigo-700 font-bold hover:underline">63 268 6139</a></p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
-                            <div><strong>Lunes a Viernes:</strong><br>14:00 - 16:00 hrs</div>
-                            <div><strong>Sábados y Domingos:</strong><br>10:00 - 12:00 hrs</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <button onclick="closeModal('modalHospitalizado')"
-                        class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-sm transition">
-                        Cerrar Guía Hospitalaria
-                    </button>
-                </div>
+        <!-- Cabecera -->
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-book-medical"></i>
+            </div>
+            <div>
+                <span class="text-xs uppercase tracking-wider text-indigo-700 font-semibold">Unidad Hospitalización Indiferenciada</span>
+                <h3 class="text-xl font-bold text-slate-900">Reglamento y Guía Oficial del Paciente</h3>
             </div>
         </div>
 
+        <!-- Bloque 1: Artículos de uso personal obligatorios -->
+        <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80 space-y-3">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-basket-shopping text-indigo-600"></i> Artículos de Uso Personal al Ingreso:
+            </h4>
+            <p class="text-xs text-slate-600">Todo paciente debe traer consigo útiles de uso personal, los cuales deben ser renovados según la utilización:</p>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
+                <li class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100"><i class="fa-solid fa-check text-emerald-600"></i> Jabón líquido</li>
+                <li class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100"><i class="fa-solid fa-check text-emerald-600"></i> Toalla y Confort[cite: 1]</li>
+                <li class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100"><i class="fa-solid fa-check text-emerald-600"></i> Desodorante[cite: 1]</li>
+                <li class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100"><i class="fa-solid fa-check text-emerald-600"></i> Crema corporal[cite: 1]</li>
+                <li class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100"><i class="fa-solid fa-check text-emerald-600"></i> Pasta y cepillo de dientes[cite: 1]</li>
+                <li class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100"><i class="fa-solid fa-check text-emerald-600"></i> Máquina afeitar (si se requiere)[cite: 1]</li>
+                <li class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-100 sm:col-span-2"><i class="fa-solid fa-check text-emerald-600"></i> <strong>Medicamentos crónicos:</strong> En cajas originales (¡No en pastilleros!)[cite: 1]</li>
+            </ul>
+        </div>
+
+        <!-- Bloque 2: Recepción de Pertenencias y Horarios -->
+        <div class="bg-indigo-50/60 p-4 sm:p-5 rounded-2xl border border-indigo-100 space-y-2">
+            <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-clock text-indigo-600"></i> Recepción de Pertenencias:
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-700">
+                Los útiles de aseo y pertenencias se recepcionan a través de la <strong>caseta de guardias</strong>, quienes se encargarán de llamar a la Unidad de Hospitalizados para su retiro y entrega al paciente.
+            </p>
+            <p class="text-xs font-semibold text-indigo-800">
+                ⏰ Horario límite de recepción: Solo se reciben pertenencias hasta las <strong>21:00 hrs</strong>.
+            </p>
+        </div>
+
+        <!-- Bloque 3: Restricciones y Prohibiciones del Recinto -->
+        <div class="bg-red-50/60 p-4 sm:p-5 rounded-2xl border border-red-100 space-y-2">
+            <h4 class="font-bold text-red-900 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-ban text-red-600"></i> Normas Estrictas del Establecimiento:
+            </h4>
+            <ul class="text-xs sm:text-sm text-slate-700 space-y-1.5 list-disc pl-4">
+                <li><strong>No se permite el ingreso de alimentos</strong> de ningún tipo por motivos de seguridad sanitaria.</li>
+                <li><strong>Prohibido fumar</strong> en todo el recinto hospitalario.</li>
+                <li><strong>No se permite grabar ni tomar fotografías</strong> dentro del recinto hospitalario.</li>
+                <li><strong>Objetos de valor:</strong> La institución no se responsabiliza por pérdidas de joyas, celulares, televisores, dinero o aparatos electrónicos. Si ingresan, quedan bajo exclusiva responsabilidad del paciente o familiar a cargo[cite: 1].</li>
+            </ul>
+        </div>
+
+        <!-- Botón de Cierre -->
+        <div class="pt-2">
+            <button onclick="closeModal('modalHospitalizado')" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-sm transition shadow-md">
+                Entendido, cerrar guía
+            </button>
+        </div>
+    </div>
+</div>
         <!-- Modal 5: Ley MILA -->
         <div id="modalMila"
             class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
@@ -2281,156 +2301,151 @@
             </div>
         </div>
 
-        <!-- Modal de Horarios Oficiale -->
-        <div id="modalHorarios" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm hidden">
-            <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-5 max-h-[90vh] overflow-y-auto">
-                <!-- Cabecera del Modal -->
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-base">
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Horarios Oficiales</h3>
-                            <span class="text-xs text-slate-500">Hospital Familiar y Comunitario de Lanco</span>
-                        </div>
-                    </div>
-                    <button onclick="closeModal('modalHorarios')"
-                        class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
+        <!-- Modal de Horarios Oficiales (Ancho y Proporcionado) -->
+<div id="modalHorarios" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm hidden">
+    
+    <!-- Contenedor visible del Modal ampliado a max-w-xl -->
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 space-y-5 max-h-[90vh] overflow-y-auto my-auto">
+
+        <!-- Cabecera del Modal -->
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-hospital-50 text-hospital-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-clock"></i>
                 </div>
-
-                <!-- Listado de Horarios Independientes -->
-                <div class="space-y-2.5 text-xs">
-
-                    <!-- Farmacia -->
-                    <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                        <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
-                            <i class="fa-solid fa-pills"></i>
-                        </div>
-                        <div>
-                            <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia</strong>
-                            <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00
-                                    hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
-                        </div>
-                    </div>
-
-                    <!-- Entrega de Leche (PNAC) -->
-                    <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                        <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center flex-shrink-0 text-sm">
-                            <i class="fa-solid fa-bottle-droplet"></i>
-                        </div>
-                        <div>
-                            <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Entrega de Leche y Productos
-                                (PNAC)</strong>
-                            <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:30 a 16:30
-                                    hrs</strong> | Viernes: <strong>08:30 a 15:30 hrs</strong></span>
-                        </div>
-                    </div>
-
-                    <!-- Oficina OIRS -->
-                    <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                        <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
-                            <i class="fa-solid fa-headset"></i>
-                        </div>
-                        <div>
-                            <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Oficina OIRS (Informaciones)</strong>
-                            <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves (08:00–13:00 y 14:00–17:00 hrs) • Viernes (hasta las 16:00 hrs)</span>
-                        </div>
-                    </div>
-
-                    <!-- Visitas -->
-                    <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                        <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
-                            <i class="fa-solid fa-bed-pulse"></i>
-                        </div>
-                        <div>
-                            <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Visitas a
-                                Hospitalizados</strong>
-                            <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Domingo: <strong>11:30 a 17:30
-                                    hrs</strong></span>
-                        </div>
-                    </div>
-
-                    <!-- Horas Médicas -->
-                    <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
-                        <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0 text-sm">
-                            <i class="fa-solid fa-calendar-check"></i>
-                        </div>
-                        <div>
-                            <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Solicitud de Horas (Línea
-                                800)</strong>
-                            <span class="text-slate-600 text-[11px] sm:text-xs">Lunes y Miércoles: <strong>08:30 a 10:00
-                                    hrs</strong> (Fono: 800 360 035)</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Botones de Acción -->
-                <div class="flex flex-col sm:flex-row items-center gap-3 pt-2 border-t border-slate-100">
-                    <button onclick="compartirTarjetaOficial()"
-                        class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-brands fa-whatsapp text-lg"></i> Compartir Tarjeta Oficial
-                    </button>
-                    <button onclick="closeModal('modalHorarios')"
-                        class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 px-5 rounded-2xl font-semibold text-xs transition">
-                        Cerrar
-                    </button>
+                <div>
+                    <h3 class="font-bold text-slate-900 text-sm sm:text-base">Horarios Oficiales</h3>
+                    <span class="text-xs text-slate-500">Hospital Familiar y Comunitario de Lanco</span>
                 </div>
             </div>
-            <!-- Tarjeta Oculta que se convertirá en Imagen para WhatsApp (Con Marca de Agua Institucional) -->
-    <div id="tarjetaCompartible" class="fixed -left-[9999px] top-0 bg-white p-8 rounded-3xl w-[500px] shadow-2xl border border-slate-200 font-sans relative overflow-hidden">
+            <button onclick="closeModal('modalHorarios')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
 
-        <!-- MARCA DE AGUA GIGANTE Y DOBLE DE FONDO (Más grande y dominante) -->
-        <div class="absolute -right-16 -bottom-16 w-170 h-170 pointer-events-none opacity-[0.05] flex items-center justify-center transform rotate-[-15deg]">
+        <!-- Listado de Horarios -->
+        <div class="space-y-3 text-xs">
+
+            <!-- Farmacia -->
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                    <i class="fa-solid fa-pills"></i>
+                </div>
+                <div>
+                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Farmacia</strong>
+                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:00 a 17:00 hrs</strong> | Viernes: <strong>08:00 a 16:00 hrs</strong></span>
+                </div>
+            </div>
+
+            <!-- Entrega de Leche (PNAC) -->
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center flex-shrink-0 text-sm">
+                    <i class="fa-solid fa-bottle-droplet"></i>
+                </div>
+                <div>
+                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Entrega de Leche y Productos (PNAC)</strong>
+                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves: <strong>08:30 a 16:30 hrs</strong> | Viernes: <strong>08:30 a 15:30 hrs</strong></span>
+                </div>
+            </div>
+
+            <!-- Oficina OIRS -->
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div>
+                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Oficina OIRS (Informaciones)</strong>
+                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Jueves (08:00–13:00 y 14:00–17:00 hrs) • Viernes (hasta las 16:00 hrs)</span>
+                </div>
+            </div>
+
+            <!-- Visitas -->
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                <div class="w-9 h-9 rounded-xl bg-hospital-50 text-hospital-700 flex items-center justify-center flex-shrink-0 text-sm">
+                    <i class="fa-solid fa-bed-pulse"></i>
+                </div>
+                <div>
+                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Visitas a Hospitalizados</strong>
+                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes a Domingo: <strong>11:30 a 17:30 hrs</strong></span>
+                </div>
+            </div>
+
+            <!-- Horas Médicas -->
+            <div class="p-3.5 bg-slate-50/70 hover:bg-slate-50 rounded-2xl border border-slate-200/70 flex items-center gap-3.5 transition">
+                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0 text-sm">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div>
+                    <strong class="block text-slate-900 text-xs sm:text-sm mb-0.5">Solicitud de Horas (Línea 800)</strong>
+                    <span class="text-slate-600 text-[11px] sm:text-xs">Lunes y Miércoles: <strong>08:30 a 10:00 hrs</strong> (Fono: 800 360 035)</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Botones de Acción Equilibrados -->
+        <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+            <button onclick="compartirTarjetaOficial()" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Compartir Horarios
+            </button>
+            <button onclick="closeModal('modalHorarios')" class="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold text-sm transition">
+                Cerrar
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Tarjeta Oculta para WhatsApp (Se mantiene intacta) -->
+    <div id="tarjetaCompartible" class="fixed -left-[9999px] top-0 bg-white p-10 rounded-3xl w-[500px] shadow-2xl border border-slate-200 font-sans relative overflow-hidden">
+        
+        <!-- MARCA DE AGUA GIGANTE Y DOBLE DE FONDO -->
+        <div class="absolute -right-16 -bottom-16 w-[420px] h-[420px] pointer-events-none opacity-[0.05] flex items-center justify-center transform rotate-[-15deg]">
             <img src="logo_hfcl.png" alt="" class="w-full h-full object-contain">
         </div>
 
         <!-- Encabezado de la Tarjeta -->
-        <div class="relative z-10 flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
-            <div class="flex items-center gap-3">
-                <img src="logo_hfcl.png" alt="Logo Hospital de Lanco" class="w-12 h-12 object-contain shrink-0">
+        <div class="relative z-10 flex items-center justify-between border-b border-slate-100 pb-5 mb-6">
+            <div class="flex items-center gap-4">
+                <img src="logo_hfcl.png" alt="Logo Hospital de Lanco" class="w-14 h-14 object-contain shrink-0">
                 <div>
-                    <h4 class="font-bold text-slate-900 text-sm">Hospital Familiar y Comunitario de Lanco</h4>
-                    <p class="text-[10px] text-slate-500">Santiago 595, Lanco</p>
+                    <h4 class="font-bold text-slate-900 text-base">Nuestros Horarios de Atención</h4>
                 </div>
             </div>
         </div>
 
-                <!-- Cuerpo con los Horarios -->
-                <div class="relative z-10 space-y-4 text-xs text-slate-700">
-                    <h3 class="font-bold text-slate-900 text-base mb-2">🕒 Guía de Horarios y Atención</h3>
+        <!-- Cuerpo con los Horarios -->
+        <div class="relative z-10 space-y-4 text-xs text-slate-700">
 
-                    <div class="bg-slate-50/90 backdrop-blur-sm p-3 rounded-xl border border-slate-100 space-y-1">
-                        <p class="font-bold text-slate-900">💊 Farmacia:</p>
-                        <p class="text-slate-600">Lunes a Jueves: 08:00 a 17:00 hrs | Viernes: hasta las 16:00 hrs</p>
-                    </div>
+            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+                <p class="font-bold text-slate-900">💊 Farmacia:</p>
+                <p class="text-slate-600">Lunes a Jueves: 08:00 a 17:00 hrs | Viernes: hasta las 16:00 hrs</p>
+            </div>
 
-                    <div class="bg-slate-50/90 backdrop-blur-sm p-3 rounded-xl border border-slate-100 space-y-1">
-                        <p class="font-bold text-slate-900">🍼 Entrega de Leche (PNAC):</p>
-                        <p class="text-slate-600">Lunes a Jueves: 08:30 a 16:30 hrs | Viernes: hasta las 15:30 hrs</p>
-                    </div>
+            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+                <p class="font-bold text-slate-900">🍼 Entrega de Leche (PNAC):</p>
+                <p class="text-slate-600">Lunes a Jueves: 08:30 a 16:30 hrs | Viernes: hasta las 15:30 hrs</p>
+            </div>
 
-                    <div class="bg-slate-50/90 backdrop-blur-sm p-3 rounded-xl border border-slate-100 space-y-1">
-                        <p class="font-bold text-slate-900">📞 OIRS y Agendamiento:</p>
-                        <p class="text-slate-600">Fono gratuito: 800 360 035 (Lunes y Miércoles 8:30 a 10:00 hrs)</p>
-                    </div>
+            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+                <p class="font-bold text-slate-900">📞 OIRS y Agendamiento:</p>
+                <p class="text-slate-600">Fono gratuito: 800 360 035 (Lunes y Miércoles 8:30 a 10:00 hrs)</p>
+            </div>
 
-                    <div class="bg-slate-50/90 backdrop-blur-sm p-3 rounded-xl border border-slate-100 space-y-1">
-                        <p class="font-bold text-slate-900">🛏️ Visitas a Hospitalizados:</p>
-                        <p class="text-slate-600">Lunes a Domingo: 11:30 a 17:30 hrs</p>
-                    </div>
-                </div>
-
-                <!-- Pie de página de la tarjeta -->
-                <div class="relative z-10 mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400 font-medium">
-                    <span>Información oficial verificada</span>
-                    <span class="text-emerald-700 font-bold">Portal Digital HFCL</span>
-                </div>
+            <div class="bg-slate-50/90 backdrop-blur-sm p-3.5 rounded-xl border border-slate-100 space-y-1">
+                <p class="font-bold text-slate-900">🛏️ Visitas a Hospitalizados:</p>
+                <p class="text-slate-600">Lunes a Domingo: 11:30 a 17:30 hrs</p>
             </div>
         </div>
+
+        <!-- Pie de página de la tarjeta -->
+        <div class="relative z-10 mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+            <span>Canal verificado para la comunidad</span>
+            <span class="text-emerald-700 font-bold">Portal Digital HFCL</span>
+        </div>
+
+    </div>
+
+</div>
             <!-- ========================================================================= -->
             <!-- NUEVAS HERRAMIENTAS INTERACTIVAS (Checklist, Sectorización, Herbario)   -->
             <!-- ========================================================================= -->
@@ -2865,14 +2880,10 @@
 
                 <button onclick="changeFontSize(1)"
                     class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-hospital-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold flex items-center justify-center transition shadow-2xs"
-                    title="Aumentar texto">
-                    A+
-                </button>
+                    title="Aumentar texto">                   A+                </button>
                 <button onclick="changeFontSize(-1)"
                     class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-hospital-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold flex items-center justify-center transition shadow-2xs"
-                    title="Reducir texto">
-                    A-
-                </button>
+                    title="Reducir texto">                    A-                </button>
 
                 <div class="h-4 w-px bg-slate-200 dark:bg-slate-700 mx-0.5"></div>
 

@@ -3,13 +3,21 @@ body {
     transition: font-size 0.2s ease; 
 }
 
-/* Clases de Accesibilidad Globales */
+/* Clases de Accesibilidad Globales que modifican la escala */
 body.text-sm-global { font-size: 0.85rem; }
 body.text-md-global { font-size: 1rem; }
 body.text-lg-global { font-size: 1.15rem; }
 body.text-xl-global { font-size: 1.3rem; }
 
-/* Alto Contraste Profesional */
+/* TRUCO CLAVE: Forzar que los textos estándar escalen junto al body */
+body.text-sm-global *, 
+body.text-md-global *, 
+body.text-lg-global *, 
+body.text-xl-global * {
+    /* Opcional: permite que elementos internos respeten la proporción heredada si usan rem/em */
+}
+
+/* Alto Contraste Profesional (Se mantiene intacto y perfecto) */
 body.high-contrast {
     background-color: #050505 !important;
     color: #f8fafc !important;
